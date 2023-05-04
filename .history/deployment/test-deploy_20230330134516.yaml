@@ -1,0 +1,36 @@
+fullnameOverride: test
+image:
+  repository: otomi/nodejs-helloworld
+  tag: v1.2.13
+
+# env:
+#   TARGET: deploy deployment
+
+# or inject all fields found in secrets by name
+secrets:
+  - mysecret-generic
+  - sec2
+
+autoscaling:
+  enabled: true
+
+files:
+  /etc/nginx/nginx.conf: |
+    myconfig
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 64Mi
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the full name template
+  name: ""

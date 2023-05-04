@@ -1,0 +1,28 @@
+{{- if eq .Values.type "ksvc" }}
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: {{ include "workload.fullname" . }}
+  labels: {{- include "workload.labels" . | nindent 4 }}
+    {{- with .Values.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- if eq .Values.ingress "cluster" }}
+    serving.workload.dev/visibility: cluster-local
+    {{- end }}
+spec:
+  template:
+    metadata:
+      annotations:
+        {{- $hasMinScale := false }}
+        {{- range $a := .Values.podAnnotations }}
+          {{- if (contains "autoscaling.workload.dev/minScale" $a) }}{{ $hasMinScale = true }}{{ end }}
+        {{- end }}
+        {{- if or (not .Values.annotations) (not $hasMinScale) }}
+        autoscaling.workload.dev/minScale: {{ (.Values.scaleToZero | default false) | ternary "0" "1" | quote }}
+        {{- end }}
+        {{- with .Values.annotations }}
+        {{- . | toYaml | nindent 8 }}
+        {{- end }}
+    spec: {{- include "podspec" . | nindent 6 }}
+{{- end }}

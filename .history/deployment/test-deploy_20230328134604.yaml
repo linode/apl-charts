@@ -1,0 +1,18 @@
+fullnameOverride: test
+image:
+  repository: otomi/nodejs-helloworld
+  tag: v1.2.13
+
+# env:
+#   TARGET: deploy deployment
+
+# or inject all fields found in secrets by name
+secrets:
+  - mysecret-generic
+
+autoscaling:
+  enabled: true
+
+files:
+  /etc/nginx/nginx.conf: |
+    myconfig

@@ -1,0 +1,77 @@
+fullnameOverride: full-values
+
+image:
+  repository: otomi/nodejs-helloworld
+  tag: v1.2.13
+
+env:
+  - name: TARGET
+    value: deploy
+
+args:
+  - --metric-name=custom_prometheus
+  - --metric-value=40
+  - --port=8080
+
+command: 
+  - ./prometheus-dummy-exporter
+
+secrets:
+  - mysecret-generic
+  - sec2
+
+secretMounts:
+/some/secret/conf: conf-secret-name
+
+autoscaling:
+  enabled: true
+
+files:
+  /etc/nginx/nginx.conf: |
+    this is my nginx config
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 64Mi
+  requests:
+    cpu: 100m
+    memory: 32Mi
+
+servicePorts:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+
+containerPorts:
+  - name: http
+    containerPort: 8080
+    protocol: TCP
+
+serviceMonitor:
+  create: true
+  endpoints:
+    - port: metrics
+      path: /metrics
+
+securityContext:
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  capabilities:
+    drop:
+    - ALL
+
+podSecurityContext:
+  fsGroup: 2000
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: http

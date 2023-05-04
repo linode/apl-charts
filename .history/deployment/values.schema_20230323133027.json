@@ -1,0 +1,154 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "affinity": {
+      "type": "object"
+    },
+    "args": {
+      "type": "array"
+    },
+    "autoscaling": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "maxReplicas": {
+          "type": "integer",
+          "default": 100
+        },
+        "minReplicas": {
+          "type": "integer",
+          "default": 1
+        },
+        "targetCPUUtilizationPercentage": {
+          "type": "integer",
+          "default": 80
+        },
+        "targetMemoryUtilizationPercentage": {
+          "type": "integer"
+        }
+      }
+    },
+    "command": {
+      "type": "string"
+    },
+    "env": {
+      "type": "object"
+    },
+    "files": {
+      "type": "object"
+    },
+    "fullnameOverride": {
+      "type": "string"
+    },
+    "image": {
+      "type": "object",
+      "properties": {
+        "pullPolicy": {
+          "type": "string",
+          "default": "IfNotPresent"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      },
+      "required": ["repository", "tag"]
+    },
+    "imagePullSecrets": {
+      "type": "array"
+    },
+    "ingress": {
+      "type": "string",
+      "enum": [
+        "public",
+        "cluster"
+      ],
+      "default": "public"
+    },
+    "labels": {
+      "type": "object"
+    },
+    "nameOverride": {
+      "type": "string"
+    },
+    "nodeSelector": {
+      "type": "object"
+    },
+    "podAnnotations": {
+      "type": "object"
+    },
+    "podSecurityContext": {
+      "type": "object"
+    },
+    "replicaCount": {
+      "type": "integer"
+    },
+    "resources": {
+      "type": "object"
+    },
+    "secretMounts": {
+      "type": "object"
+    },
+    "secrets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "securityContext": {
+      "type": "object",
+      "properties": {
+        "runAsUser": {
+          "type": "integer",
+          "default": 1000
+        },
+        "runAsNonRoot": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "service": {
+      "type": "object",
+      "properties": {
+        "containerPort": {
+          "type": "integer",
+          "default": 8080
+        },
+        "port": {
+          "type": "integer",
+          "default": 80
+        },
+        "type": {
+          "type": "string",
+          "enum": ["ClusterIP", "LoadBalancer", "NodePort"],
+          "default": "ClusterIP"
+        }
+      }
+    },
+    "serviceAccount": {
+      "type": "object",
+      "properties": {
+        "annotations": {
+          "type": "object"
+        },
+        "create": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "tolerations": {
+      "type": "array"
+    }
+  },
+  "required": ["image", "resources"]
+}

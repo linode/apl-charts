@@ -1,0 +1,66 @@
+# Default values for deployment.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: ""
+
+replicaCount: 1
+
+image:
+  repository: ""
+  pullPolicy: IfNotPresent
+  tag: ""
+
+imagePullSecrets: []
+
+serviceAccount:
+  create: true
+  name
+  annotations: {}
+
+podAnnotations: {}
+
+securityContext: {}
+
+livenessProbe: {}
+
+readinessProbe: {}
+
+podSecurityContext: {}
+
+servicePorts:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+
+containerPorts: []
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+labels: {}
+
+env: []
+
+secrets: []
+
+files: {}
+
+secretMounts: {}
+
+command: []
+
+args: []
+
+autoscaling:
+  enabled: false
+
+serviceMonitor:
+  create: false
+  endpoints: []
