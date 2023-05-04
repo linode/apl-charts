@@ -1,3 +1,0 @@
-type: ksvc
-ingress: public
-fullnameOverride: sander
