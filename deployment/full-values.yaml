@@ -4,6 +4,10 @@ image:
   repository: otomi/nodejs-helloworld
   tag: v1.2.13
 
+serviceAccount:
+  create: true
+  annotations: {}
+
 env:
   - name: TARGET
     value: deploy
@@ -60,7 +64,7 @@ securityContext:
     drop:
     - ALL
 
-podSecurityContext:
+containerSecurityContext:
   fsGroup: 2000
 
 livenessProbe:

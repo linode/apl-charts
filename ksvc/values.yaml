@@ -7,14 +7,12 @@ image:
   pullPolicy: IfNotPresent
   tag: ""
 
-imagePullSecrets: []
-
 podAnnotations: {}
 
 serviceAccount:
   create: false
-  name: ""
   annotations: {}
+  imagePullSecrets: []
 
 securityContext: {}
 
@@ -26,7 +24,7 @@ readinessProbe:
     port: http
   successThreshold: 1
 
-podSecurityContext: {}
+containerSecurityContext: {}
 
 containerPorts: []
 

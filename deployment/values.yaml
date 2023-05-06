@@ -10,11 +10,10 @@ image:
   repository: ""
   pullPolicy: IfNotPresent
   tag: ""
-
-imagePullSecrets: []
+  imagePullSecrets: []
 
 serviceAccount:
-  create: true
+  create: false
   name: ""
   annotations: {}
 
@@ -26,7 +25,7 @@ livenessProbe: {}
 
 readinessProbe: {}
 
-podSecurityContext: {}
+containerSecurityContext: {}
 
 servicePorts:
   - port: 80
@@ -60,6 +59,10 @@ args: []
 
 autoscaling:
   enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
 
 serviceMonitor:
   create: false

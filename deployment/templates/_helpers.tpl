@@ -46,18 +46,6 @@ app.kubernetes.io/name: {{ include "deployment.fullnameOverride" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "deployment.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "deployment.fullnameOverride" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
-
-
 {{- define "helm-toolkit.utils.joinListWithSep" -}}
 {{- $local := dict "first" true -}}
 {{- $ := . -}}

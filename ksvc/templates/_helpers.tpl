@@ -46,17 +46,6 @@ app.kubernetes.io/name: {{ include "ksvc.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "ksvc.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "ksvc.fullnameOverride" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
-
 {{- define "helm-toolkit.utils.joinListWithSep" -}}
 {{- $local := dict "first" true -}}
 {{- $ := . -}}
