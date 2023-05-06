@@ -22,7 +22,11 @@ spec:
         {{- . | toYaml | nindent 8 }}
         {{- end }}
     spec:
+      {{- if .Values.serviceAccount.create }}
       serviceAccountName: {{ include "ksvc.serviceAccountName" . }}
+      {{- else }}
+      serviceAccountName: sa-{{ .Release.Namespace }}
+      {{- end }}
       {{- with .Values.securityContext }}
       securityContext:
         {{- . | toYaml | nindent 8 }}
