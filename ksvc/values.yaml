@@ -28,13 +28,7 @@ containerSecurityContext: {}
 
 containerPorts: []
 
-resources:
-  limits:
-    cpu: 200m
-    memory: 64Mi
-  requests:
-    cpu: 50m
-    memory: 32Mi
+resources: {}
 
 nodeSelector: {}
 
@@ -58,4 +52,10 @@ args: []
 
 ingress: public
 
-scaleToZero: false
+autoscaling:
+  minReplicas: 0
+  maxReplicas: 10
+
+serviceMonitor:
+  create: false
+  endpoints: []

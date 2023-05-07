@@ -35,6 +35,8 @@ The first 2 workload types (a `Regular` application and a `Function as a Service
 | secretMounts | object | `{}` |  |
 | serviceMonitor.create | boolean| `false` | Set to true to create a service monitor for custom metrics |
 | serviceMonitor.endpoints | list | `[]` |  |
+| autoscaling.minReplica | integer | `1` |  |
+| autoscaling.maxReplicas | integer | `10` |  |
 
 ## Chart `deployment` specific values
 
@@ -45,9 +47,7 @@ The first 2 workload types (a `Regular` application and a `Function as a Service
 | readinessProbe | object | `{}` |  |
 | servicePorts | list | see [values.yaml](/deployment/values.yaml) | One service port is always configured. Adjust the default service port, or add more service ports |
 | containerPorts | list | `[]` | Configure the container ports in Otomi console and optionally add more ports |
-| autoscaling.enabled | boolean | `false` |  |
-| autoscaling.minReplica | integer | `1` |  |
-| autoscaling.maxReplicas | integer | `10` |  |
+| autoscaling.enabled | boolean | `true` |  |
 | autoscaling.targetCPUUtilizationPercentage | integer | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | integer | `80` |  |
 
@@ -58,13 +58,12 @@ The first 2 workload types (a `Regular` application and a `Function as a Service
 | readinessProbe.httpGet.path | string | `/` |  |
 | readinessProbe.httpGet.port | string | `http` |  |
 | readinessProbe.successThreshold | integer | `1` |  |
-| resources.limits.cpu | string | `200m` | Adjust if needed |
-| resources.limits.memory | string | `64Mi` | Adjust if needed |
+| resources.limits.cpu | string | `""` | Adjust if needed |
+| resources.limits.memory | string | `""` | Adjust if needed |
 | resources.requests.cpu | string | `50m` | Adjust if needed |
 | resources.requests.memory | string | `32Mi` | Adjust if needed |
 | containerPorts | list | `[]` | Configure the container ports in Otomi console and optionally add more ports (but do not use `http`) |
 | ingress | string | `public` | Set to `cluster` to add `serving.deployment.dev/visibility: cluster-local` label  |
-| scaleToZero | boolean | `false` | Configure scale to zero in Otomi console |
 
 ## Testing
 

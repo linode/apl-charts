@@ -13,11 +13,8 @@ spec:
   template:
     metadata:
       annotations:
-        {{- if .Values.scaleToZero }}
-        autoscaling.knative.dev/min-scale: "0"
-        {{- else }}
-        autoscaling.knative.dev/min-scale: "1"
-        {{- end }}
+        autoscaling.knative.dev/min-scale: "{{ .Values.autoscaling.minReplicas }}"
+        autoscaling.knative.dev/max-scale: "{{ .Values.autoscaling.maxReplicas }}"
         {{- with .Values.podAnnotations }}
         {{- . | toYaml | nindent 8 }}
         {{- end }}
