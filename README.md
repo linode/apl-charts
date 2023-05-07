@@ -1,14 +1,15 @@
-## otomi-charts
+# Introduction
 
 This repository contains Helm charts used by Otomi workloads. When ArgoCD in Otomi is enabled, users can create 3 types of workloads:
 
 <p align="right"><img src="https://github.com/redkubes/otomi-charts/blob/main/img/otomi-workloads.png/?raw=true" width="100%" align="right" alt="Otomi workloads"></p>
 
+
 The first 2 workload types (a `Regular` application and a `Function as a Service`) use the Helm charts in this repository. Some chart values can be configured in Otomi Console. Use the following values for more advanced and custom configurations:
 
-## Values
+# Values
 
-### Generic (values used by the `deployment` and `ksvc` charts)
+## Generic (values used by the `deployment` and `ksvc` charts)
 
 | Key | Type | Default | Notes |
 |-----|------|---------|-------------|
@@ -35,7 +36,7 @@ The first 2 workload types (a `Regular` application and a `Function as a Service
 | serviceMonitor.create | boolean| `false` | Set to true to create a service monitor for custom metrics |
 | serviceMonitor.endpoints | list | `[]` |  |
 
-### Chart `deployment` specific values
+## Chart `deployment` specific values
 
 | Key | Type | Default | Notes |
 |-----|------|---------|-------------|
@@ -50,7 +51,7 @@ The first 2 workload types (a `Regular` application and a `Function as a Service
 | autoscaling.targetCPUUtilizationPercentage | integer | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | integer | `80` |  |
 
-### Chart `ksvc` specific values
+## Chart `ksvc` specific values
 
 | Key | Type | Default | Notes |
 |-----|------|---------|-------------|
