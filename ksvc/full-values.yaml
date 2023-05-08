@@ -37,7 +37,8 @@ resources:
     memory: 32Mi
 
 containerPorts:
-  - containerPort: 8080
+  - name: http1
+    containerPort: 8080
     protocol: TCP
 
 securityContext:
@@ -54,10 +55,10 @@ containerSecurityContext:
 livenessProbe:
   httpGet:
     path: /
-    port: http
+    port: http1
 
 readinessProbe:
   httpGet:
     path: /
-    port: http
+    port: http1
   successThreshold: 1
