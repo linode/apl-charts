@@ -21,7 +21,7 @@ livenessProbe: {}
 readinessProbe:
   httpGet:
     path: /
-    port: http
+    port: http1
   successThreshold: 1
 
 containerSecurityContext: {}
