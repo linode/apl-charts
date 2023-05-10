@@ -44,7 +44,7 @@ The first 2 workload types (a `Regular` application and a `Function as a Service
 |-----|------|---------|-------------|
 | replicaCount | integer | `1` |  |
 | resources | object | `{}` |  |
-| readinessProbe | object | `{}` |  |
+| readinessProbe | object | `{}` | Uses the http1 container port |
 | servicePorts | list | see [values.yaml](/deployment/values.yaml) | One service port is always configured. Adjust the default service port, or add more service ports |
 | containerPorts | list | `[]` | Configure the container ports in Otomi console and optionally add more ports |
 | autoscaling.enabled | boolean | `true` |  |
