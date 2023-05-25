@@ -10,7 +10,6 @@ image:
 podAnnotations: {}
 
 serviceAccount:
-  create: false
   annotations: {}
   imagePullSecrets: []
 

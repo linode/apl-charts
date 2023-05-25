@@ -126,4 +126,3 @@ app.kubernetes.io/instance: {{ .Release.Name }}
     name: {{ $secretName }}
 {{- end }}
 {{- end }}
-

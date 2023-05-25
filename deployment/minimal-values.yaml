@@ -14,3 +14,7 @@ containerPorts:
   - name: http
     containerPort: 8080
     protocol: TCP
+
+serviceAccount:
+  create: true
+  name: test

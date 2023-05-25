@@ -1,3 +1,5 @@
+kubeVersion: 1.21.1
+
 fullnameOverride: full-values
 
 image:
@@ -5,7 +7,6 @@ image:
   tag: v1.2.13
 
 serviceAccount:
-  create: true
   annotations: {}
 
 env:
@@ -79,7 +80,7 @@ readinessProbe:
 
 autoscaling:
   enabled: true
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  targetMemoryUtilizationPercentage: 80
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPU: 80
+  targetMemory: 80

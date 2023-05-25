@@ -2,6 +2,8 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+kubeVersion: ""
+
 fullnameOverride: ""
 
 replicaCount: 2
@@ -10,12 +12,10 @@ image:
   repository: ""
   pullPolicy: IfNotPresent
   tag: ""
-  imagePullSecrets: []
 
 serviceAccount:
-  create: false
-  name: ""
   annotations: {}
+  imagePullSecrets: []
 
 podAnnotations: {}
 
@@ -61,8 +61,8 @@ autoscaling:
   enabled: true
   minReplicas: 2
   maxReplicas: 10
-  targetCPUUtilizationPercentage: 80
-  targetMemoryUtilizationPercentage: 80
+  targetCPU: 80
+  targetMemory: 80
 
 serviceMonitor:
   create: false

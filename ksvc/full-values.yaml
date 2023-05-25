@@ -5,7 +5,6 @@ image:
   tag: v1.2.13
 
 serviceAccount:
-  create: true
   annotations: {}
 
 env:

@@ -16,11 +16,7 @@ spec:
       {{- end }}
       labels: {{- include "deployment.selectorLabels" . | nindent 8 }}
     spec:
-      {{- if .Values.serviceAccount.create }}
-      serviceAccountName: {{ include "deployment.serviceAccountName" . }}
-      {{- else }}
-      serviceAccountName: sa-{{ .Release.Namespace }}
-      {{- end }}
+      serviceAccountName: {{ include "deployment.fullnameOverride" . }}
       {{- with .Values.securityContext }}
       securityContext: {{- . | toYaml | nindent 8 }}
       {{- end }}
