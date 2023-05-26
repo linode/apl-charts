@@ -54,12 +54,12 @@ readinessProbe:
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ##
 containerSecurityContext:
-  readOnlyRootFilesystem: true
+  # readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 1000
-  capabilities:
-    drop:
-    - ALL
+  # capabilities:
+  #   drop:
+  #   - ALL
   # fsGroup: 2000
 
 ## Configures the ports the container listens on
@@ -80,11 +80,9 @@ resources:
   ## limits:
   ##    cpu: 100m
   ##    memory: 128Mi
-  limits: {}
   ## requests:
   ##    cpu: 100m
   ##    memory: 128Mi
-  requests: {}
 
 nodeSelector: {}
 
