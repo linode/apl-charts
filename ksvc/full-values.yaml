@@ -60,4 +60,4 @@ readinessProbe:
   httpGet:
     path: /
     port: http1
-  successThreshold: 1
+  successThreshold: 2
