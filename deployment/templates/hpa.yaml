@@ -6,7 +6,7 @@ metadata:
   labels: {{- include "deployment.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
-    apiVersion: autoscaling/v2
+    apiVersion: apps/v1
     kind: Deployment
     name: {{ template "deployment.fullnameOverride" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
