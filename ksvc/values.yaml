@@ -1,33 +1,95 @@
-# Default values for ksvc.
+# Default values for ksvc workload type in Otomi.
 
+## @param fullnameOverride String to fully override ksvc.fullname template
+## Used by Otomi to set the name for all resources based on the workload name
+##
 fullnameOverride: ""
 
+## @param image.repository your image repository
+## @param image.tag image tag (immutable tags are recommended)
+## @param image.pullPolicy image pull policy
+##
 image:
   repository: ""
   pullPolicy: IfNotPresent
   tag: ""
-
+## @param podAnnotations Annotations for ksvc pods
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+##
 podAnnotations: {}
 
+## Pods Service Account
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+## A service account with the name of the workload will always be created.
+##
 serviceAccount:
+  ## @param serviceAccount.annotations Annotations for service account. Evaluated as a template.
+  ##
   annotations: {}
+  ## Optionally specify an array of imagePullSecrets. Only use when deploying images from external registries
+  ## When images are deployed from local Harbor registry, pull secrets are already added to the service account
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ## E.g.:
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
   imagePullSecrets: []
 
-securityContext: {}
+## Pod Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+##
+podSecurityContext:
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  capabilities:
+    drop:
+    - ALL
 
+## Ksvc containers' liveness probe.
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+##
 livenessProbe: {}
 
+## Ksvc containers' readiness probe.
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+##
 readinessProbe:
   httpGet:
     path: /
     port: http1
   successThreshold: 2
 
+## Pod Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+##
 containerSecurityContext: {}
+  # fsGroup: 2000
 
-containerPorts: []
+## Configures the ports the container listens on
+##
+containerPorts:
+  - name: http1
+    containerPort: 8080
+    protocol: TCP
 
-resources: {}
+## Containers' resource requests and limits
+## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+## You can change default resource request in the workload values. This increases the chance the charts will run on environments with little
+## resources, such as Minikube.
+## @param resources.limits The resources limits for the container
+## @param resources.requests The requested resources for the container
+##
+resources:
+  ## limits:
+  ##    cpu: 100m
+  ##    memory: 128Mi
+  limits: {}
+  ## requests:
+  ##    cpu: 100m
+  ##    memory: 128Mi
+  requests: {}
 
 nodeSelector: {}
 
@@ -52,7 +114,7 @@ args: []
 ingress: public
 
 autoscaling:
-  minReplicas: 0
+  minReplicas: 1
   maxReplicas: 10
 
 serviceMonitor:

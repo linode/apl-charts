@@ -40,7 +40,7 @@ containerPorts:
     containerPort: 8080
     protocol: TCP
 
-securityContext:
+podSecurityContext:
   readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 1000
