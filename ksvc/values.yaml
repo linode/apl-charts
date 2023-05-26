@@ -17,7 +17,11 @@ securityContext: {}
 
 livenessProbe: {}
 
-readinessProbe: {}
+readinessProbe:
+  httpGet:
+    path: /
+    port: http1
+  successThreshold: 2
 
 containerSecurityContext: {}
 
