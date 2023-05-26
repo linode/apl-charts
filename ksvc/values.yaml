@@ -41,8 +41,6 @@ serviceAccount:
 ##
 podSecurityContext:
   readOnlyRootFilesystem: true
-  runAsNonRoot: true
-  runAsUser: 1000
   capabilities:
     drop:
     - ALL
