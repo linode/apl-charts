@@ -20,10 +20,6 @@ spec:
         {{- end }}
     spec:
       serviceAccountName: {{ include "ksvc.fullnameOverride" . }}
-      {{- with .Values.podSecurityContext }}
-      securityContext:
-        {{- . | toYaml | nindent 8 }}
-      {{- end }}
       containers:
         - name: {{ include "ksvc.fullnameOverride" . }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}

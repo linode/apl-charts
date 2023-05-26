@@ -36,15 +36,6 @@ serviceAccount:
   ##
   imagePullSecrets: []
 
-## Pod Security Context
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-##
-podSecurityContext:
-  readOnlyRootFilesystem: true
-  capabilities:
-    drop:
-    - ALL
-
 ## Ksvc containers' liveness probe.
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
 ##
@@ -62,7 +53,13 @@ readinessProbe:
 ## Pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ##
-containerSecurityContext: {}
+containerSecurityContext:
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  capabilities:
+    drop:
+    - ALL
   # fsGroup: 2000
 
 ## Configures the ports the container listens on
