@@ -15,7 +15,7 @@ spec:
       annotations:
         autoscaling.knative.dev/min-scale: "{{ .Values.autoscaling.minReplicas }}"
         autoscaling.knative.dev/max-scale: "{{ .Values.autoscaling.maxReplicas }}"
-        {{- with .Values.podAnnotations }}
+        {{- with .Values.annotations }}
         {{- . | toYaml | nindent 8 }}
         {{- end }}
     spec:
@@ -38,7 +38,7 @@ spec:
           {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.secrets }}
-          envFrom: {{- include "envFrom" . | nindent 12 }}
+          envFrom: {{- include "envFrom" . | trim | nindent 12 }}
           {{- end }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
@@ -63,5 +63,5 @@ spec:
           {{- with .Values.tolerations }}
           tolerations: {{- toYaml . | nindent 12 }}
           {{- end }}
-          volumeMounts: {{- include "volumeMounts" . | nindent 12 }}
-      volumes: {{- include "volumes" . | nindent 8 }}
+          volumeMounts: {{- include "volumeMounts" . | trim | nindent 12 }}
+      volumes: {{- include "volumes" . | trim | nindent 8 }}

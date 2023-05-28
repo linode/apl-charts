@@ -40,15 +40,13 @@ containerPorts:
     containerPort: 8080
     protocol: TCP
 
-podSecurityContext:
+containerSecurityContext:
   readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 1000
   capabilities:
     drop:
     - ALL
-
-containerSecurityContext:
   fsGroup: 2000
 
 livenessProbe:

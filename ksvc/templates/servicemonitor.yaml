@@ -12,7 +12,7 @@ spec:
     - {{ .Release.Namespace }}
   selector:
     matchLabels: {{- include "ksvc.selectorLabels" . | nindent 6 }}
-  {{- with .Values.serviceMonitor.endpoints }}
+  {{- with .Values.serviceMonitor.endPoints }}
   endpoints:
     {{- toYaml . | nindent 4 }}
   {{- end }}

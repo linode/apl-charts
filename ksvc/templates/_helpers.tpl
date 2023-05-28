@@ -121,7 +121,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{- define "envFrom" }}
-{{- range $secretName := (. | default list) }} 
+{{- range $secretName := (. | default list) }}
 - secretRef:
     name: {{ $secretName }}
 {{- end }}

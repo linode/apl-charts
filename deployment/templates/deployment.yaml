@@ -17,9 +17,6 @@ spec:
       labels: {{- include "deployment.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "deployment.fullnameOverride" . }}
-      {{- with .Values.securityContext }}
-      securityContext: {{- . | toYaml | nindent 8 }}
-      {{- end }}
       containers:
         - name: {{ include "deployment.fullnameOverride" . }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
@@ -37,7 +34,7 @@ spec:
           env: {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.secrets }}
-          envFrom: {{- include "envFrom" . | nindent 12 }}
+          envFrom: {{- include "envFrom" . | trim | nindent 12 }}
           {{- end }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
@@ -62,5 +59,5 @@ spec:
           {{- with .Values.tolerations }}
           tolerations: {{- toYaml . | nindent 12 }}
           {{- end }}
-          volumeMounts: {{- include "volumeMounts" . | nindent 12 }}
-      volumes: {{- include "volumes" . | nindent 8 }}
+          volumeMounts: {{- include "volumeMounts" . | trim | nindent 12 }}
+      volumes: {{- include "volumes" . | trim | nindent 8 }}

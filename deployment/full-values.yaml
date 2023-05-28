@@ -45,10 +45,16 @@ servicePorts:
     targetPort: http
     protocol: TCP
     name: http
+  - name: metrics
+    targetPort: metrics
+    protocol: TCP
 
 containerPorts:
   - name: http
     containerPort: 8080
+    protocol: TCP
+  - name: metrics
+    containerPort: 1243
     protocol: TCP
 
 serviceMonitor:
@@ -57,16 +63,14 @@ serviceMonitor:
     - port: metrics
       path: /metrics
 
-securityContext:
+containerSecurityContext:
+  fsGroup: 2000
   readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 1000
   capabilities:
     drop:
     - ALL
-
-containerSecurityContext:
-  fsGroup: 2000
 
 livenessProbe:
   httpGet:
