@@ -2,12 +2,6 @@ fullnameOverride: test
 image:
   repository: otomi/nodejs-helloworld
   tag: v1.2.13
-containerPorts:
-  - containerPort: 8080
-    protocol: TCP
-autoscaling:
-  minReplicas: 0
-  maxReplicas: 20
 resources:
   requests:
       cpu: 50m
