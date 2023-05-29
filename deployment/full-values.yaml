@@ -64,15 +64,13 @@ serviceMonitor:
       path: /metrics
 
 containerSecurityContext:
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
   capabilities:
     drop:
     - ALL
   fsGroup: 2000
-
-podSecurityContext:
-  readOnlyRootFilesystem: true
-  runAsNonRoot: true
-  runAsUser: 1000
 
 livenessProbe:
   httpGet:
