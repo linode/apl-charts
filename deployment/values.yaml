@@ -46,10 +46,6 @@ serviceAccount:
   ##
   imagePullSecrets: []
 
-## @param podAnnotations Annotations for Pods.
-##
-podAnnotations: {}
-
 ## Pod liveness probe.
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
 ##
