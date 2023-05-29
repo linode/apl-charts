@@ -60,13 +60,18 @@ livenessProbe: {}
 ##
 readinessProbe: {}
 
-## Container Security Context
+## Pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ##
-containerSecurityContext:
+podSecurityContext:
   runAsNonRoot: true
   runAsUser: 1000
   # readOnlyRootFilesystem: true
+
+## Container Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+##
+containerSecurityContext: {}
   # capabilities:
   #   drop:
   #   - ALL

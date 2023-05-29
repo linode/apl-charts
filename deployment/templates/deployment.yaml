@@ -16,6 +16,10 @@ spec:
       {{- end }}
       labels: {{- include "deployment.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.podSecurityContext }}
+      securityContext: {{- . | toYaml | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
       serviceAccountName: {{ include "deployment.fullnameOverride" . }}
       containers:
         - name: {{ include "deployment.fullnameOverride" . }}
