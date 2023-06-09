@@ -70,7 +70,7 @@ readinessProbe:
   httpGet:
     path: /
     port: http1
-  successThreshold: 2
+  successThreshold: 5
 
 ## Container Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
