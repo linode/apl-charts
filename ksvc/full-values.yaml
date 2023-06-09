@@ -40,12 +40,6 @@ containerPorts:
     containerPort: 8080
     protocol: TCP
 
-containerSecurityContext:
-  capabilities:
-    drop:
-    - ALL
-  fsGroup: 2000
-
 podSecurityContext:
   readOnlyRootFilesystem: true
   runAsNonRoot: true
