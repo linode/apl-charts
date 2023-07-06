@@ -97,13 +97,13 @@ containerPorts:
 ## @param resources.limits The resources limits for the container
 ## @param resources.requests The requested resources for the container
 ##
-resources: {}
-  ## limits:
-  ##    cpu: 100m
-  ##    memory: 128Mi
-  ## requests:
-  ##    cpu: 100m
-  ##    memory: 128Mi
+resources:
+  limits:
+     cpu: 500m
+     memory: 1Gi
+  requests:
+     cpu: 200m
+     memory: 32Mi
 
 ## @param nodeSelector Node labels for pod assignment.
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
