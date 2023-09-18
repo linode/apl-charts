@@ -7,7 +7,6 @@ spec:
   propagators:
     - tracecontext
     - baggage
-    - b3
   sampler:
     type: always_on
   {{- if eq .Values.instrumentation.language "java" }}

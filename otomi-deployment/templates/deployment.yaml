@@ -3,11 +3,6 @@ kind: Deployment
 metadata:
   name: {{ include "deployment.fullnameOverride" . }}
   labels: {{- include "deployment.labels" . | nindent 4 }}
-  {{- if .Values.instrumentation.enabled }}
-  annotations:
-    instrumentation.opentelemetry.io/inject-{{ .Values.instrumentation.language }}: 'true'
-    sidecar.opentelemetry.io/inject: 'sidecar'
-  {{- end }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -18,6 +13,10 @@ spec:
     metadata:
       {{- with .Values.annotations }}
       annotations: {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.instrumentation.enabled }}
+      instrumentation.opentelemetry.io/inject-{{ .Values.instrumentation.language }}: 'true'
+      sidecar.opentelemetry.io/inject: 'sidecar'
       {{- end }}
       labels: {{- include "deployment.selectorLabels" . | nindent 8 }}
     spec:
