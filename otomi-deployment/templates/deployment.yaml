@@ -11,12 +11,13 @@ spec:
     matchLabels: {{- include "deployment.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.annotations }}
-      annotations: {{- toYaml . | nindent 8 }}
-      {{- end }}
+      annotations:
         {{- if .Values.instrumentation.enabled }}
         instrumentation.opentelemetry.io/inject-{{ .Values.instrumentation.language }}: 'true'
         sidecar.opentelemetry.io/inject: 'sidecar'
+        {{- end }}
+        {{- with .Values.annotations }}
+        {{- toYaml . | nindent 8 }}
         {{- end }}
       labels: {{- include "deployment.selectorLabels" . | nindent 8 }}
     spec:
