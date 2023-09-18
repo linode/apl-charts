@@ -14,10 +14,10 @@ spec:
       {{- with .Values.annotations }}
       annotations: {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.instrumentation.enabled }}
-      instrumentation.opentelemetry.io/inject-{{ .Values.instrumentation.language }}: 'true'
-      sidecar.opentelemetry.io/inject: 'sidecar'
-      {{- end }}
+        {{- if .Values.instrumentation.enabled }}
+        instrumentation.opentelemetry.io/inject-{{ .Values.instrumentation.language }}: 'true'
+        sidecar.opentelemetry.io/inject: 'sidecar'
+        {{- end }}
       labels: {{- include "deployment.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.podSecurityContext }}
