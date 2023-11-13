@@ -1,5 +1,3 @@
-# Introduction
-
 This repository contains a set of Helm charts that will be made available to all Teams in the Otomi developer catalog.
 
 The following charts are available:
