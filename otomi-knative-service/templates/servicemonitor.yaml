@@ -1,0 +1,22 @@
+{{- if .Values.serviceMonitor.create }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "ksvc.fullnameOverride" . }}
+  labels: 
+    prometheus: {{ .Release.Namespace }}
+    {{- include "ksvc.labels" . | nindent 4 }}
+    {{- with .Values.commonLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+  selector:
+    matchLabels: {{- include "ksvc.selectorLabels" . | nindent 6 }}
+  {{- with .Values.serviceMonitor.endPoints }}
+  endpoints:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

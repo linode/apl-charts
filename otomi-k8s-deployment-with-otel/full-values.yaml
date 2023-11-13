@@ -1,0 +1,102 @@
+kubeVersion: 1.21.1
+
+fullnameOverride: full-values
+
+image:
+  repository: otomi/nodejs-helloworld
+  tag: v1.2.13
+
+serviceAccount:
+  annotations: {}
+
+env:
+  - name: TARGET
+    value: deploy
+
+podLabels:
+ mypodlabel: test
+
+commonLabels:
+ mycommonlabel: test
+
+args:
+  - --metric-name=custom_prometheus
+  - --metric-value=40
+  - --port=8080
+
+command: 
+  - ./prometheus-dummy-exporter
+
+secrets:
+  - mysecret-generic
+  - sec2
+
+secretMounts:
+  /some/secret/conf: conf-secret-name
+
+files:
+  /etc/nginx/nginx.conf: |
+    this is my nginx config
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 64Mi
+  requests:
+    cpu: 100m
+    memory: 32Mi
+
+servicePorts:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+  - name: metrics
+    targetPort: metrics
+    protocol: TCP
+
+containerPorts:
+  - name: http
+    containerPort: 8080
+    protocol: TCP
+  - name: metrics
+    containerPort: 1243
+    protocol: TCP
+
+serviceMonitor:
+  create: true
+  endpoints:
+    - port: metrics
+      path: /metrics
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  readOnlyRootFilesystem: true
+
+containerSecurityContext:
+  capabilities:
+    drop:
+    - ALL
+  fsGroup: 2000
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPU: 80
+  targetMemory: 80
+
+instrumentation:
+  enabled: true
+  language: java
