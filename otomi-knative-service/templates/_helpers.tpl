@@ -1,20 +1,13 @@
 {{/*
-Expand the name of the chart.
-*/}}
-{{- define "ksvc.name" -}}
-{{- default .Chart.Name .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
-{{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "ksvc.fullnameOverride" -}}
+{{- define "otomi-knative-service.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- printf .Release.Name | trunc 63 }}
 {{- end }}
 {{- end }}
 
@@ -31,11 +24,10 @@ Common labels
 {{- define "ksvc.labels" -}}
 helm.sh/chart: {{ include "ksvc.chart" . }}
 {{ include "ksvc.selectorLabels" . }}
-app.kubernetes.io/version: {{ .Values.image.tag | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-app.kubernetes.io/name: {{ include "ksvc.fullnameOverride" . }}
+app.kubernetes.io/name: {{ include "otomi-knative-service.fullname" . }}
 app.kubernetes.io/owner: {{ .Release.Namespace }}
-otomi.io/app: {{ include "ksvc.fullnameOverride" . }}
+otomi.io/app: {{ include "otomi-knative-service.fullname" . }}
 {{- end }}
 
 {{/*
@@ -77,7 +69,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{- define "volumeMounts" }}
-{{- $name := (include "ksvc.fullnameOverride" .) }}
+{{- $name := (include "otomi-knative-service.fullname" .) }}
 {{- with .Values }}
 {{- if or .files .secretMounts }}
 {{- $vols := include "file-volumes" .files | fromYaml }}
@@ -97,7 +89,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{- define "volumes" }}
-{{- $name := (include "ksvc.fullnameOverride" .) }}
+{{- $name := (include "otomi-knative-service.fullname" .) }}
 {{- with .Values }}
 {{- if or .files .secretMounts }}
 {{- $vols := include "file-volumes" .files | fromYaml }}

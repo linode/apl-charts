@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "deployment.fullnameOverride" . }}
+  name: {{ include "otomi-k8s-deployment-with-otel.fullname" . }}
   labels: {{- include "deployment.labels" . | nindent 4 }}
   {{- with .Values.commonLabels }}
   {{- toYaml . | nindent 4 }}
@@ -31,9 +31,9 @@ spec:
       securityContext: {{- . | toYaml | nindent 8 }}
       {{- end }}
       automountServiceAccountToken: false
-      serviceAccountName: {{ include "deployment.fullnameOverride" . }}
+      serviceAccountName: {{ include "otomi-k8s-deployment-with-otel.fullname" . }}
       containers:
-        - name: {{ include "deployment.fullnameOverride" . }}
+        - name: {{ include "otomi-k8s-deployment-with-otel.fullname" . }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- with .Values.command }}

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "deployment.fullnameOverride" . }}-v2
+  name: {{ include "otomi-k8s-deployment-with-canary.fullname" . }}-v2
   labels: {{- include "deployment.labels" . | nindent 4 }}
   {{- with .Values.commonLabels }}
   {{- toYaml . | nindent 4 }}
@@ -24,9 +24,9 @@ spec:
       securityContext: {{- . | toYaml | nindent 8 }}
       {{- end }}
       automountServiceAccountToken: false
-      serviceAccountName: {{ include "deployment.fullnameOverride" . }}
+      serviceAccountName: {{ include "otomi-k8s-deployment-with-canary.fullname" . }}
       containers:
-        - name: {{ include "deployment.fullnameOverride" . }}
+        - name: {{ include "otomi-k8s-deployment-with-canary.fullname" . }}
           image: {{ .Values.v2.image.repository }}:{{ .Values.v2.image.tag }}
           imagePullPolicy: {{ .Values.v2.image.pullPolicy }}
           {{- with .Values.command }}

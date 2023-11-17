@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ include "deployment.fullnameOverride" . }}
+  name: {{ include "otomi-k8s-deployment-with-canary.fullname" . }}
   labels: 
     prometheus: {{ .Release.Namespace }}
     {{- include "deployment.labels" . | nindent 4 }}

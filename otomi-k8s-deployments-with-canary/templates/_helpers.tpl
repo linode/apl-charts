@@ -1,20 +1,13 @@
 {{/*
-Expand the name of the chart.
-*/}}
-{{- define "deployment.name" -}}
-{{- default .Chart.Name .Values.fullnameOverrideOverride | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
-{{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "deployment.fullnameOverride" -}}
-{{- if .Values.fullnameOverrideOverride }}
-{{- .Values.fullnameOverrideOverride | trunc 63 | trimSuffix "-" }}
+{{- define "otomi-k8s-deployment-with-canary.fullname" -}}
+{{- if .Values.fullnameOverride }}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- printf .Release.Name | trunc 63 }}
 {{- end }}
 {{- end }}
 
@@ -32,16 +25,16 @@ Common labels
 helm.sh/chart: {{ include "deployment.chart" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-app.kubernetes.io/name: {{ include "deployment.fullnameOverride" . }}
+app.kubernetes.io/name: {{ include "otomi-k8s-deployment-with-canary.fullname" . }}
 app.kubernetes.io/owner: {{ .Release.Namespace }}
-otomi.io/app: {{ include "deployment.fullnameOverride" . }}
+otomi.io/app: {{ include "otomi-k8s-deployment-with-canary.fullname" . }}
 {{- end }}
 
 {{/*
 Selector labels
 */}}
 {{- define "deployment.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "deployment.fullnameOverride" . }}
+app.kubernetes.io/name: {{ include "otomi-k8s-deployment-with-canary.fullname" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
@@ -76,7 +69,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{- define "volumeMounts" }}
-{{- $name := (include "deployment.fullnameOverride" .) }}
+{{- $name := (include "otomi-k8s-deployment-with-canary.fullname" .) }}
 {{- with .Values }}
 {{- if or .files .secretMounts }}
 {{- $vols := include "file-volumes" .files | fromYaml }}
@@ -96,7 +89,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{- define "volumes" }}
-{{- $name := (include "deployment.fullnameOverride" .) }}
+{{- $name := (include "otomi-k8s-deployment-with-canary.fullname" .) }}
 {{- with .Values }}
 {{- if or .files .secretMounts }}
 {{- $vols := include "file-volumes" .files | fromYaml }}
