@@ -1,8 +1,3 @@
-## @param fullnameOverride String to fully override deployment.fullname template
-## Used by Otomi to set the name for all resources based on the workload name
-##
-fullnameOverride: ""
-
 ## @param image.repository your image repository
 ## @param image.tag image tag (immutable tags are recommended)
 ## @param image.pullPolicy image pull policy

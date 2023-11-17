@@ -1,4 +1,4 @@
-fullnameOverride: test
+
 
 image:
   repository: otomi/nodejs-helloworld
