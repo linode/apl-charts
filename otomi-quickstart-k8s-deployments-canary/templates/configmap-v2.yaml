@@ -1,0 +1,15 @@
+
+{{- if .Values.v2.configmap.create -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "otomi-quickstart-k8s-deployments-canary.fullname" . }}-v2
+  labels: {{- include "deployment.labels" . | nindent 4 }}
+  {{- with .Values.commonLabels }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+  {{- with .Values.v2.configmap.data }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}
