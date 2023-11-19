@@ -1,1 +1,0 @@
-docker pull harbor.try-otomi.net/team-orange/blue@sha256:d43655fcf30779a1d84bae09a34729f1073dd6ac660365315b9aa3595e59b824
