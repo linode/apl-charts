@@ -17,7 +17,7 @@ spec:
       annotations:
         {{- if .Values.instrumentation.enabled }}
         instrumentation.opentelemetry.io/inject-{{ .Values.instrumentation.language }}: 'true'
-        sidecar.opentelemetry.io/inject: 'sidecar'
+        sidecar.opentelemetry.io/inject: 'otel-sidecar'
         {{- end }}
         {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
