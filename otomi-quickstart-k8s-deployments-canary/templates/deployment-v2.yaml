@@ -7,8 +7,8 @@ metadata:
   {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if not .Values.v2.autoscaling.enabled }}
-  replicas: {{ .Values.v2.replicaCount }}
+  {{- if not .Values.versionTwo.autoscaling.enabled }}
+  replicas: {{ .Values.versionTwo.replicaCount }}
   {{- end }}
   selector:
     matchLabels: {{- include "deployment.selectorLabels" . | nindent 6 }}
@@ -29,19 +29,19 @@ spec:
         - name: {{ include "otomi-quickstart-k8s-deployments-canary.fullname" . }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- with .Values.v2.command }}
+          {{- with .Values.versionTwo.command }}
           command: {{ . | toYaml | nindent 12 }}
           {{- end }}
           {{- with .Values.containerPorts }}
           ports: {{ . | toYaml | nindent 12 }}
           {{- end }}
-          {{- with .Values.v2.args }}
+          {{- with .Values.versionTwo.args }}
           args: {{ . | toYaml | nindent 12 }}
           {{- end }}
-          {{- with .Values.v2.env }}
+          {{- with .Values.versionTwo.env }}
           env: {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.v2.secrets }}
+          {{- with .Values.versionTwo.secrets }}
           envFrom: {{- include "envFrom" . | trim | nindent 12 }}
           {{- end }}
           {{- with .Values.livenessProbe }}
@@ -67,19 +67,19 @@ spec:
           {{- with .Values.tolerations }}
           tolerations: {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- if or .Values.volumeMounts .Values.v2.configmap.create }}
+          {{- if or .Values.volumeMounts .Values.versionTwo.configmap.create }}
           volumeMounts:
-          {{- if .Values.v2.configmap.create }}
+          {{- if .Values.versionTwo.configmap.create }}
             - name: configmap-volume
-              mountPath: {{ .Values.v2.configmap.mountPath }}
+              mountPath: {{ .Values.versionTwo.configmap.mountPath }}
           {{- end }}
           {{- with .Values.volumeMounts }}
           {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- end }}
-      {{- if or .Values.volumeMounts .Values.v2.configmap.create }}
+      {{- if or .Values.volumeMounts .Values.versionTwo.configmap.create }}
       volumes:
-        {{- if .Values.v2.configmap.create }}
+        {{- if .Values.versionTwo.configmap.create }}
         - name: configmap-volume
           configMap:
             name: {{ include "otomi-quickstart-k8s-deployments-canary.fullname" . }}-v2

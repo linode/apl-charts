@@ -1,5 +1,5 @@
 
-{{- if .Values.v2.configmap.create -}}
+{{- if .Values.versionTwo.configmap.create -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -9,7 +9,7 @@ metadata:
   {{- toYaml . | nindent 4 }}
   {{- end }}
 data:
-  {{- with .Values.v2.configmap.data }}
+  {{- with .Values.versionTwo.configmap.data }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
 {{- end }}

@@ -1,4 +1,4 @@
-{{- if .Values.v1.autoscaling.enabled }}
+{{- if .Values.versionOne.autoscaling.enabled }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -12,27 +12,27 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: {{ template "otomi-quickstart-k8s-deployments-canary.fullname" . }}-v1
-  minReplicas: {{ .Values.v1.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.v1.autoscaling.maxReplicas }}
+  minReplicas: {{ .Values.versionOne.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.versionOne.autoscaling.maxReplicas }}
   metrics:
-    {{- if .Values.v1.autoscaling.targetMemory }}
+    {{- if .Values.versionOne.autoscaling.targetMemory }}
     - type: Resource
       resource:
         name: memory
         target:
           type: Utilization
-          averageUtilization: {{ .Values.v1.autoscaling.targetMemory }}
+          averageUtilization: {{ .Values.versionOne.autoscaling.targetMemory }}
     {{- end }}
-    {{- if .Values.v1.autoscaling.targetCPU }}
+    {{- if .Values.versionOne.autoscaling.targetCPU }}
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: {{ .Values.v1.autoscaling.targetCPU }}
+          averageUtilization: {{ .Values.versionOne.autoscaling.targetCPU }}
     {{- end }}
 {{- end }}
-{{- if .Values.v2.autoscaling.enabled }}
+{{- if .Values.versionTwo.autoscaling.enabled }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -46,23 +46,23 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: {{ template "otomi-quickstart-k8s-deployments-canary.fullname" . }}-v2
-  minReplicas: {{ .Values.v2.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.v2.autoscaling.maxReplicas }}
+  minReplicas: {{ .Values.versionTwo.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.versionTwo.autoscaling.maxReplicas }}
   metrics:
-    {{- if .Values.v2.autoscaling.targetMemory }}
+    {{- if .Values.versionTwo.autoscaling.targetMemory }}
     - type: Resource
       resource:
         name: memory
         target:
           type: Utilization
-          averageUtilization: {{ .Values.v2.autoscaling.targetMemory }}
+          averageUtilization: {{ .Values.versionTwo.autoscaling.targetMemory }}
     {{- end }}
-    {{- if .Values.v2.autoscaling.targetCPU }}
+    {{- if .Values.versionTwo.autoscaling.targetCPU }}
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: {{ .Values.v2.autoscaling.targetCPU }}
+          averageUtilization: {{ .Values.versionTwo.autoscaling.targetCPU }}
     {{- end }}
 {{- end }}
