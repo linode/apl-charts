@@ -1,0 +1,7 @@
+apiVersion: v2
+name: otomi-quickstart-k8s-deployment-otel
+description: Otomi provided quick start Helm chart
+version: 1.0.0
+appVersion: "2.0.0"
+teams:
+    - all

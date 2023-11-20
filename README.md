@@ -1,9 +1,19 @@
-# Introduction
+This repository contains a set of Helm charts that will be made available as quick starts to all Teams in the Otomi developer catalog.
 
-This repository contains Helm charts used by Otomi workloads. When ArgoCD in Otomi is enabled, users can create 3 types of workloads:
+The following charts are available:
 
-1. Regular application
-2. Function as a Service
-3. Bring your own Helm chart
+## otomi-quickstart-k8s-deployment
 
-The first 2 workload types (`Regular application` and `Function as a Service`) use the Helm charts in this repository. All chart values can be used as values for these 2 workloads. For advanced configuration options, see the values.yaml of the charts.
+The `otomi-quickstart-k8s-deployment` chart can be used to create a Kubernetes `Deployment`. Optionally a `HPA` and a `Service Monitor` can be created.
+
+## otomi-quickstart-k8s-deployment-otel
+
+The `otomi-quickstart-k8s-deployment-otel` chart can be used to create a Kubernetes `Deployment` with Open Telemetry `instrumentation`.
+
+## otomi-quickstart-k8s-deployments-canary
+
+The `otomi-quickstart-k8s-deployments-canary` chart can be used to create 2 Kubernetes `Deployments` to deploy 2 versions of an image and use the `Traffic Control` feature in Otomi to do canary or blue/green deployments.
+
+## otomi-quickstart-knative-service
+
+The `otomi-quickstart-knative-service` chart can be used to create a Knative service with a scale to zero configuration.

@@ -1,0 +1,15 @@
+
+{{- if .Values.configmap.create -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "otomi-quickstart-k8s-deployment-otel.fullname" . }}
+  labels: {{- include "deployment.labels" . | nindent 4 }}
+  {{- with .Values.commonLabels }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+  {{- with .Values.configmap.data }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,28 @@
+{{- if .Values.instrumentation.enabled }}
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: {{ include "otomi-quickstart-k8s-deployment-otel.fullname" . }}-instrumentation
+  labels: {{- include "deployment.labels" . | nindent 4 }}
+  {{- with .Values.commonLabels }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  propagators:
+    - tracecontext
+    - baggage
+  sampler:
+    type: always_on
+  {{- if eq .Values.instrumentation.language "java" }}
+  java:
+  {{- end }}
+  {{- if eq .Values.instrumentation.language "dotnet" }}
+  dotnet:
+  {{- end }}
+  {{- if eq .Values.instrumentation.language "python" }}
+  python:
+  {{- end }}
+    env:
+      - name: OTEL_EXPORTER_OTLP_ENDPOINT
+        value: http://otel-collector-collector.otel.svc.cluster.local:4317
+{{- end }}

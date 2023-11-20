@@ -1,0 +1,22 @@
+{{- if .Values.serviceMonitor.create -}}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "otomi-quickstart-k8s-deployments-canary.fullname" . }}
+  labels: 
+    prometheus: {{ .Release.Namespace }}
+    {{- include "deployment.labels" . | nindent 4 }}
+    {{- with .Values.commonLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+  selector:
+    matchLabels: {{- include "deployment.selectorLabels" . | nindent 6 }}
+  {{- with .Values.serviceMonitor.endpoints }}
+  endpoints:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

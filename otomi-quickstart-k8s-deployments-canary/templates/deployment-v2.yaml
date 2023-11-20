@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "otomi-quickstart-k8s-deployments-canary.fullname" . }}-v2
+  labels: {{- include "deployment.labels" . | nindent 4 }}
+  {{- with .Values.commonLabels }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if not .Values.v2.autoscaling.enabled }}
+  replicas: {{ .Values.v2.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels: {{- include "deployment.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations: {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels: {{- include "deployment.selectorLabels" . | nindent 8 }}
+        version: v2
+    spec:
+      {{- with .Values.podSecurityContext }}
+      securityContext: {{- . | toYaml | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      serviceAccountName: {{ include "otomi-quickstart-k8s-deployments-canary.fullname" . }}
+      containers:
+        - name: {{ include "otomi-quickstart-k8s-deployments-canary.fullname" . }}
+          image: {{ .Values.v2.image.repository }}:{{ .Values.v2.image.tag }}
+          imagePullPolicy: {{ .Values.v2.image.pullPolicy }}
+          {{- with .Values.v2.command }}
+          command: {{ . | toYaml | nindent 12 }}
+          {{- end }}
+          {{- with .Values.containerPorts }}
+          ports: {{ . | toYaml | nindent 12 }}
+          {{- end }}
+          {{- with .Values.v2.args }}
+          args: {{ . | toYaml | nindent 12 }}
+          {{- end }}
+          {{- with .Values.v2.env }}
+          env: {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.v2.secrets }}
+          envFrom: {{- include "envFrom" . | trim | nindent 12 }}
+          {{- end }}
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+          {{- . | toYaml | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:   
+          {{- . | toYaml | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources: {{- . | toYaml | nindent 12 }}
+          {{- end }}
+          {{- with .Values.containerSecurityContext }}
+          securityContext: {{- . | toYaml | nindent 12 }}
+          {{- end }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector: {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity: {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations: {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if or .Values.volumeMounts .Values.v2.configmap.create }}
+          volumeMounts:
+          {{- if .Values.v2.configmap.create }}
+            - name: configmap-volume
+              mountPath: {{ .Values.v2.configmap.mountPath }}
+          {{- end }}
+          {{- with .Values.volumeMounts }}
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- end }}
+      {{- if or .Values.volumeMounts .Values.v2.configmap.create }}
+      volumes:
+        {{- if .Values.v2.configmap.create }}
+        - name: configmap-volume
+          configMap:
+            name: {{ include "otomi-quickstart-k8s-deployments-canary.fullname" . }}-v2
+        {{- end }}
+        {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- end }}
