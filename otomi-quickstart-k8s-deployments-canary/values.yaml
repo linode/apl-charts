@@ -3,11 +3,13 @@
 ##
 fullnameOverride: ""
 
-## @param image.repository your image repository
-## @param image.tag image tag (immutable tags are recommended)
-## @param image.pullPolicy image pull policy
+## v1 specific values. These values are used for the v1 (blue) deployment and configmap
 ##
 v1:
+  ## @param image.repository your image repository
+  ## @param image.tag image tag (immutable tags are recommended)
+  ## @param image.pullPolicy image pull policy
+  ##
   image:
     repository: ""
     pullPolicy: IfNotPresent
@@ -58,11 +60,15 @@ v1:
     # - name: TARGET
     #   value: VALUE
 
+## v2 specific values. These values are used for the v2 (green/canary) deployment and configmap
+##
+## @param image.repository your v2 image repository
+## @param image.tag image tag (immutable tags are recommended)
+image:
+  repository: ""
+  pullPolicy: IfNotPresent
+  tag: ""
 v2:
-  image:
-    repository: ""
-    pullPolicy: IfNotPresent
-    tag: ""
   ## @param replicaCount Number of replicas to deploy
   ##
   replicaCount: 1
@@ -108,6 +114,8 @@ v2:
   env: []
     # - name: TARGET
     #   value: VALUE
+
+## Generic values
 
 ## @param annotations Annotations for pods
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/

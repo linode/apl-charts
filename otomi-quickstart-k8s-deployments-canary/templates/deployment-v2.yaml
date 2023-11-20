@@ -27,8 +27,8 @@ spec:
       serviceAccountName: {{ include "otomi-quickstart-k8s-deployments-canary.fullname" . }}
       containers:
         - name: {{ include "otomi-quickstart-k8s-deployments-canary.fullname" . }}
-          image: {{ .Values.v2.image.repository }}:{{ .Values.v2.image.tag }}
-          imagePullPolicy: {{ .Values.v2.image.pullPolicy }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- with .Values.v2.command }}
           command: {{ . | toYaml | nindent 12 }}
           {{- end }}
