@@ -1,0 +1,5 @@
+rbac:
+  otomi-quickstart-k8s-deployment: null
+  otomi-quickstart-k8s-deployment-otel: null
+  otomi-quickstart-k8s-deployments-canary: null
+  otomi-quickstart-knative-service: null
