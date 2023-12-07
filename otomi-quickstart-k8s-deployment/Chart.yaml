@@ -3,5 +3,3 @@ name: otomi-quickstart-k8s-deployment
 description: Otomi provided quick start Helm chart
 version: 1.0.0
 appVersion: "1.16.0"
-teams:
-    - all
