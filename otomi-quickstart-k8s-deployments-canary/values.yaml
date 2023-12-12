@@ -147,12 +147,12 @@ serviceAccount:
   ##
   imagePullSecrets: []
 
-## Pod liveness probe.
+## Container liveness probe.
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
 ##
 livenessProbe: {}
 
-## Pod readiness probe.
+## Container readiness probe.
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
 ##
 readinessProbe:
