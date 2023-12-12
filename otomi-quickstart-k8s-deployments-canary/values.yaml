@@ -113,6 +113,12 @@ versionTwo:
 
 ## Generic values
 
+## @param labels Additional labels for pods
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+##
+podLabels: {}
+  # podlabel: test
+
 ## @param annotations Annotations for pods
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 ##

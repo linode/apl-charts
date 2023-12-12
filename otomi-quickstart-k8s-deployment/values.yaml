@@ -12,7 +12,7 @@ image:
   pullPolicy: IfNotPresent
   tag: ""
 
-## @param env Environment variables for containers
+## @param env Environment variables for the container
 ##
 env: []
   # - name: TARGET
@@ -20,7 +20,7 @@ env: []
   # - name: DB_PASSWORD
   #   valueFrom:
   #     secretKeyRef:
-  #       name: cluster-openforms-superuser
+  #       name: user
   #       key: password
 
 ## @param annotations Annotations for pods
@@ -57,7 +57,7 @@ serviceAccount:
   ##
   imagePullSecrets: []
 
-## Pod liveness probe.
+## Container liveness probe.
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
 ##
 livenessProbe: {}
@@ -65,7 +65,7 @@ livenessProbe: {}
   #   path: /
   #   port: http
 
-## Pod readiness probe.
+## Container readiness probe.
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
 ##
 readinessProbe:
@@ -107,8 +107,7 @@ servicePorts:
 
 ## Containers' resource requests and limits
 ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
-## You can change default resource request in the workload values. This increases the chance the charts will run on environments with little
-## resources, such as Minikube.
+## You can change default resource request in the workload values.
 ## @param resources.limits The resources limits for the container
 ## @param resources.requests The requested resources for the container
 ##
@@ -140,7 +139,7 @@ affinity: {}
 secrets: []
   # - mysecret
 
-## Command and args for running the container (set to default if not set). Use array form
+## Command and args for running the container (set to default if not set).
 ## @param command Override default container command (useful when using custom images)
 ## @param args Override default container args (useful when using custom images)
 ##
@@ -150,7 +149,7 @@ args: []
   # - --metric-value=40
   # - --port=8080
 
-## @param VolumeMounts A list of volume mounts to be added to the pod
+## @param VolumeMounts A list of volume mounts to be added to the container
 ##
 volumeMounts: []
   # - name: my-secret
@@ -208,6 +207,7 @@ serviceMonitor:
   endpoints: []
     # - port: metrics
     #   path: /metrics
+    #   interval: 50s
 
 configmap:
   ## @param configmap.create Creates a Configmap and mounts it to the Pod
