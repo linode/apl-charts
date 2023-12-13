@@ -20,7 +20,7 @@ env: []
   # - name: DB_PASSWORD
   #   valueFrom:
   #     secretKeyRef:
-  #       name: cluster-openforms-superuser
+  #       name: user
   #       key: password
 
 ## @param annotations Annotations for pods
@@ -57,7 +57,7 @@ serviceAccount:
   ##
   imagePullSecrets: []
 
-## Pod liveness probe.
+## Container liveness probe.
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
 ##
 livenessProbe: {}
@@ -65,7 +65,7 @@ livenessProbe: {}
   #   path: /
   #   port: http
 
-## Pod readiness probe.
+## Container readiness probe.
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
 ##
 readinessProbe:
