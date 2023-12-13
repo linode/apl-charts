@@ -4,16 +4,16 @@ The `otomi-quickstart-k8s-deployment-canary` Helm chart can be used to create 2 
 
 ## About Otomi quick starts
 
-The Developer Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by Otomi to get started quickly. The Helm charts provided by Otomi can be used out-of-the-box, but can also be modified depending on your requirements or be removed from the catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the administrator of the platform.
+The Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by Otomi to get started quickly, but they can also be modified depending on your requirements or be removed from the Catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the platform administrator.
 
 ## How to use this quick start
 
-1. Create a Build and copy the image repository name of the build (see list of builds)
-2. Go to the `values` tab en fill in a name for your workload
-3. Add the image repository name of the (blue) build to the `versionOne.image.repository` parameter value
-4. Add the image repository name of the (blue) build to the `versionTwo.image.repository` parameter value
-5. Add the tag of the (blue or canary) build to the `versionOne.image.tag` parameter value
-6. Add the tag of the (blue or canary) build to the `versionTwo.image.tag` parameter value
+1. Create a Build and copy the image repository name of the Build (see list of builds)
+2. Go to the `values` tab and fill in a name for your Workload
+3. Add the image repository name of the (blue) Build to the `versionOne.image.repository` parameter value
+4. Add the image repository name of the (blue) Build to the `versionTwo.image.repository` parameter value
+5. Add the tag of the (blue or canary) Build to the `versionOne.image.tag` parameter value
+6. Add the tag of the (blue or canary) Build to the `versionTwo.image.tag` parameter value
 7. Optional: Change other parameter values as required
 8. Create a Service and configure Traffic control to split traffic between the two versions
 
@@ -73,8 +73,8 @@ The Developer Catalog is a library of curated Helm charts to create Kubernetes r
 | `resources.requests.cpu` | Container cpu requests                                                                                 | `100m`          |
 | `resources.requests.memory` | Container memory request                                                                            | `32Mi`          |
 | `nodeSelector` | Node labels for pod assignment                                                                                   | `{}`            |
-| `tolerations` | Tolerations for pod assignment |                                                                                  | `[]`            |
-| `affinity` | Affinity for pod assignment |                                                                                        | `{}`            |
+| `tolerations` | Tolerations for pod assignment                                                                                    | `[]`            |
+| `affinity` | Affinity for pod assignment                                                                                          | `{}`            |
 | `volumeMounts` | A list of volume mounts to be added to the container                                                             | `[]`            |
 | `volumes` | A list of volumes to be added to the pod                                                                              | `[]`            |
 | `serviceMonitor.create` | Set to true to create a ServiceMonitor for the Team Prometheus                                          | `false`         | 

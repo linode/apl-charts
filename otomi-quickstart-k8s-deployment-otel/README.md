@@ -4,14 +4,14 @@ The `otomi-quickstart-k8s-deployment-otel` Helm chart can be used to create a Ku
 
 ## About Otomi quick starts
 
-The Developer Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by Otomi to get started quickly. The Helm charts provided by Otomi can be used out-of-the-box, but can also be modified depending on your requirements or be removed from the catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the administrator of the platform.
+The Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by Otomi to get started quickly, but they can also be modified depending on your requirements or be removed from the Catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the platform administrator.
 
 ## How to use this quick start
 
 1. Create a Build and copy the image repository name of the build (see list of builds)
-2. Go to the `values` tab en fill in a name for your workload
-3. Add the image repository name of the build to the `image.repository` parameter value
-4. Add the tag of the build to the `image.tag` parameter value
+2. Go to the `values` tab and fill in a name for your Workload
+3. Add the image repository name of the Build to the `image.repository` parameter value
+4. Add the tag of the Build to the `image.tag` parameter value
 5. Add the `instrumentation.language`. See [here](https://opentelemetry.io/docs/instrumentation/) for all supported languages
 5. Optional: Change other parameter values as required
 
@@ -59,8 +59,8 @@ To use this Helm chart:
 | `resources.requests.cpu` | Container cpu requests                                                                                 | `100m`          |
 | `resources.requests.memory` | Container memory request                                                                            | `32Mi`          |
 | `nodeSelector` | Node labels for pod assignment                                                                                   | `{}`            |
-| `tolerations` | Tolerations for pod assignment |                                                                                  | `[]`            |
-| `affinity` | Affinity for pod assignment |                                                                                        | `{}`            |
+| `tolerations` | Tolerations for pod assignment                                                                                    | `[]`            |
+| `affinity` | Affinity for pod assignment                                                                                          | `{}`            |
 | `secrets` | Set secrets as container environment variables using a secretRef (secret reference)                                   | `[]`            |
 | `command` | Override default container commands                                                                                   | `[]`            |
 | `args` | Override default container arguments                                                                                     | `[]`            |
