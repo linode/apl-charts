@@ -20,7 +20,7 @@ env: []
   # - name: DB_PASSWORD
   #   valueFrom:
   #     secretKeyRef:
-  #       name: ruser
+  #       name: user
   #       key: password
 
 ## @param annotations Annotations for pods
