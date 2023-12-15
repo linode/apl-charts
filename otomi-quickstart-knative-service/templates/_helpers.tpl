@@ -28,6 +28,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/name: {{ include "otomi-quickstart-knative-service.fullname" . }}
 app.kubernetes.io/owner: {{ .Release.Namespace }}
 otomi.io/app: {{ include "otomi-quickstart-knative-service.fullname" . }}
+otomi.io/team: {{ .Release.Namespace }}
 {{- end }}
 
 {{/*
