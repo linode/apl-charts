@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "otomi-quickstart-k8s-deployment.fullname" . }}
+  name: {{ include "deployment.fullname" . }}
   labels: {{- include "deployment.labels" . | nindent 4 }}
   {{- with .Values.commonLabels }}
   {{- toYaml . | nindent 4 }}

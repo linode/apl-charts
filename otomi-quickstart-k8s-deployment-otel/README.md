@@ -54,7 +54,7 @@ To use this Helm chart:
 | `containerSecurityContext` | Container security context                                                                           | `{}`            |
 | `containerPorts` | Configures the container ports to listens on.                                                                  | `8080`          |
 | `servicePorts` | Configures the service ports to listens on. Exposes on port 80 by default, using the http port of the pod.       | `80`            |
-| `resources` | Container cpu limits                                                                                                | `{}`            |
+| `resources` | Container resource requests and limits                                                                              | `{}`            |
 | `nodeSelector` | Node labels for pod assignment                                                                                   | `{}`            |
 | `tolerations` | Tolerations for pod assignment                                                                                    | `[]`            |
 | `affinity` | Affinity for pod assignment                                                                                          | `{}`            |
