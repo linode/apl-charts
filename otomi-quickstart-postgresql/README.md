@@ -39,29 +39,15 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources. 
 
 | Name             | Description                                                                                                    | Value           |
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
-| `pullPolicy` | Image pull policy. Choose between `always`, `never` or (default) `IfNotPresent`                                    | `IfNotPresent`  |
-| `env` | Environment variables for containers                                                                                      | `[]`            |
-| `podAnnotations` | Additional Annotations for pods                                                                                | `{}`            |
-| `podLabels` | Additional labels for pods                                                                                          | `{}`            |
-| `commonLabels` | Additional labels for all resources                                                                              | `{}`            |
-| `serviceAccount.annotations` | Annotations for the service account                                                                | `{}`            |
-| `serviceAccount.imagePullSecrets` | Image pull secrets. Only add when using external registries (not the local harbor).           | `[]`            |
-| `livenessProbe` | Container liveness probe                                                                                        | `path=/` `port=http1` |
-| `readinessProbe` | Container readiness probe                                                                                      | `{}`            |
-| `containerSecurityContext` | Container security context                                                                           | `{}`            |
-| `containerPorts` | Configures the container ports to listens on                                                                   | `8080`          |
-| `resources` | Container cpu limits                                                                                                | `{}`            |
-| `nodeSelector` | Node labels for pod assignment                                                                                   | `{}`            |
-| `tolerations` | Tolerations for pod assignment                                                                                    | `[]`            |
-| `affinity` | Affinity for pod assignment                                                                                          | `{}`            |
-| `secrets` | Set secrets as container environment variables using a secretRef (secret reference)                                   | `[]`            |
-| `command` | Override default container commands                                                                                   | `[]`            |
-| `args` | Override default container arguments                                                                                     | `[]`            |
-| `volumeMounts` | A list of volume mounts to be added to the container                                                             | `[]`            |
-| `volumes` | A list of volumes to be added to the pod                                                                              | `[]`            |
-| `replicaCount` | The number of replicas to deploy                                                                                 | `2`             |
-| `autoscaling.minReplicas` | The minimal replica's (autoscaling.knative.dev/min-scale: "minReplicas")                              | `0`             |
-| `autoscaling.maxReplicas` | The minimal replica's (autoscaling.knative.dev/min-scale: "maxReplicas")                              | `10`            |
-| `serviceMonitor.create` | Set to true to create a ServiceMonitor for the Team Prometheus                                          | `false`         | 
-| `serviceMonitor.endpoints` | Configure the endpoints for the service monitor                                                      | `[]`            |
-| `ingress` | Configure service exposure                                                                                            | `public`        |
+| `primaryUpdateStrategy` | Rolling update strategy. Select between unsupervised or supervised                                      | `unsupervised`  |
+| `storage.storageClass` | StorageClass to use for database data.                                                                   | `""`            |
+| `storage.size` | Size of the storage. Required if not already specified in the PVC template                                       | `1Gi`           |
+| `walStorage.storageClass` | Configuration of the storage for PostgreSQL WAL (Write-Ahead Log)                                     | `""`            |
+| `walStorage.size` | Size of the WAL storage. Required if not already specified in the PVC template                                | `1Gi`           |
+| `monitoring` | Create a PodMonitor and metrics will be scraped by the team Prometheus                                             | `false`         |
+| `dashboard` | Create a ConfigMap with a Grafana dashboard for CloudNativePG                                                       | `false`         |
+| `byoSuperUserSecret.enabled` | Bring your own secret for super admin credentials                                                  | `false`         |
+| `byoSuperUserSecret.name` | Name of the secret containing the super admin credentials                                             | `""`            |
+| `bootstrap.initdb.dataChecksums` | Whether the -k option should be passed to initdb enabling checksums on data pages              | `false`         |
+| `resources` | Container resource requests and limits                                                                              | `{}`            |
+
