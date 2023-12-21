@@ -1,0 +1,14 @@
+{{- if .Values.dashboard }}
+{{- $file := .Files.Get "grafana-dashboard/cnpg.json" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-postgresql-{{ include "postgresql.fullname" . }}
+  labels: {{- include "postgresql.labels" . | nindent 4 }}
+  {{- with .Values.commonLabels }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+    grafana_dashboard: "1"
+data: |-
+  {{- $file | nindent 4 }}
+{{- end }}
