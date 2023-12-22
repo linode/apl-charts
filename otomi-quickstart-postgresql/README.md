@@ -39,7 +39,7 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources. 
 
 | Name             | Description                                                                                                    | Value           |
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
-| `instances` | Number of instances required in the cluster                                                                         | `1`             |
+| `instances` | Number of instances required in the cluster                                                                         | `2`             |
 | `primaryUpdateStrategy` | Rolling update strategy. Select between unsupervised or supervised                                      | `unsupervised`  |
 | `storage.storageClass` | StorageClass to use for database data                                                                    | `""`            |
 | `storage.size` | Size of the storage. Required if not already specified in the PVC template                                       | `1Gi`           |
