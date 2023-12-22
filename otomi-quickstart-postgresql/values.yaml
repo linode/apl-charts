@@ -4,6 +4,9 @@
 ##
 fullnameOverride: ""
 
+## @param instances Number of instances required in the cluster
+instances: 1
+
 # @param primaryUpdateStrategy Rolling update strategy
 # Select between unsupervised (automated update of the primary once all
 # replicas have been upgraded) or supervised (requires manual supervision to perform
