@@ -33,7 +33,7 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources. 
 
 | Name             | Description                                                                                                    | Value           |
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
-| `fullnameOverride` | Used by Otomi to set the name of all resources including the name name of the database                                   | `""`            |
+| `fullnameOverride` | Used by Otomi to set the name of all resources including the name name of the database                       | `""`            |
 
 ### Optional parameters
 
