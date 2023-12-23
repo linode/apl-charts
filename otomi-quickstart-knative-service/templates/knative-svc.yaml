@@ -1,7 +1,7 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: {{ include "otomi-quickstart-knative-service.fullname" . }}
+  name: {{ include "ksvc.fullname" . }}
   labels: {{- include "ksvc.labels" . | nindent 4 }}
     {{- with .Values.commonLabels }}
     {{- toYaml . | nindent 4 }}
@@ -23,10 +23,10 @@ spec:
       {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
-      serviceAccountName: {{ include "otomi-quickstart-knative-service.fullname" . }}
+      serviceAccountName: {{ include "ksvc.fullname" . }}
       automountServiceAccountToken: false   
       containers:
-        - name: {{ include "otomi-quickstart-knative-service.fullname" . }}
+        - name: {{ include "ksvc.fullname" . }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- with .Values.command }}
@@ -43,7 +43,7 @@ spec:
           {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.secrets }}
-          envFrom: {{- include "envFrom" . | trim | nindent 12 }}
+          envFrom: {{- include "ksvc.envFrom" . | trim | nindent 12 }}
           {{- end }}
           {{- with .Values.livenessProbe }}
           livenessProbe:

@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ include "otomi-quickstart-k8s-deployment.fullname" . }}
+  name: {{ include "deployment.fullname" . }}
   labels: 
     prometheus: {{ .Release.Namespace }}
     {{- include "deployment.labels" . | nindent 4 }}

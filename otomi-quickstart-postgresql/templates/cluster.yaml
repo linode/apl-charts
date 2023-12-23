@@ -21,15 +21,13 @@ spec:
   storage:
     {{- with .Values.storage.storageClass }}
     storageClass: {{ . }}
-    size: {{ .Values.storage.size }}
     {{- end }}
+    size: {{ .Values.storage.size }}
   walStorage:
     {{- with .Values.walStorage.storageClass }}
     storageClass: {{ . }}
     {{- end }}
     size: {{ .Values.walStorage.size }}
-  monitoring:
-    enablePodMonitor: false
   resources:
     {{- with .Values.resources }}
     {{- toYaml . | nindent 4 }}

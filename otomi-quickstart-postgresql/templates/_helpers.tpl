@@ -31,6 +31,15 @@ otomi.io/app: {{ include "postgresql.fullname" . }}
 {{- end }}
 
 {{/*
+Dashboard labels
+*/}}
+{{- define "postgresql.dbLabels" -}}
+{{ include "postgresql.labels" . }}
+grafana_dashboard: "1"
+release: grafana-dashboards-{{ .Release.Namespace | trimPrefix "team-" }}
+{{- end }}
+
+{{/*
 Selector labels
 */}}
 {{- define "postgresql.selectorLabels" -}}

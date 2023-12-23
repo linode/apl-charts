@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ include "otomi-quickstart-knative-service.fullname" . }}
+  name: {{ include "ksvc.fullname" . }}
   labels: 
     prometheus: {{ .Release.Namespace }}
     {{- include "ksvc.labels" . | nindent 4 }}

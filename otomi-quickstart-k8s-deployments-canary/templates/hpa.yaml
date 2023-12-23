@@ -2,7 +2,7 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "otomi-quickstart-k8s-deployments-canary.fullname" . }}-v1
+  name: {{ include "deployment.fullname" . }}-v1
   labels: {{- include "deployment.labels" . | nindent 4 }}
   {{- with .Values.commonLabels }}
   {{- toYaml . | nindent 4 }}
@@ -11,7 +11,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ template "otomi-quickstart-k8s-deployments-canary.fullname" . }}-v1
+    name: {{ template "deployment.fullname" . }}-v1
   minReplicas: {{ .Values.versionOne.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.versionOne.autoscaling.maxReplicas }}
   metrics:
@@ -36,7 +36,7 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "otomi-quickstart-k8s-deployments-canary.fullname" . }}-v2
+  name: {{ include "deployment.fullname" . }}-v2
   labels: {{- include "deployment.labels" . | nindent 4 }}
   {{- with .Values.commonLabels }}
   {{- toYaml . | nindent 4 }}
@@ -45,7 +45,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ template "otomi-quickstart-k8s-deployments-canary.fullname" . }}-v2
+    name: {{ template "deployment.fullname" . }}-v2
   minReplicas: {{ .Values.versionTwo.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.versionTwo.autoscaling.maxReplicas }}
   metrics:

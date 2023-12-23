@@ -4,11 +4,11 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: grafana-dashboard-postgresql-{{ include "postgresql.fullname" . }}
-  labels: {{- include "postgresql.labels" . | nindent 4 }}
+  labels: {{- include "postgresql.dbLabels" . | nindent 4 }}
   {{- with .Values.commonLabels }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
-    grafana_dashboard: "1"
-data: |-
-  {{- $file | nindent 4 }}
+data:
+  cnpg.json: |-
+    {{- $file | nindent 4 }}
 {{- end }}

@@ -1,6 +1,6 @@
 # Otomi quick start for creating a PostgreSQL cluster
 
-The `otomi-quickstart-postgresql` Helm chart can be used to create a cloudnativepg Postgressql `Cluster`. Optionally a Prometheus `PodMonitor` and a `Configmap` (for adding a postgresql dashboard to Grafana) can be created.
+The `otomi-quickstart-postgresql` Helm chart can be used to create a cloudnativepg PostgreSQL `Cluster`. Optionally a Prometheus `PodMonitor` and a `Configmap` (for adding a postgresql dashboard to Grafana) can be created.
 
 ## About Otomi quick starts
 
