@@ -3,7 +3,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "otomi-quickstart-knative-service.fullname" -}}
+{{- define "ksvc.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -25,20 +25,20 @@ Common labels
 helm.sh/chart: {{ include "ksvc.chart" . }}
 {{ include "ksvc.selectorLabels" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-app.kubernetes.io/name: {{ include "otomi-quickstart-knative-service.fullname" . }}
+app.kubernetes.io/name: {{ include "ksvc.fullname" . }}
 app.kubernetes.io/owner: {{ .Release.Namespace }}
-otomi.io/app: {{ include "otomi-quickstart-knative-service.fullname" . }}
+otomi.io/app: {{ include "ksvc.fullname" . }}
 {{- end }}
 
 {{/*
 Selector labels
 */}}
 {{- define "ksvc.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "otomi-quickstart-knative-service.fullname" . }}
+app.kubernetes.io/name: {{ include "ksvc.fullname" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{- define "envFrom" }}
+{{- define "ksvc.envFrom" }}
 {{- range $secretName := (. | default list) }}
 - secretRef:
     name: {{ $secretName }}

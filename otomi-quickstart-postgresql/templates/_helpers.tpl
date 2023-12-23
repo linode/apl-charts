@@ -3,7 +3,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "deployment.fullname" -}}
+{{- define "postgresql.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -14,32 +14,40 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "deployment.chart" -}}
+{{- define "postgresql.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "deployment.labels" -}}
-helm.sh/chart: {{ include "deployment.chart" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+{{- define "postgresql.labels" -}}
+helm.sh/chart: {{ include "postgresql.chart" . }}
+{{ include "postgresql.selectorLabels" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-app.kubernetes.io/name: {{ include "deployment.fullname" . }}
+app.kubernetes.io/name: {{ include "postgresql.fullname" . }}
 app.kubernetes.io/owner: {{ .Release.Namespace }}
-otomi.io/app: {{ include "deployment.fullname" . }}
+otomi.io/app: {{ include "postgresql.fullname" . }}
+{{- end }}
+
+{{/*
+Dashboard labels
+*/}}
+{{- define "postgresql.dbLabels" -}}
+{{ include "postgresql.labels" . }}
+grafana_dashboard: "1"
+release: grafana-dashboards-{{ .Release.Namespace | trimPrefix "team-" }}
 {{- end }}
 
 {{/*
 Selector labels
 */}}
-{{- define "deployment.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "deployment.fullname" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+{{- define "postgresql.selectorLabels" -}}
+cnpg.io/cluster: {{ include "postgresql.fullname" . }}
 {{- end }}
 
-{{- define "deployment.envFrom" }}
-{{- range $secretName := (. | default list) }} 
+{{- define "envFrom" }}
+{{- range $secretName := (. | default list) }}
 - secretRef:
     name: {{ $secretName }}
 {{- end }}

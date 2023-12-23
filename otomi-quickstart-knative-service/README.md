@@ -50,7 +50,7 @@ To use this Helm chart:
 | `readinessProbe` | Container readiness probe                                                                                      | `{}`            |
 | `containerSecurityContext` | Container security context                                                                           | `{}`            |
 | `containerPorts` | Configures the container ports to listens on                                                                   | `8080`          |
-| `resources` | Container cpu limits                                                                                                | `{}`            |
+| `resources` | Container resource requests and limits                                                                              | `{}`            |
 | `nodeSelector` | Node labels for pod assignment                                                                                   | `{}`            |
 | `tolerations` | Tolerations for pod assignment                                                                                    | `[]`            |
 | `affinity` | Affinity for pod assignment                                                                                          | `{}`            |

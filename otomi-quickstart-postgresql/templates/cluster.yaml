@@ -1,0 +1,34 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ include "postgresql.fullname" . }}
+  labels: {{- include "postgresql.labels" . | nindent 4 }}
+  {{- with .Values.commonLabels }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  instances: {{ .Values.instances }}
+  {{- if .Values.byoSuperUserSecret.true }}
+  superuserSecret:
+    name: {{ .Values.byoSuperUserSecret.name }}
+  {{- end }}
+  bootstrap:
+    initdb:
+      database: {{ include "postgresql.fullname" . }}
+      dataChecksums: {{ .Values.bootstrap.initdb.dataChecksums }}
+  primaryUpdateStrategy: {{ .Values.primaryUpdateStrategy }}
+  imageName: ghcr.io/cloudnative-pg/postgresql:15.3
+  storage:
+    {{- with .Values.storage.storageClass }}
+    storageClass: {{ . }}
+    {{- end }}
+    size: {{ .Values.storage.size }}
+  walStorage:
+    {{- with .Values.walStorage.storageClass }}
+    storageClass: {{ . }}
+    {{- end }}
+    size: {{ .Values.walStorage.size }}
+  resources:
+    {{- with .Values.resources }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}

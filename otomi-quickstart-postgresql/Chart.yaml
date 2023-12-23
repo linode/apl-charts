@@ -1,0 +1,7 @@
+apiVersion: v2
+name: otomi-quickstart-postgresql
+description: Otomi provided quick start Helm chart
+type: application
+version: 1.0.0
+appVersion: "2.0.0"
+icon: https://otomi.io/otomi-charts/icons/deploy.png

@@ -68,7 +68,7 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources. 
 | `versionTwo.env` | Environment variables for containers                                                                           | `[]`            |
 | `containerPorts` | Configures the container ports to listens on.                                                                  | `8080`          |
 | `servicePorts` | Configures the service ports to listens on. Exposes on port 80 by default, using the http port of the pod.       | `80`            |
-| `resources` | Container cpu limits                                                                                                | `{}`            |
+| `resources` | Container resource requests and limits                                                                              | `{}`            |
 | `nodeSelector` | Node labels for pod assignment                                                                                   | `{}`            |
 | `tolerations` | Tolerations for pod assignment                                                                                    | `[]`            |
 | `affinity` | Affinity for pod assignment                                                                                          | `{}`            |

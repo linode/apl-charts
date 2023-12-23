@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "otomi-quickstart-k8s-deployment.fullname" . }}
+  name: {{ include "deployment.fullname" . }}
   labels: {{- include "deployment.labels" . | nindent 4 }}
   {{- with .Values.commonLabels }}
   {{- toYaml . | nindent 4 }}
@@ -26,9 +26,9 @@ spec:
       securityContext: {{- . | toYaml | nindent 8 }}
       {{- end }}
       automountServiceAccountToken: false
-      serviceAccountName: {{ include "otomi-quickstart-k8s-deployment.fullname" . }}
+      serviceAccountName: {{ include "deployment.fullname" . }}
       containers:
-        - name: {{ include "otomi-quickstart-k8s-deployment.fullname" . }}
+        - name: {{ include "deployment.fullname" . }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- with .Values.command }}
@@ -44,7 +44,7 @@ spec:
           env: {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.secrets }}
-          envFrom: {{- include "envFrom" . | trim | nindent 12 }}
+          envFrom: {{- include "deployment.envFrom" . | trim | nindent 12 }}
           {{- end }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
@@ -84,7 +84,7 @@ spec:
         {{- if .Values.configmap.create }}
         - name: configmap-volume
           configMap:
-            name: {{ include "otomi-quickstart-k8s-deployment.fullname" . }}
+            name: {{ include "deployment.fullname" . }}
         {{- end }}
         {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
