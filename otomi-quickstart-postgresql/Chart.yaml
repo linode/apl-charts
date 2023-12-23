@@ -4,4 +4,4 @@ description: Otomi provided quick start Helm chart
 type: application
 version: 1.0.0
 appVersion: "2.0.0"
-icon: https://otomi.io/otomi-charts/icons/deploy.png
+icon: https://otomi.io/otomi-charts/icons/postgresql.png
