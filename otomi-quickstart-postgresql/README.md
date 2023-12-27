@@ -13,15 +13,15 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources. 
 3. Use a `secretKeyRef` to configure the environment variables for the container:
 
 ```yaml
-- name: DB_USER
-  valueFrom:
-    secretKeyRef:
-      name: clustername-superuser
-      key: password
 - name: DB_PASSWORD
   valueFrom:
     secretKeyRef:
-      name: clustername-superuser
+      name: <clustername>-superuser
+      key: password
+- name: DB_USER
+  valueFrom:
+    secretKeyRef:
+      name: <clustername>-superuser
       key: username
 ```
 4. Add more environment variables to connect to the database. All the database settings can be found in the `<clustername>-superuser` secret. Open a Shell and run `k9s`. Then see your secrets `:secrets`, select the `<clustername>-superuser` secret and type `x`

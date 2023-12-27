@@ -68,10 +68,10 @@ livenessProbe: {}
 ## Container readiness probe.
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
 ##
-readinessProbe:
-  httpGet:
-    path: /
-    port: http
+readinessProbe: {}
+  # httpGet:
+  #   path: /
+  #   port: http
 
 ## Pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/

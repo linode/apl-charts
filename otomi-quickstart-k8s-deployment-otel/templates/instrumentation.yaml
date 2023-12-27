@@ -1,0 +1,52 @@
+{{- if .Values.instrumentation.enabled }}
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: {{ include "deployment.fullname" . }}-otelinst
+  labels: {{- include "deployment.labels" . | nindent 4 }}
+  {{- with .Values.commonLabels }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  propagators:
+    - tracecontext
+    - baggage
+  sampler:
+    {{- with .Values.instrumentation.sampler }}
+    {{- toYaml . | nindent 6 }}
+    {{- end }}
+  exporter:
+    endpoint: http://otel-collector-collector.otel.svc.cluster.local:4317
+  {{- if eq .Values.instrumentation.language "java" }}
+  {{- with .Values.instrumentation.extraEnv }}
+  java:
+    env:
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
+  {{- end }}
+  {{- if eq .Values.instrumentation.language "dotnet" }}
+  dotnet:
+    env: 
+      - name: OTEL_EXPORTER_OTLP_ENDPOINT
+        value: http://otel-collector-collector.otel.svc.cluster.local:4318
+    {{- with .Values.instrumentation.extraEnv }}
+    {{- toYaml . | nindent 6 }}
+    {{- end }}
+  {{- end }}
+  {{- if eq .Values.instrumentation.language "python" }}
+  python:
+    env: 
+      - name: OTEL_EXPORTER_OTLP_ENDPOINT
+        value: http://otel-collector-collector.otel.svc.cluster.local:4318
+    {{- with .Values.instrumentation.extraEnv }}
+    {{- toYaml . | nindent 6 }}
+    {{- end }}
+  {{- end }}
+  {{- if eq .Values.instrumentation.language "nodejs" }}
+  {{- with .Values.instrumentation.extraEnv }}
+  nodejs:
+    env:
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
+  {{- end }}
+{{- end }}

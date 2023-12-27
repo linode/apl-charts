@@ -7,6 +7,11 @@ metadata:
   {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  inheritedMetadata:
+    labels: {{- include "postgresql.labels" . | nindent 6 }}
+      {{- with .Values.commonLabels }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
   instances: {{ .Values.instances }}
   {{- if .Values.byoSuperUserSecret.true }}
   superuserSecret:

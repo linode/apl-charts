@@ -8,9 +8,9 @@ fullnameOverride: ""
 ## @param image.pullPolicy image pull policy
 ##
 image:
-  repository: ""
+  repository: bla
   pullPolicy: IfNotPresent
-  tag: ""
+  tag: bla
 
 ## @param env Environment variables for containers
 ##
@@ -68,10 +68,10 @@ livenessProbe: {}
 ## Container readiness probe.
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
 ##
-readinessProbe:
-  httpGet:
-    path: /
-    port: http
+readinessProbe: {}
+  # httpGet:
+  #   path: /
+  #   port: http
 
 ## Pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -224,8 +224,22 @@ configmap:
 
 ## Open Telemetry instrumentation
 ## Requires OpenTelemetry Operator enabled
-## @param instrumentation.enabled will create the instrumentation resources and add required annotations to the deployment
-## @param instrumentation.language Language libraries used for instrumentation. Choose between 'java', 'dotnet', 'python'. See here for all supported languages: https://opentelemetry.io/docs/instrumentation/
+## @param instrumentation.language Language libraries used for instrumentation. Choose between 'java', 'dotnet', 'python' or `nodejs`. See here for all supported languages: https://opentelemetry.io/docs/instrumentation/
 instrumentation:
+  ## @param instrumentation.enabled will create the instrumentation CR and add required annotations to the deployment
   enabled: true
+  sampler:
+    ## @param type Sampler defines sampling configuration.
+    type: always_on
+    ## @param argument The value depends on the sampler type. 
+    ## For instance for parentbased_traceidratio sampler type it is a number in range [0..1] e.g. 0.25.
+    # argument: "0.25"
   language: java
+  ## @param extraEnv Additional variables. By default, the .NET auto-instrumentation ships with many instrumentation libraries. This makes instrumentation easy, but could result in too much or unwanted data. 
+  ## If there are any libraries you do not want to use you can set the OTEL_DOTNET_AUTO_[SIGNAL]_[NAME]_INSTRUMENTATION_ENABLED=false 
+  ## where [SIGNAL] is the type of the signal and [NAME] is the case-sensitive name of the library.
+  # extraEnv:
+  #   - name: OTEL_INSTRUMENTATION_KAFKA_ENABLED
+  #     value: false
+  #   - name: OTEL_INSTRUMENTATION_REDISCALA_ENABLED
+  #     value: false

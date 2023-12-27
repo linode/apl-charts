@@ -5,7 +5,7 @@ metadata:
   labels:
     cnpg.io/cluster: {{ include "postgresql.fullname" . }}
     prometheus: {{ .Release.Namespace }}
-  name: {{ include "postgresql.fullname" . }}
+  name: {{ include "postgresql.fullname" . }}-pm
 spec:
   namespaceSelector:
     matchNames: [{{ .Release.Namespace }}]

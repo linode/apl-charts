@@ -1,6 +1,6 @@
 # Otomi quick start for creating a regular workload with OpenTelemetry instrumentation
 
-The `otomi-quickstart-k8s-deployment-otel` Helm chart can be used to create a Kubernetes `Deployment` (to deploy a single image), a `Service`, a `ServiceAccount`, an `OpenTelemetryCollector` and an `Instrumentation`. Optionally a `HorizontalPodAutoscaler`, a Prometheus `ServiceMonitor` and a `Configmap` can be created.
+The `otomi-quickstart-k8s-deployment-otel` Helm chart can be used to create a Kubernetes `Deployment` (to deploy a single image), a `Service`, a `ServiceAccount`and an `Instrumentation` CR to auto instrument the application only . Optionally a `HorizontalPodAutoscaler`, a Prometheus `ServiceMonitor` and a `Configmap` can be created.
 
 ## About Otomi quick starts
 
@@ -12,7 +12,7 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources. 
 2. Go to the `values` tab and fill in a name for your Workload
 3. Add the image repository name of the Build to the `image.repository` parameter value
 4. Add the tag of the Build to the `image.tag` parameter value
-5. Add the `instrumentation.language`. See [here](https://opentelemetry.io/docs/instrumentation/) for all supported languages
+5. Add the `instrumentation.language`. Choose between `java`, `dotnet`, `python` or `nodejs`
 5. Optional: Change other parameter values as required
 
 ## Prerequisites
@@ -76,3 +76,4 @@ To use this Helm chart:
 | `configmap.data` | Key value pairs stored in the configmap                                                                        | `{}`            |
 | `instrumentation.enabled` | Enable instrumentation to create instrumentation resources and add required annotations               | `true`          |
 | `instrumentation.language` | The Language libraries used for instrumentation                                                      | `java`          |
+| `sampler.type` | Defines sampling configuration                                                                                   | `always_on`     |

@@ -16,8 +16,8 @@ spec:
     metadata:
       annotations:
         {{- if .Values.instrumentation.enabled }}
-        instrumentation.opentelemetry.io/inject-{{ .Values.instrumentation.language }}: 'true'
-        sidecar.opentelemetry.io/inject: 'otel-sidecar'
+        instrumentation.opentelemetry.io/inject-{{ .Values.instrumentation.language }}: "{{ include "deployment.fullname" . }}-otelinst"
+        instrumentation.opentelemetry.io/container-names: "{{ include "deployment.fullname" . }}"
         {{- end }}
         {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
