@@ -26,4 +26,4 @@ The `otomi-quickstart-postgresql` Helm chart can be used to create a cloudnative
 
 ## Otomi quick start for creating a Redis master-replica cluster
 
-The `otomi-quickstart-redis` Helm chart can be used to create a Redis master-replica cluster. Optionally a Prometheus `PodMonitor` and a `Configmap` (for adding a postgresql dashboard to Grafana) can be created.
+The `otomi-quickstart-redis` Helm chart can be used to create a Redis master-replica cluster.
