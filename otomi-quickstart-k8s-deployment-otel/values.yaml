@@ -8,9 +8,9 @@ fullnameOverride: ""
 ## @param image.pullPolicy image pull policy
 ##
 image:
-  repository: bla
+  repository: ""
   pullPolicy: IfNotPresent
-  tag: bla
+  tag: ""
 
 ## @param env Environment variables for containers
 ##
