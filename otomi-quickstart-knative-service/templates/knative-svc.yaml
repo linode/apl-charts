@@ -68,10 +68,8 @@ spec:
           {{- with .Values.tolerations }}
           tolerations: {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- if or .Values.volumeMounts .Values.configmap.create }}
           {{- with .Values.volumeMounts }}
           volumeMounts: {{- toYaml . | nindent 12 }}
-          {{- end }}
           {{- end }}
       {{- with .Values.volumes }}
       volumes:
