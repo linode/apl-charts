@@ -34,14 +34,48 @@ resources: {}
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
+  #   cpu: 2000m
+  #   memory: 2Gi
   # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+  #   cpu: 1000m
+  #   memory: 2Gi
 
 nodeSelector: {}
 
 tolerations: []
 
 affinity: {}
+
+rabbitmqCluster:
+  spec:
+    delayStartSeconds: {}
+    override: {}
+    persistence: {}
+    rabbitmq: {}
+    replicas: {}
+    resources: {}
+    secretBackend: {}
+    service: {}
+    terminationGracePeriodSeconds: {}
+    tls: {}
+  status:
+    binding: {}
+    conditions: {}
+    defaultUser: {}
+    observedGeneration: {}
+
+rabbitMqQueues: 
+  - name: my-queue-1
+    vhost: "/my-vhost"
+    durable: true
+    autoDelete: false
+    arguments:
+      message-ttl: 60000
+      max-length: 1000
+  - name: my-queue-2
+    vhost: "/my-vhost"
+    durable: true
+    autoDelete: false
+    arguments:
+      message-ttl: 30000
+      max-length: 500
