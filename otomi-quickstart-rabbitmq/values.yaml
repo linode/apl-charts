@@ -63,18 +63,14 @@ rabbitmqCluster:
     defaultUser: {}
     observedGeneration: {}
 
-# rabbitMqQueues: 
-#   - name: my-queue-1
-#     vhost: "/my-vhost"
-#     durable: true
-#     autoDelete: false
-#     arguments:
-#       message-ttl: 60000
-#       max-length: 1000
-#   - name: my-queue-2
-#     vhost: "/my-vhost"
-#     durable: true
-#     autoDelete: false
-#     arguments:
-#       message-ttl: 30000
-#       max-length: 500
+rabbitMqQueues: []
+  # - name: my-queue-1
+  #   vhost: "/my-vhost"
+  #   type: "default"
+  #   durable: true
+  #   arguments: {}
+  # - name: my-queue-2
+  #   vhost: "/my-vhost"
+  #   type: "default"
+  #   durable: true
+  #   arguments: {}

@@ -5,18 +5,52 @@ metadata:
   labels:
     {{- include "otomi-quickstart-rabbitmq.labels" . | nindent 4 }}
 spec:
+  {{- with .Values.delayStartSeconds }}
   delayStartSeconds: {{- .Values.rabbitmqCluster.spec.delayStartSeconds | toYaml | nindent 4 }}
+  {{- end }}
+  {{- with .Values.override }}
   override: {{- .Values.rabbitmqCluster.spec.override | toYaml | nindent 4 }}
+  {{- end }}
+  {{- with .Values.persistence }}
   persistence: {{- .Values.rabbitmqCluster.spec.persistence | toYaml | nindent 4 }}
+  {{- end }}
+  {{- with .Values.rabbitmq }}
   rabbitmq: {{- .Values.rabbitmqCluster.spec.rabbitmq | toYaml | nindent 4 }}
+  {{- end }}
+  {{- with .Values.replicas }}
   replicas: {{- .Values.rabbitmqCluster.spec.replicas | toYaml | nindent 4 }}
+  {{- end }}
+  {{- with .Values.resources }}
   resources: {{- .Values.rabbitmqCluster.spec.resources | toYaml | nindent 4 }}
+  {{- end }}
+  {{- with .Values.secretBackend }}
   secretBackend: {{- .Values.rabbitmqCluster.spec.secretBackend | toYaml | nindent 4 }}
+  {{- end }}
+  {{- with .Values.service }}
   service: {{- .Values.rabbitmqCluster.spec.service | toYaml | nindent 4 }}
+  {{- end }}
+  {{- with .Values.terminationGracePeriodSeconds }}
   terminationGracePeriodSeconds: {{- .Values.rabbitmqCluster.spec.terminationGracePeriodSeconds | toYaml | nindent 4 }}
+  {{- end }}
+  {{- with .Values.tls }}
   tls: {{- .Values.rabbitmqCluster.spec.tls | toYaml | nindent 4 }}
+  {{- end }}
 status:
+  {{- with .Values.binding }}
   binding: {{- .Values.rabbitmqCluster.status.binding | toYaml | nindent 4 }}
+  {{- end }}
+  {{- with .Values.conditions }}
   conditions: {{- .Values.rabbitmqCluster.status.conditions | toYaml | nindent 4 }}
+  {{- end }}
+  {{- with .Values.defaultUser }}
   defaultUser: {{- .Values.rabbitmqCluster.status.defaultUser | toYaml | nindent 4 }}
+  {{- end }}
+  {{- with .Values.observedGeneration }}
   observedGeneration: {{- .Values.rabbitmqCluster.status.observedGeneration | toYaml | nindent 4 }}
+  {{- end }}
+  
+{{- if .Values.rabbitMqQueues }}
+{{- range .Values.rabbitMqQueues }}
+{{- include "rabbitmqqueue.template" . | nindent 2 }}
+{{- end }}
+{{- end }}
