@@ -4,26 +4,19 @@ metadata:
   name: {{ include "otomi-quickstart-rabbitmq.fullname" . }}
   labels:
     {{- include "otomi-quickstart-rabbitmq.labels" . | nindent 4 }}
-# spec: {{- .Values.rabbitmqCluster.spec | toYaml | nindent 4 }}
-# spec:
-#   delayStartSeconds: {{- .Values.rabbitmqCluster.spec.delayStartSeconds | toYaml | nindent 4 }}
-#   override: {{- .Values.rabbitmqCluster.spec.override | toYaml | nindent 4 }}
-#   persistence: {{- .Values.rabbitmqCluster.spec.persistence | toYaml | nindent 4 }}
-#   rabbitmq: {{- .Values.rabbitmqCluster.spec.rabbitmq | toYaml | nindent 4 }}
-#   replicas: {{- .Values.rabbitmqCluster.spec.replicas | toYaml | nindent 4 }}
-#   resources: {{- .Values.rabbitmqCluster.spec.resources | toYaml | nindent 4 }}
-#   secretBackend: {{- .Values.rabbitmqCluster.spec.secretBackend | toYaml | nindent 4 }}
-#   service: {{- .Values.rabbitmqCluster.spec.service | toYaml | nindent 4 }}
-#   terminationGracePeriodSeconds: {{- .Values.rabbitmqCluster.spec.terminationGracePeriodSeconds | toYaml | nindent 4 }}
-#   tls: {{- .Values.rabbitmqCluster.spec.tls | toYaml | nindent 4 }}
-# status:
-#   binding: {{- .Values.rabbitmqCluster.status.binding | toYaml | nindent 4 }}
-#   conditions: {{- .Values.rabbitmqCluster.status.conditions | toYaml | nindent 4 }}
-#   defaultUser: {{- .Values.rabbitmqCluster.status.defaultUser | toYaml | nindent 4 }}
-#   observedGeneration: {{- .Values.rabbitmqCluster.status.observedGeneration | toYaml | nindent 4 }}
-
-# {{- if .Values.rabbitMqQueues }}
-# {{- range .Values.rabbitMqQueues }}
-# {{- include "rabbitmqqueue.template" . | nindent 4 }}
-# {{- end }}
-# {{- end }}
+spec:
+  delayStartSeconds: {{- .Values.rabbitmqCluster.spec.delayStartSeconds | toYaml | nindent 4 }}
+  override: {{- .Values.rabbitmqCluster.spec.override | toYaml | nindent 4 }}
+  persistence: {{- .Values.rabbitmqCluster.spec.persistence | toYaml | nindent 4 }}
+  rabbitmq: {{- .Values.rabbitmqCluster.spec.rabbitmq | toYaml | nindent 4 }}
+  replicas: {{- .Values.rabbitmqCluster.spec.replicas | toYaml | nindent 4 }}
+  resources: {{- .Values.rabbitmqCluster.spec.resources | toYaml | nindent 4 }}
+  secretBackend: {{- .Values.rabbitmqCluster.spec.secretBackend | toYaml | nindent 4 }}
+  service: {{- .Values.rabbitmqCluster.spec.service | toYaml | nindent 4 }}
+  terminationGracePeriodSeconds: {{- .Values.rabbitmqCluster.spec.terminationGracePeriodSeconds | toYaml | nindent 4 }}
+  tls: {{- .Values.rabbitmqCluster.spec.tls | toYaml | nindent 4 }}
+status:
+  binding: {{- .Values.rabbitmqCluster.status.binding | toYaml | nindent 4 }}
+  conditions: {{- .Values.rabbitmqCluster.status.conditions | toYaml | nindent 4 }}
+  defaultUser: {{- .Values.rabbitmqCluster.status.defaultUser | toYaml | nindent 4 }}
+  observedGeneration: {{- .Values.rabbitmqCluster.status.observedGeneration | toYaml | nindent 4 }}

@@ -45,23 +45,23 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-# rabbitmqCluster:
-#   spec:
-#     delayStartSeconds: {}
-#     override: {}
-#     persistence: {}
-#     rabbitmq: {}
-#     replicas: {}
-#     resources: {}
-#     secretBackend: {}
-#     service: {}
-#     terminationGracePeriodSeconds: {}
-#     tls: {}
-#   status:
-#     binding: {}
-#     conditions: {}
-#     defaultUser: {}
-#     observedGeneration: {}
+rabbitmqCluster:
+  spec:
+    delayStartSeconds: {}
+    override: {}
+    persistence: {}
+    rabbitmq: {}
+    replicas: {}
+    resources: {}
+    secretBackend: {}
+    service: {}
+    terminationGracePeriodSeconds: {}
+    tls: {}
+  status:
+    binding: {}
+    conditions: {}
+    defaultUser: {}
+    observedGeneration: {}
 
 # rabbitMqQueues: 
 #   - name: my-queue-1
