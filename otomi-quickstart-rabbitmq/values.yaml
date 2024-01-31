@@ -45,37 +45,36 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+# rabbitmqCluster:
+#   spec:
+#     delayStartSeconds: {}
+#     override: {}
+#     persistence: {}
+#     rabbitmq: {}
+#     replicas: {}
+#     resources: {}
+#     secretBackend: {}
+#     service: {}
+#     terminationGracePeriodSeconds: {}
+#     tls: {}
+#   status:
+#     binding: {}
+#     conditions: {}
+#     defaultUser: {}
+#     observedGeneration: {}
 
-rabbitmqCluster:
-  spec:
-    delayStartSeconds: {}
-    override: {}
-    persistence: {}
-    rabbitmq: {}
-    replicas: {}
-    resources: {}
-    secretBackend: {}
-    service: {}
-    terminationGracePeriodSeconds: {}
-    tls: {}
-  status:
-    binding: {}
-    conditions: {}
-    defaultUser: {}
-    observedGeneration: {}
-
-rabbitMqQueues: 
-  - name: my-queue-1
-    vhost: "/my-vhost"
-    durable: true
-    autoDelete: false
-    arguments:
-      message-ttl: 60000
-      max-length: 1000
-  - name: my-queue-2
-    vhost: "/my-vhost"
-    durable: true
-    autoDelete: false
-    arguments:
-      message-ttl: 30000
-      max-length: 500
+# rabbitMqQueues: 
+#   - name: my-queue-1
+#     vhost: "/my-vhost"
+#     durable: true
+#     autoDelete: false
+#     arguments:
+#       message-ttl: 60000
+#       max-length: 1000
+#   - name: my-queue-2
+#     vhost: "/my-vhost"
+#     durable: true
+#     autoDelete: false
+#     arguments:
+#       message-ttl: 30000
+#       max-length: 500
