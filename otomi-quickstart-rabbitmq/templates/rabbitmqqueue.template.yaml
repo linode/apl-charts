@@ -1,0 +1,10 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: Queue
+metadata:
+  name: {{ include "otomi-quickstart-rabbitmq.fullname" . }} # name of this custom resource; does not have to the same as the actual queue name
+  namespace: test-namespace
+spec:
+  name: {{ include "otomi-quickstart-rabbitmq.fullname" . }}-queue # name of the queue
+  rabbitmqClusterReference:
+    name: {{ include "otomi-quickstart-rabbitmq.fullname" . }}
+    namespace: rabbitmq-service
