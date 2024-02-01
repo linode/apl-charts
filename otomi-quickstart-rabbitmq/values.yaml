@@ -64,13 +64,3 @@ rabbitmqCluster:
     observedGeneration: {}
 
 rabbitMqQueues: []
-  # - name: my-queue-1
-  #   vhost: "/my-vhost"
-  #   type: "default"
-  #   durable: true
-  #   arguments: {}
-  # - name: my-queue-2
-  #   vhost: "/my-vhost"
-  #   type: "default"
-  #   durable: true
-  #   arguments: {}
