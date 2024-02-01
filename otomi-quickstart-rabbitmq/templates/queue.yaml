@@ -1,5 +1,5 @@
 {{- $ := . }}
-{{- range $i, $queue := .Values.rabbitMqQueues }}
+{{- range $i, $queue := .Values.queues }}
 ---
 apiVersion: rabbitmq.com/v1beta1
 kind: Queue

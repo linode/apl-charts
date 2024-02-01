@@ -57,10 +57,5 @@ rabbitmqCluster:
     service: {}
     terminationGracePeriodSeconds: {}
     tls: {}
-  status:
-    binding: {}
-    conditions: {}
-    defaultUser: {}
-    observedGeneration: {}
 
-rabbitMqQueues: []
+queues: []
