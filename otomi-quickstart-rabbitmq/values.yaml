@@ -67,7 +67,7 @@ rabbitmqCluster:
         memory: 2Gi
       requests:
         cpu: '1'
-        memory: 2Gi
+        memory: 1Gi
   #   secretBackend:
   #     externalSecret: {}
     terminationGracePeriodSeconds: 604800
