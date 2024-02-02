@@ -1,5 +1,5 @@
 {{- $ := . }}
-{{- with .Values.rabbitmqCluster.spec }}
+{{- with $.Values.rabbitmqCluster.spec }}
 apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
@@ -7,5 +7,5 @@ metadata:
   labels:
     {{- include "otomi-quickstart-rabbitmq.labels" $ | nindent 4 }}
 spec: 
-{{- $ | toYaml | nindent 2 }}
+{{- $.Values.rabbitmqCluster.spec | toYaml | nindent 2 }}
 {{- end }}
