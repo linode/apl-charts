@@ -46,16 +46,16 @@ tolerations: []
 
 affinity: {}
 rabbitmqCluster:
-  spec:
-    delayStartSeconds: {}
-    override: {}
-    persistence: {}
-    rabbitmq: {}
-    replicas: {}
-    resources: {}
-    secretBackend: {}
-    service: {}
-    terminationGracePeriodSeconds: {}
-    tls: {}
+  spec: {}
+  #   delayStartSeconds: {}
+  #   override: {}
+  #   persistence: {}
+  #   rabbitmq: {}
+  #   replicas: {}
+  #   resources: {}
+  #   secretBackend: {}
+  #   service: {}
+  #   terminationGracePeriodSeconds: {}
+  #   tls: {}
 
 queues: []
