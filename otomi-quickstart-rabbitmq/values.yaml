@@ -45,22 +45,36 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+# !Warning: If spec is removed, then the rabbitmqCluster won't be created!
+# if you want to check all spec options, please check the rabbitmqCluster crd
+# https://github.com/rabbitmq/cluster-operator/blob/main/config/crd/bases/rabbitmq.com_rabbitmqclusters.yaml
 rabbitmqCluster:
   spec:
+    # affinity:
+    #   nodeAffinity: {}
+    #   podAffinity: {}
+    #   podAntiAffinity: {}
     delayStartSeconds: 30
   #   override: {}
     persistence:
       storage: 10Gi
+      # storageClassName: {}
   #   rabbitmq: {}
     replicas: 3
     resources:
       limits:
-        cpu: "2"
+        cpu: 2000m
+        memory: 2Gi
+      requests:
+        cpu: 1000m
         memory: 2Gi
   #   secretBackend:
   #     externalSecret: {}
     terminationGracePeriodSeconds: 604800
-  #   tls: {}
 
+# !Warning: If you rename already deployed queues, ArgoCD will try to remove it
+# if you want to check all spec options, please check the queue crd
+# https://github.com/rabbitmq/messaging-topology-operator/blob/main/config/crd/bases/rabbitmq.com_queues.yaml
 queues:
   - name: "my-queue1"
+#    durable: true
