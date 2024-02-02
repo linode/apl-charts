@@ -11,6 +11,6 @@ spec:
   rabbitmqClusterReference:
     name: {{ include "otomi-quickstart-rabbitmq.fullname" $ }}
 {{- with $queue.spec }}
-  {{- $queue.spec | toYaml nindent 2 }}
+  {{- $queue.spec | toYaml | nindent 2 }}
 {{- end }}
 {{- end }}

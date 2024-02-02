@@ -63,10 +63,10 @@ rabbitmqCluster:
     replicas: 3
     resources:
       limits:
-        cpu: 2
+        cpu: '2'
         memory: 2Gi
       requests:
-        cpu: 1
+        cpu: '1'
         memory: 2Gi
   #   secretBackend:
   #     externalSecret: {}
@@ -75,6 +75,16 @@ rabbitmqCluster:
 # !Warning: If you rename already deployed queues, ArgoCD will try to remove it
 # if you want to check all spec options, please check the queue crd
 # https://github.com/rabbitmq/messaging-topology-operator/blob/main/config/crd/bases/rabbitmq.com_queues.yaml
+# By default the queue is of type 'classic'
 queues:
   - name: "my-queue1"
-#    durable: true
+    # If you want to use a queue of type 'quorum', you have to set durable to true
+    # spec:
+    #     durable: true
+    #     arguments:
+    #         x-queue-type: quorum
+    # If you want to use a queue of type 'stream', you have to set durable to true
+    # spec:
+    #     durable: true
+    #     arguments:
+    #         x-queue-type: stream
