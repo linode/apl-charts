@@ -63,10 +63,10 @@ rabbitmqCluster:
     replicas: 3
     resources:
       limits:
-        cpu: 2000m
+        cpu: 2
         memory: 2Gi
       requests:
-        cpu: 1000m
+        cpu: 1
         memory: 2Gi
   #   secretBackend:
   #     externalSecret: {}
