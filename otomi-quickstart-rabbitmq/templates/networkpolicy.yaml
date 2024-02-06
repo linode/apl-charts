@@ -1,0 +1,22 @@
+
+{{- $ := . }}
+{{- if .Values.networkPolicy.enabled }}
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: {{ include "otomi-quickstart-rabbitmq.fullname" $ }}
+  labels: {{- include "otomi-quickstart-rabbitmq.labels" $ | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels: {{- include "otomi-quickstart-rabbitmq.selectorLabels" $ | nindent 6 }}
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels: {{- include "otomi-quickstart-rabbitmq.selectorLabels" $ | nindent 14 }}
+        - namespaceSelector:
+            matchLabels:
+              name: {{ $.Release.Namespace }}
+{{- end }}
