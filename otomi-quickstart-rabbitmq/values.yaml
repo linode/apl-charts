@@ -90,3 +90,13 @@ queues:
     #     durable: true
     #     arguments:
     #         x-queue-type: stream
+
+policies:
+  - name: "my-policy1"
+    pattern: ".*"
+    definition: {}
+    spec:
+      # applyTo: "queues" # Default: 'all' - Options: 'queues', 'classic_queues', 'quorum_queues', 'streams', 'exchanges', or 'all'
+      # priority: {}    # Default: 0
+      # vhost: {}       # Default: /
+
