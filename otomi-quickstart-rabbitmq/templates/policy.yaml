@@ -10,7 +10,7 @@ spec:
   name: {{ $policy.name }} # name of the policy
   rabbitmqClusterReference:
     name: {{ include "otomi-quickstart-rabbitmq.fullname" $ }}
-  definition: {{ $policy.definition }}
+  definition: {{ toYaml $policy.definition | nindent 4 }}
   pattern: {{ $policy.pattern }}
 {{- with $policy.spec }}
   {{- $policy.spec | toYaml | nindent 2 }}
