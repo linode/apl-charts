@@ -41,9 +41,8 @@ Depending on the Queue type you can set different policy definitions.
 | `ha-sync-mode` | [manual, automatic]                                                                                | `[manual, automatic]`            |
 | `ha-promote-on-shutdown` | PLACEHOLDER                                                                               | `[when-synced, always]`            |
 | `ha-promote-on-failure` | PLACEHOLDER                                                                                | `[when-synced, always]`            |
-| `queue-version` | Set the queue version. Defaults to version 1.
-Version 1 has a journal-based index that embeds small messages.
-Version 2 has a different index which improves memory usage and performance in many scenarios, as well as a per-queue store for messages that were previously embedded.                                                                               | `number`            |
+| `queue-version` | Set the queue version. Defaults to version 1. Version 1 has a journal-based index that embeds small messages.
+Version 2 has a different index which improves memory usage and performance in many scenarios, as well as a per-queue store for messages that were previously embedded. | `number`            |
 | `queue-master-locator` | PLACEHOLDER                                                                               | `string`            |
 
 #### Queues [Quorum]
