@@ -78,8 +78,8 @@ rabbitmqCluster:
 # if you want to check all spec options, please check the queue crd
 # https://github.com/rabbitmq/messaging-topology-operator/blob/main/config/crd/bases/rabbitmq.com_queues.yaml
 # By default the queue is of type 'classic'
-queues:
-  - name: "my-queue1"
+queues: []
+  # - name: "my-queue1"
     # If you want to use a queue of type 'quorum', you have to set durable to true
     # spec:
     #     durable: true
@@ -91,12 +91,12 @@ queues:
     #     arguments:
     #         x-queue-type: stream
 
-policies:
-  - name: "my-policy1"
-    pattern: ".*"
-    definition:
-      dead-letter-exchange: "cc"
-      ha-mode: "all"
+policies: []
+  # - name: "my-policy1"
+  #   pattern: ".*"
+  #   definition: # Check the readme Optional parameters: Queue Policy definitions for all definitions
+  #     dead-letter-exchange: "cc"
+  #     ha-mode: "all"
     # spec:
       # applyTo: "queues" # Default: 'all' - Options: 'queues', 'classic_queues', 'quorum_queues', 'streams', 'exchanges', or 'all'
       # priority: {}    # Default: 0
