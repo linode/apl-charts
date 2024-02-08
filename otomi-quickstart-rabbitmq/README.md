@@ -13,8 +13,8 @@ The `otomi-quickstart-rabbitmq` Helm chart can be used to create:
 3. Scroll down and add a `queue` to `queues` or `policy` to `policies` if you want to create them as well
 
 
-## Parameters
-If a `queue` or `policy` is added to the values.yaml their mandatory parameters also need to be filled in.
+## Queue Parameters
+If a `queue` is added to the values.yaml their mandatory parameters also need to be filled in.
 
 ### Queue mandatory parameters
 | Name             | Description                                                                                                    | Value           |
@@ -35,13 +35,15 @@ queues:
   - name: "my-queue2"
 ```
 
-#### Queues specifications
+#### Queues optional parameters
 | Name             | Description                                                                                                    | Value           |
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
 | `autoDelete` |  When set to true, queues that have had at least one consumer before are deleted after the last consumer unsubscribes.                                    | `boolean`  |
 | `durable` |  When set to false queues does not survive server restart.                                    | `boolean`  |
 | `vhost` |  Default to vhost '/'                                    | `string`  |
 
+## Policy Parameters
+If a `policy` is added to the values.yaml their mandatory parameters also need to be filled in.
 
 ### Policy mandatory parameters
 | Name             | Description                                                                                                    | Value           |
@@ -51,7 +53,7 @@ queues:
 | `definition` | Policy definition.                                                                                                 | `string`  |
 
 
-#### Policy parameters
+#### Policy optional parameters
 | Name             | Description                                                                                                    | Value           |
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
 | `applyTo` | What this policy applies to: 'queues', 'classic_queues', 'quorum_queues', 'streams', 'exchanges', or 'all'. Default to 'all'.                                    | `string`  |
