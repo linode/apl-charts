@@ -10,12 +10,14 @@ The `otomi-quickstart-rabbitmq` Helm chart can be used to create:
 
 1. Enable RabbitMQ in the Core Apps
 2. Go the to `values` tab and fill in a name for your Workload.
-3. Scroll down and add a `queue` to `queues` or `policy` to `policies`
+3. Scroll down and add a `queue` to `queues` or `policy` to `policies` if you want to create them as well
 
 
 ## Parameters
 
 ### Mandatory parameters
+
+If a `queue` or `policy` is added to the values.yaml their mandatory parameters also need to be filled in.
 #### Queue
 | Name             | Description                                                                                                    | Value           |
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
@@ -53,7 +55,7 @@ Depending on the Queue type you can set different policy definitions.
 | `ha-promote-on-shutdown` |  Provides an option to promote a node containing the queue as the master queue node. Is triggered when the node is shutdown gracefully.                                                    | `[when-synced, always]`            |
 | `ha-promote-on-failure` | Provides an option to promote a node containing the queue as the master queue node. Is triggered when the node fails                                                                        | `[when-synced, always]`            |
 | `queue-version` | Set the queue version. Defaults to version 1. Version 1 has a journal-based index that embeds small messages. Version 2 has a different index which improves memory usage and performance in many scenarios, as well as a per-queue store for messages that were previously embedded. | `number`            |
-| `queue-master-locator` | The master queue node is automatically assigned using the rabbitmq node with less masters. `Min-masters`: Selects the master node as the one with the least running master queues. `Client-local`: selects the queue master node as the local node on which the queue is being declared. `Random`: Selects the queue master node based on random selection.        | `[min-masters, client-local, random]`            |
+| `queue-master-locator` | The master queue node is automatically assigned using the rabbitmq node with less masters. `Min-masters`: Selects the master node as the one with the least running master queues. `Client-local`: Selects the queue master node as the local node on which the queue is being declared. `Random`: Selects the queue master node based on random selection.        | `[min-masters, client-local, random]`            |
 
 #### Queues [Quorum]
 | Name             | Description                                                                                                    | Value           |
