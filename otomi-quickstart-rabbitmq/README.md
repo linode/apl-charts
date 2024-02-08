@@ -21,7 +21,7 @@ If a `queue` or `policy` is added to the values.yaml their mandatory parameters 
 #### Queue
 | Name             | Description                                                                                                    | Value           |
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
-| `name` | Name of queue, cannot be updated.                                                                                        | `string`  |
+| `name` | Name of queue.                                                                                        | `string`  |
 
 #### Policy
 | Name             | Description                                                                                                    | Value           |
@@ -31,8 +31,45 @@ If a `queue` or `policy` is added to the values.yaml their mandatory parameters 
 | `definition` | Policy definition.                                                                                                 | `string`  |
 
 ### Optional parameters
+Queue specification for additional configuration, to set the specification in the `values.yaml`, please look at the following example. 
+```
+queues:
+  - name: "my-quorum-queue1"
+    spec:
+      durable: true
+      autoDelete: true
+      arguments:
+         x-queue-type: quorum
+  - name: "my-queue2"
+```
+#### Queues specifications
+| Name             | Description                                                                                                    | Value           |
+|------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
+| `autoDelete` |  When set to true, queues that have had at least one consumer before are deleted after the last consumer unsubscribes.                                    | `boolean`  |
+| `durable` |  When set to false queues does not survive server restart.                                    | `boolean`  |
+| `vhost` |  Default to vhost '/'                                    | `string`  |
+
 Queue Policy definitions:
-Depending on the Queue type you can set different policy definitions.
+Depending on the Queue type you can set different policy definitions. To set a definition in the `values.yaml`, please look at the following example.
+```
+policies:
+  - name: "my-policy1"
+    pattern: ".*"
+    definition: # Check the readme Optional parameters: Queue Policy definitions for all definitions
+      dead-letter-exchange: "cc"
+      ha-mode: "all"
+    spec:
+      applyTo: "classic_queues"     # Default: 'all' - Options: 'queues', 'classic_queues', 'quorum_queues', 'streams', 'exchanges', or 'all'
+      priority: 1           # Default: 0
+      vhost: "/"     # Default: /
+  - name: my-policy2
+    pattern: .*
+    definition:
+      dead-letter-exchange: cc
+      max-age: 1h
+    spec:
+      applyTo: streams
+```
 
 #### Queues [All types]
 | Name             | Description                                                                                                    | Value           |
