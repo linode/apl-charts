@@ -34,13 +34,13 @@ If a `queue` or `policy` is added to the values.yaml their mandatory parameters 
 Queue specification for additional configuration, to set the specification in the `values.yaml`, please look at the following example. 
 ```
 queues:
-  - name: "my-quorum-queue1"
+  \- name: "my-quorum-queue1"
     spec:
       durable: true
       autoDelete: true
       arguments:
          x-queue-type: quorum
-  - name: "my-queue2"
+  \- name: "my-queue2"
 ```
 #### Queues specifications
 | Name             | Description                                                                                                    | Value           |
