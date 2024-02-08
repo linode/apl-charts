@@ -14,11 +14,9 @@ The `otomi-quickstart-rabbitmq` Helm chart can be used to create:
 
 
 ## Parameters
-
-### Mandatory parameters
-
 If a `queue` or `policy` is added to the values.yaml their mandatory parameters also need to be filled in.
-#### Queue
+
+### Queue mandatory parameters
 | Name             | Description                                                                                                    | Value           |
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
 | `name` | Name of queue.                                                                                        | `string`  |
@@ -44,7 +42,8 @@ queues:
 | `durable` |  When set to false queues does not survive server restart.                                    | `boolean`  |
 | `vhost` |  Default to vhost '/'                                    | `string`  |
 
-#### Policy
+
+### Policy mandatory parameters
 | Name             | Description                                                                                                    | Value           |
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
 | `name` | Name of policy, cannot be updated.                                                                                       | `string`  |
@@ -52,7 +51,7 @@ queues:
 | `definition` | Policy definition.                                                                                                 | `string`  |
 
 
-#### Optional parameters
+#### Policy parameters
 | Name             | Description                                                                                                    | Value           |
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
 | `applyTo` | What this policy applies to: 'queues', 'classic_queues', 'quorum_queues', 'streams', 'exchanges', or 'all'. Default to 'all'.                                    | `string`  |
@@ -66,13 +65,13 @@ Depending on the Queue type you can set different policy definitions. To set a d
 policies:
   - name: "my-policy1"
     pattern: ".*"
-    definition: # Check the readme Optional parameters: Queue Policy definitions for all definitions
+    definition:
       dead-letter-exchange: "cc"
       ha-mode: "all"
     spec:
-      applyTo: "classic_queues"     # Default: 'all' - Options: 'queues', 'classic_queues', 'quorum_queues', 'streams', 'exchanges', or 'all'
-      priority: 1           # Default: 0
-      vhost: "/"     # Default: /
+      applyTo: "classic_queues"
+      priority: 1
+      vhost: "/"
   - name: my-policy2
     pattern: .*
     definition:
