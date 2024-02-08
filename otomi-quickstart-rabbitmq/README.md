@@ -23,13 +23,6 @@ If a `queue` or `policy` is added to the values.yaml their mandatory parameters 
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
 | `name` | Name of queue.                                                                                        | `string`  |
 
-#### Policy
-| Name             | Description                                                                                                    | Value           |
-|------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
-| `name` | Name of policy, cannot be updated.                                                                                       | `string`  |
-| `pattern` | Regular expression pattern used to match queues and exchanges, e.g. "^amq.".                                          | `string`  |
-| `definition` | Policy definition.                                                                                                 | `string`  |
-
 ### Optional parameters
 Queue specification for additional configuration, to set the specification in the `values.yaml`, please look at the following example. 
 
@@ -51,7 +44,15 @@ queues:
 | `durable` |  When set to false queues does not survive server restart.                                    | `boolean`  |
 | `vhost` |  Default to vhost '/'                                    | `string`  |
 
-#### Policy specifications
+#### Policy
+| Name             | Description                                                                                                    | Value           |
+|------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
+| `name` | Name of policy, cannot be updated.                                                                                       | `string`  |
+| `pattern` | Regular expression pattern used to match queues and exchanges, e.g. "^amq.".                                          | `string`  |
+| `definition` | Policy definition.                                                                                                 | `string`  |
+
+
+#### Optional parameters
 | Name             | Description                                                                                                    | Value           |
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
 | `applyTo` | What this policy applies to: 'queues', 'classic_queues', 'quorum_queues', 'streams', 'exchanges', or 'all'. Default to 'all'.                                    | `string`  |
