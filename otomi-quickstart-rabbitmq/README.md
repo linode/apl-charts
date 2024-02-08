@@ -51,7 +51,14 @@ queues:
 | `durable` |  When set to false queues does not survive server restart.                                    | `boolean`  |
 | `vhost` |  Default to vhost '/'                                    | `string`  |
 
-Queue Policy definitions:
+#### Policy specifications
+| Name             | Description                                                                                                    | Value           |
+|------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
+| `applyTo` | What this policy applies to: 'queues', 'classic_queues', 'quorum_queues', 'streams', 'exchanges', or 'all'. Default to 'all'.                                    | `string`  |
+| `priority` |  In the event that more than one policy can match a given exchange or queue, the policy with the greatest priority applies. Default to '0'.                                     | `number`  |
+| `vhost` |  Default to vhost '/'                                    | `string`  |
+
+#### Queue Policy definitions:
 Depending on the Queue type you can set different policy definitions. To set a definition in the `values.yaml`, please look at the following example.
 
 ```
