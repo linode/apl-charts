@@ -29,10 +29,11 @@ queues:
   - name: "my-quorum-queue1"
     spec:
       durable: true
-      autoDelete: true
       arguments:
          x-queue-type: quorum
   - name: "my-queue2"
+    spec:
+      autoDelete: true
 ```
 
 #### Queues optional parameters
