@@ -30,7 +30,7 @@ spec:
       serviceAccountName: {{ include "deployment.fullname" . }}
       containers:
         - name: {{ include "deployment.fullname" . }}
-          image: {{ .Values.versionOne.image.repository }}:{{ .Values.v2.image.tag }}
+          image: {{ .Values.versionOne.image.repository }}:{{ .Values.versionOne.image.tag }}
           imagePullPolicy: {{ .Values.versionOne.image.pullPolicy }}
           {{- with .Values.versionOne.command }}
           command: {{ . | toYaml | nindent 12 }}
