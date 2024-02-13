@@ -79,15 +79,15 @@ affinity: {}
 rabbitmqCluster:
   spec:
     # affinity:
-    #   nodeAffinity: {}
-    #   podAffinity: {}
-    #   podAntiAffinity: {}
+      # nodeAffinity: {}
+      # podAffinity: {}
+      # podAntiAffinity: {}
     delayStartSeconds: 30
-  #   override: {}
+    # override: {}
     persistence:
       storage: 10Gi
       # storageClassName: {}
-  #   rabbitmq: {}
+    # rabbitmq: {}
     replicas: 3
     resources:
       limits:
@@ -96,8 +96,8 @@ rabbitmqCluster:
       requests:
         cpu: '1'
         memory: 1Gi
-  #   secretBackend:
-  #     externalSecret: {}
+    # secretBackend:
+      # externalSecret: {}
     terminationGracePeriodSeconds: 604800
 
 # !Warning: If you rename already deployed queues, ArgoCD will try to remove it
@@ -108,21 +108,21 @@ queues: []
   # - name: "my-queue1"
     # If you want to use a queue of type 'quorum', you have to set durable to true
     # spec:
-    #     durable: true
-    #     arguments:
-    #         x-queue-type: quorum
+      # durable: true
+      # arguments:
+        # x-queue-type: quorum
     # If you want to use a queue of type 'stream', you have to set durable to true
     # spec:
-    #     durable: true
-    #     arguments:
-    #         x-queue-type: stream
+      # durable: true
+      # arguments:
+        # x-queue-type: stream
 
 policies: []
   # - name: "my-policy1"
-  #   pattern: ".*"
-  #   definition: # Check the readme Optional parameters: Queue Policy definitions for all definitions
-  #     dead-letter-exchange: "cc"
-  #     ha-mode: "all"
+    # pattern: ".*"
+    # definition: # Check the readme Optional parameters: Queue Policy definitions for all definitions
+      # dead-letter-exchange: "cc"
+      # ha-mode: "all"
     # spec:
       # applyTo: "queues" # Default: 'all' - Options: 'queues', 'classic_queues', 'quorum_queues', 'streams', 'exchanges', or 'all'
       # priority: {}    # Default: 0
