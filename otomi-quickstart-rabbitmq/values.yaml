@@ -3,6 +3,10 @@
 # Declare variables to be passed into your templates.
 
 nameOverride: ""
+
+## @param fullnameOverride String to fully override deployment.fullname template
+## Used by Otomi to set the name for all resources based on the workload name
+##
 fullnameOverride: ""
 
 serviceAccount:
