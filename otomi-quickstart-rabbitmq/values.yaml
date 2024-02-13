@@ -1,13 +1,10 @@
-# Default values for otomi-quickstart-rabbitmq.
+# Default values for rabbitmq.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-networkPolicy:
-  enabled: false
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -17,18 +14,37 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+## Optionally specify an array of imagePullSecrets. Only use when deploying images from external registries
+## When images are deployed from local Harbor registry, pull secrets are already added to the service account
+## Secrets must be manually created in the namespace.
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+## E.g.:
+## imagePullSecrets:
+##   - myRegistryKeySecretName
+##
+imagePullSecrets: []
+
+## @param annotations Annotations for pods
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+##
 podAnnotations: {}
 
+## Pod Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+##
 podSecurityContext: {}
-  # fsGroup: 2000
+  # runAsNonRoot: true
+  # runAsUser: 1000
+  # readOnlyRootFilesystem: true
 
+## Container Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+##
 securityContext: {}
   # capabilities:
   #   drop:
   #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+  # fsGroup: 2000
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -42,13 +58,23 @@ resources: {}
   #   cpu: 1000m
   #   memory: 2Gi
 
+## @param nodeSelector Node labels for pod assignment.
+## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+##
 nodeSelector: {}
 
+## @param tolerations Tolerations for pod assignment.
+## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+##
 tolerations: []
 
+## @param affinity Affinity for pod assignment
+## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+##
 affinity: {}
+
 # !Warning: If spec is removed, then the rabbitmqCluster won't be created!
-# if you want to check all spec options, please check the rabbitmqCluster crd
+# if you want to check all spec options, please see the rabbitmqCluster crd
 # https://github.com/rabbitmq/cluster-operator/blob/main/config/crd/bases/rabbitmq.com_rabbitmqclusters.yaml
 rabbitmqCluster:
   spec:

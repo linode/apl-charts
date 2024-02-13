@@ -1,0 +1,20 @@
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: {{ include "rabbitmq.fullname" $ }}
+  labels: {{- include "rabbitmq.labels" $ | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      otomi.io/app: {{ .Release.Name }}
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: {{ .Release.Namespace }}
+          podSelector:
+            matchLabels:
+              otomi.io/app: {{ .Release.Name }}

@@ -1,5 +1,5 @@
 {{- $ := . }}
-{{- $clusterName := include "otomi-quickstart-rabbitmq.fullname" $ }}
+{{- $clusterName := include "rabbitmq.fullname" $ }}
 {{- range $i, $policy := $.Values.policies }}
 ---
 apiVersion: rabbitmq.com/v1beta1
@@ -9,7 +9,7 @@ metadata:
 spec:
   name: {{ $policy.name }} # name of the policy
   rabbitmqClusterReference:
-    name: {{ include "otomi-quickstart-rabbitmq.fullname" $ }}
+    name: {{ include "rabbitmq.fullname" $ }}
   definition: {{ toYaml $policy.definition | nindent 4 }}
   pattern: {{ $policy.pattern }}
 {{- with $policy.spec }}

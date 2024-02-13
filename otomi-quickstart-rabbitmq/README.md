@@ -1,16 +1,15 @@
 # Otomi quick start for creating a RabbitMQ cluster and/or Queues
 
-The `otomi-quickstart-rabbitmq` Helm chart can be used to create:
-- RabbitMQ cluster
+The `rabbitmq` Helm chart can be used to create:
+- A RabbitMQ cluster
 - Queues
 - Policies
 
+## Prerequisites
 
-## How to use this Helm chart
+To use this Helm chart:
 
-1. Enable RabbitMQ in the Core Apps
-2. Go the to `values` tab and fill in a name for your Workload.
-3. Scroll down and add a `queue` to `queues` or `policy` to `policies` if you want to create them as well
+- Make sure the administrator has enabled `rabbitmq`
 
 
 ## Queue Parameters
@@ -131,6 +130,3 @@ policies:
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
 | `federation-upstream-set` | Only works if federation plugin is enabled. Chooses the name of a set of upstreams to use with federation, or "all" to use all upstreams.Incompatible with 'federation-upstream'                                  | `string`  |
 | `federation-upstream` | Only works if federation plugin is enabled. Chooses a specific upstream set to use for federation. Incompatible with 'federation-upstream-set'                                  | `string`  |
-
-## Network policies
-If you have enabled network policies for teams then by default all ingress traffic is blocked. In order to enable traffic between RabbitMQ replicas set `networkPolicy.enabled: true` in the Helm chart values.

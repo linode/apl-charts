@@ -3,9 +3,9 @@
 apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
-  name: {{ include "otomi-quickstart-rabbitmq.fullname" $ }}
+  name: {{ include "rabbitmq.fullname" $ }}
   labels:
-    {{- include "otomi-quickstart-rabbitmq.labels" $ | nindent 4 }}
+    {{- include "rabbitmq.labels" $ | nindent 4 }}
 spec: 
 {{- $.Values.rabbitmqCluster.spec | toYaml | nindent 2 }}
 {{- end }}
