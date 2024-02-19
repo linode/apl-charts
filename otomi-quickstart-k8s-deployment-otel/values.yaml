@@ -243,3 +243,5 @@ instrumentation:
   #     value: false
   #   - name: OTEL_INSTRUMENTATION_REDISCALA_ENABLED
   #     value: false
+  ## @param image Image for auto-instrumentation. The operator release provides certain default images, which can be overridden for improving compatibility with newer versions of Python, Java etc.
+  image: ""

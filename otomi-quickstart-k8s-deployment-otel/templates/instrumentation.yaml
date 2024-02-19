@@ -25,6 +25,9 @@ spec:
     {{- with .Values.instrumentation.extraEnv }}
     {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- if .Values.instrumentation.image -}}
+    image: {{ .Values.instrumentation.image }}
+    {{- end -}}
   {{- end }}
   {{- if eq .Values.instrumentation.language "dotnet" }}
   dotnet:
@@ -36,6 +39,9 @@ spec:
     {{- with .Values.instrumentation.extraEnv }}
     {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- if .Values.instrumentation.image -}}
+    image: {{ .Values.instrumentation.image }}
+    {{- end -}}
   {{- end }}
   {{- if eq .Values.instrumentation.language "python" }}
   python:
@@ -47,6 +53,9 @@ spec:
     {{- with .Values.instrumentation.extraEnv }}
     {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- if .Values.instrumentation.image -}}
+    image: {{ .Values.instrumentation.image }}
+    {{- end -}}
   {{- end }}
   {{- if eq .Values.instrumentation.language "nodejs" }}
   nodejs:
@@ -56,5 +65,8 @@ spec:
     {{- with .Values.instrumentation.extraEnv }}
     {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- if .Values.instrumentation.image -}}
+    image: {{ .Values.instrumentation.image }}
+    {{- end -}}
   {{- end }}
 {{- end }}
