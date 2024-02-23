@@ -1,4 +1,5 @@
-
+{{- $ := . }}
+---
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
@@ -6,8 +7,7 @@ metadata:
   labels: {{- include "rabbitmq.labels" $ | nindent 4 }}
 spec:
   podSelector:
-    matchLabels:
-      otomi.io/app: {{ .Release.Name }}
+    matchLabels: {{- include "rabbitmq.selectorLabels" $ | nindent 14 }}
   policyTypes:
     - Ingress
   ingress:
@@ -16,5 +16,4 @@ spec:
             matchLabels:
               name: {{ .Release.Namespace }}
           podSelector:
-            matchLabels:
-              otomi.io/app: {{ .Release.Name }}
+            matchLabels: {{- include "rabbitmq.selectorLabels" $ | nindent 14 }}
