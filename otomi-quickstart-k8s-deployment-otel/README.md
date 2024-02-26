@@ -81,4 +81,5 @@ To see traces:
 | `configmap.data` | Key value pairs stored in the configmap                                                                        | `{}`            |
 | `instrumentation.enabled` | Enable instrumentation to create instrumentation resources and add required annotations               | `true`          |
 | `instrumentation.language` | The Language libraries used for instrumentation                                                      | `java`          |
+| `instrumentation.image` | The image used for auto-instrumentation | `""`
 | `sampler.type` | Defines sampling configuration                                                                                   | `always_on`     |

@@ -235,7 +235,7 @@ instrumentation:
     ## For instance for parentbased_traceidratio sampler type it is a number in range [0..1] e.g. 0.25.
     # argument: "0.25"
   language: java
-  ## @param extraEnv Additional variables. By default, the .NET auto-instrumentation ships with many instrumentation libraries. This makes instrumentation easy, but could result in too much or unwanted data. 
+  ## @param extraEnv Additional variables. By default, the auto-instrumentation ships with many instrumentation libraries. This makes instrumentation easy, but could result in too much or unwanted data. 
   ## If there are any libraries you do not want to use you can set the OTEL_DOTNET_AUTO_[SIGNAL]_[NAME]_INSTRUMENTATION_ENABLED=false 
   ## where [SIGNAL] is the type of the signal and [NAME] is the case-sensitive name of the library.
   # extraEnv:
@@ -243,3 +243,5 @@ instrumentation:
   #     value: false
   #   - name: OTEL_INSTRUMENTATION_REDISCALA_ENABLED
   #     value: false
+  ## @param image Image for auto-instrumentation. The operator release provides certain default images, which can be overridden for improving compatibility with newer versions of Python, Java etc.
+  image: ""
