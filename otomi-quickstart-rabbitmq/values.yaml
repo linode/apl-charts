@@ -95,11 +95,11 @@ rabbitmqCluster:
     replicas: 3
     resources:
       limits:
-        cpu: '2'
+        cpu: '1'
         memory: 2Gi
       requests:
         cpu: '1'
-        memory: 1Gi
+        memory: 2Gi
     # secretBackend:
       # externalSecret: {}
     terminationGracePeriodSeconds: 604800
