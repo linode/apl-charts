@@ -18,35 +18,55 @@ spec:
   exporter:
     endpoint: http://otel-collector-collector.otel.svc.cluster.local:4317
   {{- if eq .Values.instrumentation.language "java" }}
-  {{- with .Values.instrumentation.extraEnv }}
   java:
     env:
+      - name: OTEL_METRICS_EXPORTER
+        value: none
+    {{- with .Values.instrumentation.extraEnv }}
     {{- toYaml . | nindent 6 }}
-  {{- end }}
+    {{- end }}
+    {{- with .Values.instrumentation.image }}
+    image: {{ . }}
+    {{- end }}
   {{- end }}
   {{- if eq .Values.instrumentation.language "dotnet" }}
   dotnet:
     env: 
       - name: OTEL_EXPORTER_OTLP_ENDPOINT
         value: http://otel-collector-collector.otel.svc.cluster.local:4318
+      - name: OTEL_METRICS_EXPORTER
+        value: none
     {{- with .Values.instrumentation.extraEnv }}
     {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.instrumentation.image }}
+    image: {{ . }}
     {{- end }}
   {{- end }}
   {{- if eq .Values.instrumentation.language "python" }}
   python:
-    env: 
+    env:
       - name: OTEL_EXPORTER_OTLP_ENDPOINT
         value: http://otel-collector-collector.otel.svc.cluster.local:4318
+      - name: OTEL_METRICS_EXPORTER
+        value: none
     {{- with .Values.instrumentation.extraEnv }}
     {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- with .Values.instrumentation.image }}
+    image: {{ . }}
+    {{- end }}
   {{- end }}
   {{- if eq .Values.instrumentation.language "nodejs" }}
-  {{- with .Values.instrumentation.extraEnv }}
   nodejs:
     env:
+      - name: OTEL_METRICS_EXPORTER
+        value: none
+    {{- with .Values.instrumentation.extraEnv }}
     {{- toYaml . | nindent 6 }}
-  {{- end }}
+    {{- end }}
+    {{- with .Values.instrumentation.image }}
+    image: {{ . }}
+    {{- end }}
   {{- end }}
 {{- end }}

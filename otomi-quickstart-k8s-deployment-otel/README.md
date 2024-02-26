@@ -19,8 +19,13 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources. 
 
 To use this Helm chart:
 
-- Make sure the administrator has enabled `OpenTelemetry` and `Tempo`
-- Enable `Managed prometheus and alert manager` in the Team settings
+- Make sure the administrator has enabled `OpenTelemetry`
+
+To see traces:
+
+- Make sure the administrator configured `Istio` for tracing
+- Make sure the administrator has enabled `Loki` and `Tempo`
+- Make sure `Grafana` is enabled for the Team (see Settings, Managed monitoring)
 
 ## Parameters
 
@@ -76,4 +81,5 @@ To use this Helm chart:
 | `configmap.data` | Key value pairs stored in the configmap                                                                        | `{}`            |
 | `instrumentation.enabled` | Enable instrumentation to create instrumentation resources and add required annotations               | `true`          |
 | `instrumentation.language` | The Language libraries used for instrumentation                                                      | `java`          |
+| `instrumentation.image` | The image used for auto-instrumentation | `""`
 | `sampler.type` | Defines sampling configuration                                                                                   | `always_on`     |

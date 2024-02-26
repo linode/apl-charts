@@ -80,7 +80,7 @@ policies:
       dead-letter-exchange: cc
       max-age: 1h
     spec:
-      applyTo: streams
+      applyTo: "quorum_queues"
 ```
 
 ##### Queues [All types]
