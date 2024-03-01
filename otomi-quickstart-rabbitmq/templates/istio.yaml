@@ -1,0 +1,46 @@
+{{- $ := . }}
+---
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: {{ include "rabbitmq.fullname" $ }}
+  labels: {{- include "rabbitmq.labels" $ | nindent 4 }}
+spec:
+  hosts:
+  - {{ include "rabbitmq.fullname" $ }}-nodes.{{$.Release.Namespace}}.svc.cluster.local
+  location: MESH_INTERNAL
+  ports:
+  - name: epmd
+    number: 4369
+    protocol: TCP
+  - name: inter-node
+    number: 25672
+    protocol: TCP
+  resolution: NONE
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: rabbitmq-mtls
+  namespace: team-demo
+spec:
+  host: {{ include "rabbitmq.fullname" $ }}-nodes.{{$.Release.Namespace}}.svc.cluster.local
+  trafficPolicy:
+    portLevelSettings:
+    - port:
+        # 4369: epmd, a peer discovery service used by RabbitMQ nodes and CLI tools
+        number: 4369
+      tls:
+        mode: DISABLE
+    # - port:
+    #     # 25672: used for inter-node and CLI tools communication (Erlang distribution server port) and is allocated 
+    #     number: 25672
+    #   tls:
+    #     mode: DISABLE
+    - port:
+        # :5671 # Since AMQPS is using TLS by design istio does not have to encrypt this channel
+        number: 5671
+      tls:
+        mode: DISABLE
+    tls:
+      mode: ISTIO_MUTUAL

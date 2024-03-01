@@ -5,3 +5,6 @@ rbac:
   otomi-quickstart-knative-service: null
   otomi-quickstart-postgresql: null
   otomi-quickstart-redis: null
+  otomi-quickstart-rabbitmq: null
+betaCharts:
+  - otomi-quickstart-rabbitmq

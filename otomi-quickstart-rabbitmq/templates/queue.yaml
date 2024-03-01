@@ -1,0 +1,16 @@
+{{- $ := . }}
+{{- $clusterName := include "rabbitmq.fullname" $ }}
+{{- range $i, $queue := $.Values.queues }}
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Queue
+metadata:
+  name: {{ $clusterName }}-{{ $queue.name }} # name of this custom resource; does not have to the same as the actual queue name
+spec:
+  name: {{ $queue.name }} # name of the queue
+  rabbitmqClusterReference:
+    name: {{ include "rabbitmq.fullname" $ }}
+{{- with $queue.spec }}
+  {{- $queue.spec | toYaml | nindent 2 }}
+{{- end }}
+{{- end }}

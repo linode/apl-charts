@@ -27,3 +27,7 @@ The `otomi-quickstart-postgresql` Helm chart can be used to create a cloudnative
 ## Otomi quick start for creating a Redis master-replica cluster
 
 The `otomi-quickstart-redis` Helm chart can be used to create a Redis master-replica cluster.
+
+## Otomi quick start for creating a RabbitMQ cluster
+
+The `otomi-quickstart-rabbitmq` Helm chart can be used to create a RabbitMQ `cluster` with `queues` and `policies`.

@@ -1,0 +1,11 @@
+{{- $ := . }}
+{{- with $.Values.rabbitmqCluster.spec }}
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: {{ include "rabbitmq.fullname" $ }}
+  labels:
+    {{- include "rabbitmq.labels" $ | nindent 4 }}
+spec: 
+{{- $.Values.rabbitmqCluster.spec | toYaml | nindent 2 }}
+{{- end }}

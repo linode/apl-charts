@@ -1,0 +1,18 @@
+{{- $ := . }}
+{{- $clusterName := include "rabbitmq.fullname" $ }}
+{{- range $i, $policy := $.Values.policies }}
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Policy
+metadata:
+  name: {{ $clusterName }}-{{ $policy.name }} # name of this custom resource; does not have to the same as the actual policy name
+spec:
+  name: {{ $policy.name }} # name of the policy
+  rabbitmqClusterReference:
+    name: {{ include "rabbitmq.fullname" $ }}
+  definition: {{ toYaml $policy.definition | nindent 4 }}
+  pattern: {{ $policy.pattern }}
+{{- with $policy.spec }}
+  {{- $policy.spec | toYaml | nindent 2 }}
+{{- end }}
+{{- end }}
