@@ -13,8 +13,8 @@ spec:
     - Ingress
   ingress:
     - from:
-        - podSelector:
-            matchLabels: {{- include "rabbitmq.selectorLabels" $ | nindent 14 }}
+        # - podSelector:
+        #     matchLabels: {{- include "rabbitmq.selectorLabels" $ | nindent 14 }}
         - namespaceSelector:
             matchLabels:
               name: {{ $.Release.Namespace }}
