@@ -21,6 +21,7 @@
       }
     ]
   },
+  "description": "Grafana dashboard for rabbitmq",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,

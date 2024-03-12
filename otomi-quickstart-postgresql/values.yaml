@@ -39,8 +39,8 @@ walStorage:
 ## Requires Managed prometheus and alert manager Enabled for the Team
 ## @param dashboard Will add a ConfigMap with a Grafana dashboard for CloudNativePG
 ##
-monitoring: false
-dashboard: false
+monitoring: true
+dashboard: true
 
 ## @param byoSuperUserSecret BYO secret for super admin credentials
 ## @param enabled Set to true to use a BYO secret
