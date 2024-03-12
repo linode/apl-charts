@@ -22,7 +22,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
   name: rabbitmq-mtls
-  namespace: {{ include "$.Release.Namespace" . | quote }}
+  namespace: {{ include "$.Release.Namespace" $ | quote }}
 spec:
   host: {{ include "rabbitmq.fullname" $ }}-nodes.{{$.Release.Namespace}}.svc.cluster.local
   trafficPolicy:
