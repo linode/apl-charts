@@ -22,7 +22,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: {{ $clusterName }}-rabbitmq-mtls
+  name: {{ $clusterName }}-mtls
   namespace: {{ $.Release.Namespace }}
 spec:
   host: {{ include "rabbitmq.fullname" $ }}-nodes.{{$.Release.Namespace}}.svc.cluster.local
