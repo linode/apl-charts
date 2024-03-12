@@ -13,8 +13,8 @@ fullnameOverride: ""
 ## Requires Managed prometheus and alert manager Enabled for the Team
 ## @param dashboard Will add a ConfigMap with a Grafana dashboard for CloudNativePG
 ##
-monitoring: false
-dashboard: false
+monitoring: true
+dashboard: true
 
 serviceAccount:
   # Specifies whether a service account should be created
