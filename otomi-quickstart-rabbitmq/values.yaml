@@ -9,6 +9,13 @@ nameOverride: ""
 ##
 fullnameOverride: ""
 
+## @param monitoring Will create a PodMonitor and metrics will be scraped by the team Prometheus
+## Requires Managed prometheus and alert manager Enabled for the Team
+## @param dashboard Will add a ConfigMap with a Grafana dashboard for CloudNativePG
+##
+monitoring: false
+dashboard: false
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
