@@ -1,8 +1,7 @@
-
 ## @param fullnameOverride String to fully override deployment.fullname template
 ## Used by Otomi to set the name for all resources based on the workload name
 ##
-fullnameOverride: ""
+fullnameOverride: ''
 
 ## @param instances Number of instances required in the cluster
 ## default set to 2 for smooth migration between nodes
@@ -15,24 +14,24 @@ instances: 2
 primaryUpdateStrategy: unsupervised
 
 ## @param walStorage Configuration of the storage for PostgreSQL database data
-## @param storageClass StorageClass to use for database data. 
+## @param storageClass StorageClass to use for database data.
 ## If not specified, generated PVCs will be satisfied by the default storage class.
-## @param size Size of the storage. Required if not already specified in the PVC template. 
-## Changes to this field are automatically reapplied to the created PVCs. 
+## @param size Size of the storage. Required if not already specified in the PVC template.
+## Changes to this field are automatically reapplied to the created PVCs.
 ## Size cannot be decreased.
 ##
 storage:
-  storageClass: ""
+  storageClass: ''
   size: 1Gi
 
 ## @param walStorage Configuration of the storage for PostgreSQL WAL (Write-Ahead Log)
-## @param storageClass StorageClass to use for the WAL. 
+## @param storageClass StorageClass to use for the WAL.
 ## If not specified, generated PVCs will be satisfied by the default storage class.
-## @param size Size of the WAL storage. Required if not already specified in the PVC template. 
-## Changes to this field are automatically reapplied to the created PVCs. 
+## @param size Size of the WAL storage. Required if not already specified in the PVC template.
+## Changes to this field are automatically reapplied to the created PVCs.
 ## Size cannot be decreased.
 walStorage:
-  storageClass: ""
+  storageClass: ''
   size: 1Gi
 
 ## @param monitoring Will create a PodMonitor and metrics will be scraped by the team Prometheus
@@ -48,7 +47,7 @@ dashboard: false
 ##
 byoSuperUserSecret:
   enabled: false
-  name: ""
+  name: ''
 
 ## @param bootstrap Initialize a new PostgreSQL cluster (default)
 ## ref: https://cloudnative-pg.io/documentation/1.20/bootstrap/ for more information
@@ -73,3 +72,10 @@ resources:
   requests:
     cpu: 50m
     memory: 64Mi
+
+## @param networkpolicies Create network policies for the PostgreSQL deployment
+## @param create Set to true to create network policies
+##
+otomi:
+  networkpolicies:
+    create: true
