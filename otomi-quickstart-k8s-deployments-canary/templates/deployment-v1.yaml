@@ -80,6 +80,10 @@ spec:
           {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- end }}
+      {{- with .Values.versionOne.initContainers }}
+      initContainers:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if or .Values.volumeMounts .Values.versionOne.configmap.create }}
       volumes:
         {{- if .Values.versionOne.configmap.create }}

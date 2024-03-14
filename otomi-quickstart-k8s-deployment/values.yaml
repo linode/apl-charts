@@ -149,6 +149,17 @@ args: []
   # - --metric-value=40
   # - --port=8080
 
+## @param initContainers A list of initContainers to add to the pod
+##
+initContainers: []
+  # - name: app-setup
+  #   image: setup-image
+  #   command: 
+  #     - cmd1
+  #   volumeMounts:
+  #     - name: tmp
+  #       mountPath: /tmp
+
 ## @param VolumeMounts A list of volume mounts to be added to the container
 ##
 volumeMounts: []

@@ -57,6 +57,16 @@ versionOne:
   env: []
     # - name: TARGET
     #   value: VALUE
+  ## @param initContainers A list of initContainers to add to the pod
+  ##
+  initContainers: []
+    # - name: app-setup
+    #   image: setup-image
+    #   command: 
+    #     - cmd1
+    #   volumeMounts:
+    #     - name: tmp
+    #       mountPath: /tmp    
 
 versionTwo:
   ## @param image.repository your v2 image repository
@@ -105,6 +115,16 @@ versionTwo:
     # - --metric-name=custom_prometheus
     # - --metric-value=40
     # - --port=8080
+  ## @param initContainers A list of initContainers to add to the pod
+  ##
+  initContainers: []
+    # - name: app-setup
+    #   image: setup-image
+    #   command: 
+    #     - cmd1
+    #   volumeMounts:
+    #     - name: tmp
+    #       mountPath: /tmp    
   ## @param env Environment variables for containers
   ##
   env: []
