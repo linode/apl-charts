@@ -1,0 +1,18 @@
+{{- if .Values.serviceMonitor.create -}}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "rabbitmq.fullname" . }}
+  labels: 
+    prometheus: {{ .Release.Namespace }}
+    {{- include "rabbitmq.labels" . | nindent 4 }}
+spec:
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+  selector:
+    matchLabels: {{- include "rabbitmq.selectorLabels" . | nindent 6 }}
+  endpoints:
+    - port: 15692
+      path: /metrics
+{{- end }}
