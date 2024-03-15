@@ -6,7 +6,7 @@ metadata:
   name: grafana-dashboard-{{ include "rabbitmq.fullname" . }}
   labels: {{- include "rabbitmq.labels" . | nindent 4 }}
     grafana_dashboard: "1"
-    release: {{ .Release.Namespace }}
+    release: grafana-dashboards-{{ .Release.Namespace | trimPrefix "team-" }}
   {{- with .Values.commonLabels }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
