@@ -13,6 +13,6 @@ spec:
   selector:
     matchLabels: {{- include "rabbitmq.selectorLabels" . | nindent 6 }}
   endpoints:
-    - port: "15692"
+    - port: "prometheus"
       path: /metrics
 {{- end }}
