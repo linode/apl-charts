@@ -15,8 +15,14 @@ fullnameOverride: ""
 ##
 monitoring: false
 dashboard: false
-serviceMonitor: 
-  create: true
+
+## Prometheus Operator ServiceMonitor configuration
+##
+serviceMonitor:
+  ## @param serviceMonitor.create Creates a Prometheus Operator ServiceMonitor
+  ## The service monitor is configured to use the private team Prometheus instance
+  ##
+  create: false
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -100,7 +106,7 @@ rabbitmqCluster:
     persistence:
       storage: 10Gi
       # storageClassName: {}
-    # rabbitmq: {}
+    rabbitmq: {}
     replicas: 3
     resources:
       limits:
@@ -112,6 +118,10 @@ rabbitmqCluster:
     # secretBackend:
       # externalSecret: {}
     terminationGracePeriodSeconds: 604800
+
+plugins:
+  - 'rabbitmq_prom'
+  - 'something2'
 
 # !Warning: If you rename already deployed queues, ArgoCD will try to remove it
 # if you want to check all spec options, please check the queue crd
