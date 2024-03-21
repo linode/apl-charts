@@ -13,8 +13,8 @@ fullnameOverride: ""
 ## Requires Managed prometheus and alert manager Enabled for the Team
 ## @param dashboard Will add a ConfigMap with a Grafana dashboard for CloudNativePG
 ##
-monitoring: true
-dashboard: true
+monitoring: false
+dashboard: false
 
 ## Prometheus Operator ServiceMonitor configuration
 ##
@@ -22,7 +22,7 @@ serviceMonitor:
   ## @param serviceMonitor.create Creates a Prometheus Operator ServiceMonitor
   ## The service monitor is configured to use the private team Prometheus instance
   ##
-  create: true
+  create: false
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -119,7 +119,7 @@ rabbitmqCluster:
       # externalSecret: {}
     terminationGracePeriodSeconds: 604800
 
-    # 'rabbitmq_prometheus'
+# 'rabbitmq_prometheus'
 plugins: []
 
 # !Warning: If you rename already deployed queues, ArgoCD will try to remove it
