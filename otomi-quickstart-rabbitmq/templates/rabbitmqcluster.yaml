@@ -10,8 +10,10 @@ spec:
 {{- if and (not $.Values.rabbitmqCluster.spec.rabbitmq) $.Values.plugins }}
   {{- $rabbitmq := merge $.Values.rabbitmqCluster.spec (dict "rabbitmq" (dict "additionalPlugins" $.Values.plugins)) }}
   {{- $.Values.rabbitmqCluster.spec | toYaml | nindent 2 }}
-{{- else }}
+{{- else if $.Values.rabbitmqCluster.spec.rabbitmq }}
   {{- $rabbitmq := merge $.Values.rabbitmqCluster.spec.rabbitmq (dict "additionalPlugins" $.Values.plugins) }}
+  {{- $.Values.rabbitmqCluster.spec | toYaml | nindent 2 }}
+{{- else }}
   {{- $.Values.rabbitmqCluster.spec | toYaml | nindent 2 }}
 {{- end }}
 {{- end }}

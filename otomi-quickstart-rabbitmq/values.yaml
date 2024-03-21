@@ -106,7 +106,7 @@ rabbitmqCluster:
     persistence:
       storage: 10Gi
       # storageClassName: {}
-    rabbitmq: {}
+    # rabbitmq: {}
     replicas: 3
     resources:
       limits:
@@ -119,9 +119,8 @@ rabbitmqCluster:
       # externalSecret: {}
     terminationGracePeriodSeconds: 604800
 
-plugins:
-  - 'rabbitmq_prom'
-  - 'something2'
+    # 'rabbitmq_prometheus'
+plugins: []
 
 # !Warning: If you rename already deployed queues, ArgoCD will try to remove it
 # if you want to check all spec options, please check the queue crd
