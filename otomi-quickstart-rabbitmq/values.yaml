@@ -13,8 +13,8 @@ fullnameOverride: ""
 ## Requires Managed prometheus and alert manager Enabled for the Team
 ## @param dashboard Will add a ConfigMap with a Grafana dashboard for CloudNativePG
 ##
-monitoring: false
-dashboard: false
+monitoring: true
+dashboard: true
 
 ## Prometheus Operator ServiceMonitor configuration
 ##
@@ -22,7 +22,7 @@ serviceMonitor:
   ## @param serviceMonitor.create Creates a Prometheus Operator ServiceMonitor
   ## The service monitor is configured to use the private team Prometheus instance
   ##
-  create: false
+  create: true
 
 serviceAccount:
   # Specifies whether a service account should be created
