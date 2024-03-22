@@ -10,4 +10,7 @@ metadata:
   {{- with .Values.commonLabels }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
+  data:
+  rabbitmq.json: |-
+    {{- $file | nindent 4 }}
 {{- end }}
