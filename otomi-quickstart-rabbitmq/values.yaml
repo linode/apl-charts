@@ -119,8 +119,12 @@ rabbitmqCluster:
       # externalSecret: {}
     terminationGracePeriodSeconds: 604800
 
-# 'rabbitmq_prometheus'
+# Here you can add plugins that you want to enable for the rabbitmq cluster 
+# See a complete list at: https://www.rabbitmq.com/docs/plugins#tier1-plugins
 plugins: []
+# - rabbitmq_mqtt 
+# - rabbitmq_federation 
+# - rabbitmq_federation_management
 
 # !Warning: If you rename already deployed queues, ArgoCD will try to remove it
 # if you want to check all spec options, please check the queue crd
@@ -139,6 +143,8 @@ queues: []
       # arguments:
         # x-queue-type: stream
 
+# if you want to check all spec options, please check the policy crd
+# https://github.com/rabbitmq/messaging-topology-operator/blob/main/config/crd/bases/rabbitmq.com_policies.yaml
 policies: []
   # - name: "my-policy1"
     # pattern: ".*"
