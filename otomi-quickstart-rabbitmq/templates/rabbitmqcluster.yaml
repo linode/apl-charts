@@ -6,6 +6,14 @@ metadata:
   name: {{ include "rabbitmq.fullname" $ }}
   labels:
     {{- include "rabbitmq.labels" $ | nindent 4 }}
-spec: 
-{{- $.Values.rabbitmqCluster.spec | toYaml | nindent 2 }}
+spec:
+{{- if and (not $.Values.rabbitmqCluster.spec.rabbitmq) $.Values.plugins }}
+  {{- $rabbitmq := merge $.Values.rabbitmqCluster.spec (dict "rabbitmq" (dict "additionalPlugins" $.Values.plugins)) }}
+  {{- $.Values.rabbitmqCluster.spec | toYaml | nindent 2 }}
+{{- else if $.Values.rabbitmqCluster.spec.rabbitmq }}
+  {{- $rabbitmq := merge $.Values.rabbitmqCluster.spec.rabbitmq (dict "additionalPlugins" $.Values.plugins) }}
+  {{- $.Values.rabbitmqCluster.spec | toYaml | nindent 2 }}
+{{- else }}
+  {{- $.Values.rabbitmqCluster.spec | toYaml | nindent 2 }}
+{{- end }}
 {{- end }}
