@@ -149,6 +149,18 @@ args: []
   # - --metric-value=40
   # - --port=8080
 
+## @param persistence A list of initContainers to add to the pod
+## Enable persistence using Persistent Volume Claims
+## Will create volumeMounts and volumes
+## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+##
+persistence:
+  enabled: false
+  # storageClass: local-path
+  # accessMode: ReadWriteOnce
+  # size: 10Mi
+  # mountPath: "/mnt/data"
+
 ## @param initContainers A list of initContainers to add to the pod
 ##
 initContainers: []
@@ -159,6 +171,7 @@ initContainers: []
   #   volumeMounts:
   #     - name: tmp
   #       mountPath: /tmp
+
 
 ## @param VolumeMounts A list of volume mounts to be added to the container
 ##
