@@ -171,6 +171,9 @@ serviceAccount:
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
 ##
 livenessProbe: {}
+  # httpGet:
+  #   path: /
+  #   port: http
 
 ## Container readiness probe.
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
@@ -185,17 +188,26 @@ readinessProbe: {}
 ##
 podSecurityContext: {}
   # runAsNonRoot: true
-  # runAsUser: 1000
+  # runAsUser: 65532
+  # runAsGroup: 65532
   # readOnlyRootFilesystem: true
+  # seccompProfile:
+  #   type: RuntimeDefault
 
 ## Container Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ##
 containerSecurityContext: {}
+  # runAsNonRoot: true
+  # runAsUser: 65532
+  # runAsGroup: 65532
+  # seccompProfile:
+  #   type: RuntimeDefault
   # capabilities:
   #   drop:
   #   - ALL
   # fsGroup: 2000
+  # allowPrivilegeEscalation: false
 
 ## Configures the container ports to listens on
 ##
