@@ -198,11 +198,6 @@ podSecurityContext: {}
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ##
 containerSecurityContext: {}
-  # runAsNonRoot: true
-  # runAsUser: 65532
-  # runAsGroup: 65532
-  # seccompProfile:
-  #   type: RuntimeDefault
   # capabilities:
   #   drop:
   #   - ALL
