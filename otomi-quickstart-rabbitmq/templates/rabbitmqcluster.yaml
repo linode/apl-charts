@@ -52,11 +52,13 @@ spec:
   {{- with .Values.persistence }}
   persistence: {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- if or .Values.additionalConfig .Values.plugins .Values.advancedConfig .Values.envConfig -}}
   rabbitmq:
     additionalConfig: {{ .Values.additionalConfig }}
     additionalPlugins: {{ toYaml .Values.plugins | nindent 6 }}
     advancedConfig: {{ .Values.advancedConfig }}
     envConfig: {{ .Values.envConfig }}
+  {{- end }}
   replicas: {{ .Values.replicaCount }}
   {{- with .Values.resources }}
   resources: {{ toYaml . | nindent 4 }}
