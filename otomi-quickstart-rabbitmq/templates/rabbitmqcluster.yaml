@@ -8,7 +8,9 @@ spec:
   {{- with .Values.affinity }}
   affinity: {{- toYaml . | nindent 4 }}
   {{- end }}
-  delayStartSeconds: {{ .Values.delayStartSeconds }}
+  {{- with .Values.delayStartSeconds }}
+  delayStartSeconds: {{ . }}
+  {{- end }}
   {{- with .Values.image }}
   image: {{ . }}
   {{- end }}
@@ -59,7 +61,9 @@ spec:
     advancedConfig: {{ .Values.advancedConfig }}
     envConfig: {{ .Values.envConfig }}
   {{- end }}
-  replicas: {{ .Values.replicaCount }}
+  {{- with .Values.replicaCount }}
+  replicas: {{ . }}
+  {{- end }}
   {{- with .Values.resources }}
   resources: {{ toYaml . | nindent 4 }}
   {{- end }}
@@ -69,8 +73,12 @@ spec:
   {{- with .Values.service }}
   service: {{ toYaml . | nindent 4 }}
   {{- end }}
-  skipPostDeploySteps: {{ .Values.skipPostDeploySteps }}
-  terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+  {{- with .Values.secretBackend }}
+  skipPostDeploySteps: {{ . }}
+  {{- end }}
+  {{- with .Values.terminationGracePeriodSeconds }}
+  terminationGracePeriodSeconds: {{ . }}
+  {{- end }}
   {{- with .Values.tls }}
   service: {{ toYaml . | nindent 4 }}
   {{- end }}
