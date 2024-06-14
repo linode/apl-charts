@@ -37,12 +37,17 @@ spec:
             securityContext: {{- toYaml . | nindent 14 }}
             {{- end }}
             {{- with .Values.containerSecurityContext }}
+            {{- if . }}
             containers:
               - name: rabbitmq              
                 securityContext: {{- toYaml . | nindent 18 }}
             initContainers:
               - name: setup-container
                 securityContext: {{- toYaml . | nindent 18 }}
+            {{- else }}
+            # Dummy - required for validation of RabbitMQ resource
+            containers: []
+            {{- end }}
             {{- end }}
   {{- with .Values.persistence }}
   persistence: {{- toYaml . | nindent 4 }}
