@@ -112,7 +112,8 @@ persistence:
 # tested. This value should be an odd number to ensure the resultant cluster
 # can establish exactly one quorum of nodes in the event of a fragmenting
 # network partition.
-replicas: 3
+# Scaling down of an existing cluster is not supported
+replicaCount: 3
 
 # Secret backend configuration for the RabbitmqCluster. Enables to fetch
 # default user credentials and certificates from K8s external secret stores.
