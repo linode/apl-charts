@@ -65,7 +65,7 @@ containerSecurityContext:
     drop:
       - ALL
   allowPrivilegeEscalation: false
-  # Note that the RabbitMQ image used by the operator my not support setting fsGroup to
+  # Note that the RabbitMQ image used by the operator may not support setting fsGroup to
   # a non-root (> 0) value.
 
 resources:
