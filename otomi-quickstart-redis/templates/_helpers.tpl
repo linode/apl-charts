@@ -1,5 +1,5 @@
 {{/*
-Copyright VMware, Inc.
+Copyright Broadcom, Inc. All Rights Reserved.
 SPDX-License-Identifier: APACHE-2.0
 */}}
 
@@ -31,6 +31,13 @@ Return the proper image name (for the init container volume-permissions image)
 */}}
 {{- define "redis.volumePermissions.image" -}}
 {{ include "common.images.image" (dict "imageRoot" .Values.volumePermissions.image "global" .Values.global) }}
+{{- end -}}
+
+{{/*
+Return kubectl image
+*/}}
+{{- define "redis.kubectl.image" -}}
+{{ include "common.images.image" (dict "imageRoot" .Values.kubectl.image "global" .Values.global) }}
 {{- end -}}
 
 {{/*
@@ -261,6 +268,7 @@ Compile all warnings into a single message, and call fail.
 {{- $messages := append $messages (include "redis.validateValues.architecture" .) -}}
 {{- $messages := append $messages (include "redis.validateValues.podSecurityPolicy.create" .) -}}
 {{- $messages := append $messages (include "redis.validateValues.tls" .) -}}
+{{- $messages := append $messages (include "redis.validateValues.createMaster" .) -}}
 {{- $messages := without $messages "" -}}
 {{- $message := join "\n" $messages -}}
 
@@ -309,6 +317,16 @@ redis: tls.enabled
     In order to enable TLS, you also need to provide
     an existing secret containing the TLS certificates or
     enable auto-generated certificates.
+{{- end -}}
+{{- end -}}
+
+{{/* Validate values of Redis&reg; - master service enabled */}}
+{{- define "redis.validateValues.createMaster" -}}
+{{- if and (or .Values.sentinel.masterService.enabled .Values.sentinel.service.createMaster) (or (not .Values.rbac.create) (not .Values.replica.automountServiceAccountToken) (not .Values.serviceAccount.create)) }}
+redis: sentinel.masterService.enabled
+    In order to redirect requests only to the master pod via the service, you also need to
+    create rbac and serviceAccount. In addition, you need to enable
+    replica.automountServiceAccountToken.
 {{- end -}}
 {{- end -}}
 
