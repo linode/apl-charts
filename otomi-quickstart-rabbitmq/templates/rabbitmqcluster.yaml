@@ -1,5 +1,3 @@
-{{- $ := . }}
-{{- with $.Values.rabbitmqCluster.spec }}
 apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
@@ -7,13 +5,83 @@ metadata:
   labels:
     {{- include "rabbitmq.labels" $ | nindent 4 }}
 spec:
-{{- if and (not $.Values.rabbitmqCluster.spec.rabbitmq) $.Values.plugins }}
-  {{- $rabbitmq := merge $.Values.rabbitmqCluster.spec (dict "rabbitmq" (dict "additionalPlugins" $.Values.plugins)) }}
-  {{- $.Values.rabbitmqCluster.spec | toYaml | nindent 2 }}
-{{- else if $.Values.rabbitmqCluster.spec.rabbitmq }}
-  {{- $rabbitmq := merge $.Values.rabbitmqCluster.spec.rabbitmq (dict "additionalPlugins" $.Values.plugins) }}
-  {{- $.Values.rabbitmqCluster.spec | toYaml | nindent 2 }}
-{{- else }}
-  {{- $.Values.rabbitmqCluster.spec | toYaml | nindent 2 }}
-{{- end }}
-{{- end }}
+  {{- with .Values.affinity }}
+  affinity: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.delayStartSeconds }}
+  delayStartSeconds: {{ . }}
+  {{- end }}
+  {{- with .Values.image }}
+  image: {{ . }}
+  {{- end }}
+  {{- with .Values.imagePullSecrets }}
+  imagePullSecrets: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  override:
+    statefulSet:
+      spec:
+        selector:
+          matchLabels:
+            {{- include "rabbitmq.labels" . | nindent 14 }}
+        template:
+          metadata:
+            {{- with .Values.podAnnotations }}
+            annotations:
+              {{- toYaml . | nindent 16 }}
+            {{- end }}
+            labels:
+              {{- include "rabbitmq.labels" . | nindent 16 }}
+          spec:
+            {{- with .Values.nodeSelector }}
+            nodeSelector: {{- toYaml . | nindent 14 }}
+            {{- end }}            
+            {{- with .Values.podSecurityContext }}
+            securityContext: {{- toYaml . | nindent 14 }}
+            {{- end }}
+            {{- with .Values.containerSecurityContext }}
+            {{- if . }}
+            containers:
+              - name: rabbitmq              
+                securityContext: {{- toYaml . | nindent 18 }}
+            initContainers:
+              - name: setup-container
+                securityContext: {{- toYaml . | nindent 18 }}
+            {{- else }}
+            # Dummy - required for validation of RabbitMQ resource
+            containers: []
+            {{- end }}
+            {{- end }}
+  {{- with .Values.persistence }}
+  persistence: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- if or .Values.additionalConfig .Values.plugins .Values.advancedConfig .Values.envConfig -}}
+  rabbitmq:
+    additionalConfig: {{ .Values.additionalConfig }}
+    additionalPlugins: {{ toYaml .Values.plugins | nindent 6 }}
+    advancedConfig: {{ .Values.advancedConfig }}
+    envConfig: {{ .Values.envConfig }}
+  {{- end }}
+  {{- with .Values.replicaCount }}
+  replicas: {{ . }}
+  {{- end }}
+  {{- with .Values.resources }}
+  resources: {{ toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.secretBackend }}
+  secretBackend: {{ toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.service }}
+  service: {{ toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.secretBackend }}
+  skipPostDeploySteps: {{ . }}
+  {{- end }}
+  {{- with .Values.terminationGracePeriodSeconds }}
+  terminationGracePeriodSeconds: {{ . }}
+  {{- end }}
+  {{- with .Values.tls }}
+  service: {{ toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.tolerations }}
+  tolerations: {{ toYaml . | nindent 4 }}
+  {{- end }}

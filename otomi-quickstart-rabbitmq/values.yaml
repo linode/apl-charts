@@ -33,14 +33,13 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-## Optionally specify an array of imagePullSecrets. Only use when deploying images from external registries
-## When images are deployed from local Harbor registry, pull secrets are already added to the service account
-## Secrets must be manually created in the namespace.
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-## E.g.:
-## imagePullSecrets:
-##   - myRegistryKeySecretName
-##
+# Image is the name of the RabbitMQ docker image to use for RabbitMQ nodes in
+# the RabbitmqCluster. Must be provided together with ImagePullSecrets in
+# order to use an image in a private registry.
+# image: ""
+
+# List of Secret resource containing access credentials to the registry for
+# the RabbitMQ image. Required if the docker registry is private.
 imagePullSecrets: []
 
 ## @param annotations Annotations for pods
@@ -51,31 +50,31 @@ podAnnotations: {}
 ## Pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ##
-podSecurityContext: {}
-  # runAsNonRoot: true
-  # runAsUser: 1000
-  # readOnlyRootFilesystem: true
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 65532
+  runAsGroup: 65532
+  seccompProfile:
+    type: RuntimeDefault
 
 ## Container Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ##
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # fsGroup: 2000
+containerSecurityContext:
+  capabilities:
+    drop:
+      - ALL
+  allowPrivilegeEscalation: false
+  # Note that the RabbitMQ image used by the operator may not support setting fsGroup to
+  # a non-root (> 0) value.
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 2000m
-  #   memory: 2Gi
-  # requests:
-  #   cpu: 1000m
-  #   memory: 2Gi
+resources:
+  limits:
+    cpu: '1'
+    memory: 2Gi
+  requests:
+    cpu: '1'
+    memory: 2Gi
 
 ## @param nodeSelector Node labels for pod assignment.
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
@@ -92,32 +91,54 @@ tolerations: []
 ##
 affinity: {}
 
-# !Warning: If spec is removed, then the rabbitmqCluster won't be created!
-# if you want to check all spec options, please see the rabbitmqCluster crd
-# https://github.com/rabbitmq/cluster-operator/blob/main/config/crd/bases/rabbitmq.com_rabbitmqclusters.yaml
-rabbitmqCluster:
-  spec:
-    # affinity:
-      # nodeAffinity: {}
-      # podAffinity: {}
-      # podAntiAffinity: {}
-    delayStartSeconds: 30
-    # override: {}
-    persistence:
-      storage: 10Gi
-      # storageClassName: {}
-    # rabbitmq: {}
-    replicas: 3
-    resources:
-      limits:
-        cpu: '1'
-        memory: 2Gi
-      requests:
-        cpu: '1'
-        memory: 2Gi
-    # secretBackend:
-      # externalSecret: {}
-    terminationGracePeriodSeconds: 604800
+# DelayStartSeconds is the time the init container (`setup-container`) will
+# sleep before terminating. This effectively delays the time between starting
+# the Pod and starting the `rabbitmq` container. RabbitMQ relies on up-to-date
+# DNS entries early during peer discovery. The purpose of this artificial
+# delay is to ensure that DNS entries are up-to-date when booting RabbitMQ.
+# For more information, see
+# https://github.com/kubernetes/kubernetes/issues/92559 If your Kubernetes DNS
+# backend is configured with a low DNS cache value or publishes not ready
+# addresses promptly, you can decrase this value or set it to 0.
+delayStartSeconds: 30
+
+# The desired persistent storage configuration for each Pod in the cluster.
+persistence:
+  storage: 10Gi
+  # storageClassName: {}
+
+# Replicas is the number of nodes in the RabbitMQ cluster. Each node is
+# deployed as a Replica in a StatefulSet. Only 1, 3, 5 replicas clusters are
+# tested. This value should be an odd number to ensure the resultant cluster
+# can establish exactly one quorum of nodes in the event of a fragmenting
+# network partition.
+# Scaling down of an existing cluster is not supported
+replicaCount: 3
+
+# Secret backend configuration for the RabbitmqCluster. Enables to fetch
+# default user credentials and certificates from K8s external secret stores.
+# secretBackend: 
+#   externalSecret: {}
+
+# The desired state of the Kubernetes Service to create for the cluster.
+# service: {}
+
+# If unset, or set to false, the cluster will run `rabbitmq-queues rebalance
+# all` whenever the cluster is updated. Set to true to prevent the operator
+# rebalancing queue leaders after a cluster update. Has no effect if the
+# cluster only consists of one node. For more information, see
+# https://www.rabbitmq.com/rabbitmq-queues.8.html#rebalance
+skipPostDeploySteps: false
+
+#  TerminationGracePeriodSeconds is the timeout that each rabbitmqcluster pod
+#  will have to terminate gracefully. It defaults to 604800 seconds ( a week
+#  long) to ensure that the container preStop lifecycle hook can finish
+#  running. For more information, see:
+#  https://github.com/rabbitmq/cluster-operator/blob/main/docs/design/20200520-graceful-pod-termination.md
+terminationGracePeriodSeconds: 604800
+
+# TLS-related configuration for the RabbitMQ cluster.
+# tls: {}
 
 # Here you can add plugins that you want to enable for the rabbitmq cluster 
 # See a complete list at: https://www.rabbitmq.com/docs/plugins#tier1-plugins
@@ -155,3 +176,21 @@ policies: []
       # applyTo: "queues" # Default: 'all' - Options: 'queues', 'classic_queues', 'quorum_queues', 'streams', 'exchanges', or 'all'
       # priority: {}    # Default: 0
       # vhost: {}       # Default: /
+
+# Modify to add to the rabbitmq.conf file in addition to default
+# configurations set by the operator. Modifying this property on an existing
+# RabbitmqCluster will trigger a StatefulSet rolling restart and will cause
+# rabbitmq downtime. For more information on this config, see
+# https://www.rabbitmq.com/configure.html#config-file
+additionalConfig: ""
+
+# Specify any rabbitmq advanced.config configurations to apply to the cluster.
+# For more information on advanced config, see
+# https://www.rabbitmq.com/configure.html#advanced-config-file
+advancedConfig: ""
+
+# Modify to add to the rabbitmq-env.conf file. Modifying this property on an
+# existing RabbitmqCluster will trigger a StatefulSet rolling restart and will
+# cause rabbitmq downtime. For more information on env config, see
+# https://www.rabbitmq.com/man/rabbitmq-env.conf.5.html
+envConfig: ""

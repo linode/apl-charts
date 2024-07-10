@@ -78,8 +78,11 @@ readinessProbe: {}
 ##
 podSecurityContext: {}
   # runAsNonRoot: true
-  # runAsUser: 1000
-  # readOnlyRootFilesystem: true
+  # runAsUser: 65532
+  # runAsGroup: 65532
+  # seccompProfile:
+  #   type: RuntimeDefault
+  # fsGroup: 65532
 
 ## Container Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -88,7 +91,8 @@ containerSecurityContext: {}
   # capabilities:
   #   drop:
   #   - ALL
-  # fsGroup: 2000
+  # allowPrivilegeEscalation: false
+  # readOnlyRootFilesystem: true
 
 ## Configures the container ports to listens on
 ##
