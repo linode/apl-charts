@@ -1,10 +1,10 @@
-# Otomi quick start for creating a PostgreSQL cluster
+# APL quick start for creating a PostgreSQL cluster
 
-The `otomi-quickstart-postgresql` Helm chart can be used to create a cloudnativepg PostgreSQL `Cluster`. Optionally a Prometheus `PodMonitor` and a `Configmap` (for adding a postgresql dashboard to Grafana) can be created.
+The `apl-quickstart-postgresql` Helm chart can be used to create a cloudnativepg PostgreSQL `Cluster`. Optionally a Prometheus `PodMonitor` and a `Configmap` (for adding a postgresql dashboard to Grafana) can be created.
 
-## About Otomi quick starts
+## About APL quick starts
 
-The Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by Otomi to get started quickly, but they can also be modified depending on your requirements or be removed from the Catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the platform administrator.
+The Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by APL to get started quickly, but they can also be modified depending on your requirements or be removed from the Catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the platform administrator.
 
 ## How to use this quick start
 
@@ -31,11 +31,11 @@ Note that there is also a superuser secret `<clustername>-superuser` with the sa
 
 ## Parameters
 
-### Otomi controlled parameters
+### APL controlled parameters
 
 | Name             | Description                                                                                                    | Value           |
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
-| `fullnameOverride` | Used by Otomi to set the name of all resources including the name name of the database                       | `""`            |
+| `fullnameOverride` | Used by APL to set the name of all resources including the name name of the database                       | `""`            |
 
 ### Optional parameters
 

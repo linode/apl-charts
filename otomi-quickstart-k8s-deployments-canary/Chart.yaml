@@ -1,6 +1,0 @@
-apiVersion: v2
-name: otomi-quickstart-k8s-deployments-canary
-description: Otomi provided quick start Helm chart
-version: 1.2.0
-appVersion: "2.0.0"
-icon: https://linode.github.io/apl-charts/icons/canary.png

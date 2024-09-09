@@ -1,10 +1,10 @@
-# Otomi quick start for creating a workload with Traffic control
+# APL quick start for creating a workload with Traffic control
 
-The `otomi-quickstart-k8s-deployments-canary` Helm chart can be used to create 2 Kubernetes `Deployments` (to deploy 2 versions of an image), a `Service` and a `ServiceAccount`. Optionally a `HorizontalPodAutoscaler`, a Prometheus `ServiceMonitor` and a `Configmap` (for each version) can be created.
+The `apl-quickstart-k8s-deployments-canary` Helm chart can be used to create 2 Kubernetes `Deployments` (to deploy 2 versions of an image), a `Service` and a `ServiceAccount`. Optionally a `HorizontalPodAutoscaler`, a Prometheus `ServiceMonitor` and a `Configmap` (for each version) can be created.
 
-## About Otomi quick starts
+## About APL quick starts
 
-The Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by Otomi to get started quickly, but they can also be modified depending on your requirements or be removed from the Catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the platform administrator.
+The Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by APL to get started quickly, but they can also be modified depending on your requirements or be removed from the Catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the platform administrator.
 
 ## How to use this quick start
 
@@ -28,11 +28,11 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources. 
 | `versionTwo.image.repository` | Image repository for the image to deploy                                                          | `""`            |
 | `versionTwo.image.tag` | Image tag for the image to deploy                                                                        | `""`            |
 
-### Otomi controlled parameters
+### APL controlled parameters
 
 | Name             | Description                                                                                                    | Value           |
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
-| `fullnameOverride` | Used by Otomi to set the name of all resources using the workload name                                       | `""`            |
+| `fullnameOverride` | Used by APL to set the name of all resources using the workload name                                       | `""`            |
 
 ### Optional parameters
 

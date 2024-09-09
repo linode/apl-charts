@@ -1,6 +1,6 @@
 apiVersion: v2
-name: otomi-quickstart-knative-service
-description: Otomi provided quick start Helm chart
+name: apl-quickstart-knative-service
+description: APL provided quick start Helm chart for a Knative Service
 type: application
 version: 1.0.0
 appVersion: "2.0.0"

@@ -1,4 +1,4 @@
-# Otomi quick start for creating a RabbitMQ cluster and/or Queues
+# APL quick start for creating a RabbitMQ cluster and/or Queues
 
 The `rabbitmq` Helm chart can be used to create:
 - A RabbitMQ cluster
