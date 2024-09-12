@@ -1,5 +1,5 @@
 apiVersion: v2
-name: apl-quickstart-knative-service
+name: quickstart-knative-service
 description: APL provided quick start Helm chart for a Knative Service
 type: application
 version: 1.0.0

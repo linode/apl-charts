@@ -1,10 +1,10 @@
 rbac:
-  apl-quickstart-k8s-deployment: null
-  apl-quickstart-k8s-deployment-otel: null
-  apl-quickstart-k8s-deployments-canary: null
-  apl-quickstart-knative-service: null
-  apl-quickstart-postgresql: null
-  apl-quickstart-redis: null
-  apl-quickstart-rabbitmq: null
+  quickstart-k8s-deployment: null
+  quickstart-k8s-deployment-otel: null
+  quickstart-k8s-deployments-canary: null
+  quickstart-knative-service: null
+  quickstart-postgresql: null
+  quickstart-redis: null
+  quickstart-rabbitmq: null
 betaCharts:
-  - apl-quickstart-rabbitmq
+  - quickstart-rabbitmq

@@ -1,5 +1,5 @@
 apiVersion: v2
-name: rabbitmq
+name: quickstart-rabbitmq
 description: A Helm chart for a RabbitmqCluster
 
 # A chart can be either an 'application' or a 'library' chart.
