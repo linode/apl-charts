@@ -1,8 +1,0 @@
-fullnameOverride: test
-image:
-  repository: otomi/nodejs-helloworld
-  tag: v1.2.13
-resources:
-  requests:
-      cpu: 50m
-      memory: 32Mi
