@@ -1,10 +1,10 @@
-# APL quick start for creating a Knative workload
+# Quick start for creating a Knative workload
 
-The `apl-quickstart-knative-service` Helm chart can be used to create a Knative `Service` (to deploy a single image), a `Service` and a  `ServiceAccount`. Optionally a Prometheus `ServiceMonitor` can be created.
+The `quickstart-knative-service` Helm chart can be used to create a Knative `Service` (to deploy a single image), a `Service` and a  `ServiceAccount`. Optionally a Prometheus `ServiceMonitor` can be created.
 
-## About APL quick starts
+## About the quick starts
 
-The Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by APL to get started quickly, but they can also be modified depending on your requirements or be removed from the Catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the platform administrator.
+The Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by Application Platform for LKE to get started quickly, but they can also be modified depending on your requirements or be removed from the Catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the platform administrator.
 
 ## How to use this quick start
 
@@ -29,11 +29,11 @@ To use this Helm chart:
 | `image.repository` | Image repository for the image to deploy                                                                     | `""`            |
 | `image.tag` | Image tag for the image to deploy                                                                                   | `""`            |
 
-### APL controlled parameters
+### Application Platform for LKE (APL) controlled parameters
 
-| Name             | Description                                                                                                    | Value           |
-|------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
-| `fullnameOverride` | Used by APL to set the name of all resources using the workload name                                       | `""`            |
+| Name               | Description                                                                                                    | Value           |
+|--------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
+| `fullnameOverride` | Used by Application Platform for LKE to set the name of all resources using the workload name                  | `""`            |
 
 ### Optional parameters
 

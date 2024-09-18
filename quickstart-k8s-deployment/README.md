@@ -1,10 +1,10 @@
-# APL quick start for creating a regular workload
+# Quick start for creating a regular workload
 
-The `apl-quickstart-k8s-deployment` Helm chart can be used to create a Kubernetes `Deployment` (to deploy a single image), a `Service` and a `ServiceAccount`. Optionally a `HorizontalPodAutoscaler`, a Prometheus `ServiceMonitor` and a `Configmap` can be created.
+The `quickstart-k8s-deployment` Helm chart can be used to create a Kubernetes `Deployment` (to deploy a single image), a `Service` and a `ServiceAccount`. Optionally a `HorizontalPodAutoscaler`, a Prometheus `ServiceMonitor` and a `Configmap` can be created.
 
-## About APL quick starts
+## About Application Platform for LKE quick starts
 
-The Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by APL to get started quickly, but they can also be modified depending on your requirements or be removed from the Catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the platform administrator.
+The Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by Application Platform for LKE to get started quickly, but they can also be modified depending on your requirements or be removed from the Catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the platform administrator.
 
 ## How to use this quick start
 
@@ -23,11 +23,11 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources. 
 | `image.repository` | Image repository for the image to deploy                                                                     | `""`            |
 | `image.tag` | Image tag for the image to deploy                                                                                   | `""`            |
 
-### APL controlled parameters
+### Application Platform for LKE controlled parameters
 
-| Name             | Description                                                                                                    | Value           |
-|------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
-| `fullnameOverride` | Used by APL to set the name of all resources using the workload name                                       | `""`            |
+| Name               | Description                                                                                                    | Value           |
+|--------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
+| `fullnameOverride` | Used by Application Platform for LKE to set the name of all resources using the workload name                  | `""`            |
 
 ### Optional parameters
 

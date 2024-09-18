@@ -1,10 +1,10 @@
-# Otomi quick start for creating a Redis master-replica cluster
+# Quick start for creating a Redis master-replica cluster
 
-The `otomi-quickstart-redis` Helm chart can be used to create master-replica Redis cluster. The `replicaCount` for the replica's by default is set to `1`.
+The `quickstart-redis` Helm chart can be used to create master-replica Redis cluster. The `replicaCount` for the replica's by default is set to `1`.
 
-## About Otomi quick starts
+## About the quick starts
 
-The Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by Otomi to get started quickly, but they can also be modified depending on your requirements or be removed from the Catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the platform administrator.
+The Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by Application Platform for LKE (APL) to get started quickly, but they can also be modified depending on your requirements or be removed from the Catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the platform administrator.
 
 ## How to use this quick start
 
@@ -34,8 +34,7 @@ Use a `secretKeyRef` to configure the environment variables for the container to
 
 # Bitnami package for Redis(R)
 
-This chart has been modified for the integration into the Otomi platform.
-The following instructions have been altered to reflect the use of the workload catalog.
+This chart has been modified for the integration into Application Platform for LKE. The following instructions have been altered to reflect the use of the Catalog.
 
 Redis(R) is an open source, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
 
@@ -84,11 +83,11 @@ Once the Kubernetes Redis Deployment is online and confirmed to be working with 
 
 ### External DNS
 
-Note that Otomi manages external DNS and therefore, which should be used instead of the
-following approach.
+Note that Application Platform for LKE manages ExternalDNS and therefore, which should be used instead of the following approach.
 
 This chart is equipped to allow leveraging the ExternalDNS project. Doing so will enable ExternalDNS to publish the FQDN for each instance, in the format of `<pod-name>.<release-name>.<dns-suffix>`.
-Example, when using the following configuration:
+
+Example:
 
 ```yaml
 useExternalDNS:
@@ -184,10 +183,7 @@ metrics.enabled=true
 
 ### Securing traffic using TLS
 
-Note that Otomi provides mutual TLS through the Istio service mesh. Therefore, TLS
-is not needed for transport security alone.
-
-TLS support can be enabled in the chart by specifying the `tls.` parameters while creating a release. The following parameters should be configured to properly enable the TLS support in the cluster:
+Note that Application Platform for LKE provides mutual TLS through the Istio service mesh. Therefore, TLS is not needed for transport security alone. TLS support can be enabled in the chart by specifying the `tls.` parameters while creating a release. The following parameters should be configured to properly enable the TLS support in the cluster:
 
 - `tls.enabled`: Enable TLS support. Defaults to `false`
 - `tls.existingSecret`: Name of the secret that contains the certificates. No defaults.
@@ -199,13 +195,13 @@ For example:
 
 First, create the secret with the certificates files:
 
-```console
+```bash
 kubectl create secret generic certificates-tls-secret --from-file=./cert.pem --from-file=./cert.key --from-file=./ca.pem
 ```
 
 Then, use the following parameters:
 
-```console
+```bash
 tls.enabled="true"
 tls.existingSecret="certificates-tls-secret"
 tls.certFilename="cert.pem"
@@ -382,12 +378,11 @@ Follow the following steps:
     helm install new-redis  -f values.yaml .  --set cluster.enabled=true  --set cluster.slaveCount=3
     ```
 
-### NetworkPolicy
+### Network Policies
 
-Note that Otomi provides centralized functionality for managing networking policies, which
-is the recommended approach over the following instructions.
+Note that Application Platform for LKE provides centralized functionality for managing networking policies, which is the recommended approach over the following instructions.
 
-With NetworkPolicy enabled, only pods with the generated client label will be able to connect to Redis. This label will be displayed in the output after a successful install.
+With `NetworkPolicy` enabled, only pods with the generated client label will be able to connect to Redis. This label will be displayed in the output after a successful install.
 
 With `networkPolicy.ingressNSMatchLabels` pods from other namespaces can connect to Redis. Set `networkPolicy.ingressNSPodMatchLabels` to match pod labels in matched namespace. For example, for a namespace labeled `redis=external` and pods in that namespace labeled `redis-client=true` the fields should be set:
 
