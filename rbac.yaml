@@ -1,10 +1,10 @@
 rbac:
-  otomi-quickstart-k8s-deployment: null
-  otomi-quickstart-k8s-deployment-otel: null
-  otomi-quickstart-k8s-deployments-canary: null
-  otomi-quickstart-knative-service: null
-  otomi-quickstart-postgresql: null
-  otomi-quickstart-redis: null
-  otomi-quickstart-rabbitmq: null
+  quickstart-k8s-deployment: null
+  quickstart-k8s-deployment-otel: null
+  quickstart-k8s-deployments-canary: null
+  quickstart-knative-service: null
+  quickstart-postgresql: null
+  quickstart-redis: null
+  quickstart-rabbitmq: null
 betaCharts:
-  - otomi-quickstart-rabbitmq
+  - quickstart-rabbitmq
