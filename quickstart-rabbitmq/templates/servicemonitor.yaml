@@ -4,7 +4,7 @@ kind: ServiceMonitor
 metadata:
   name: {{ include "rabbitmq.fullname" . }}
   labels: 
-    prometheus: {{ .Release.Namespace }}
+    prometheus: system
     {{- include "rabbitmq.labels" . | nindent 4 }}
 spec:
   namespaceSelector:
