@@ -67,11 +67,11 @@ bootstrap:
 ##
 resources:
   limits:
-    cpu: 100m
-    memory: 128Mi
+    cpu: "1"
+    memory: 1Gi
   requests:
-    cpu: 50m
-    memory: 64Mi
+    cpu: 200m
+    memory: 256Mi
 
 ## @param networkpolicies Create network policies for the PostgreSQL deployment
 ## @param create Set to true to create network policies
