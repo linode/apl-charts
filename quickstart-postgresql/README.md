@@ -47,7 +47,7 @@ Note that there is also a superuser secret `<clustername>-superuser` with the sa
 | `storage.size` | Size of the storage. Required if not already specified in the PVC template                                       | `1Gi`           |
 | `walStorage.storageClass` | Configuration of the storage for PostgreSQL WAL (Write-Ahead Log)                                     | `""`            |
 | `walStorage.size` | Size of the WAL storage. Required if not already specified in the PVC template                                | `1Gi`           |
-| `monitoring` | Create a PodMonitor and metrics will be scraped by the team Prometheus                                             | `false`         |
+| `monitoring` | Create a PodMonitor and metrics will be scraped by the Platform Prometheus                                         | `false`         |
 | `dashboard` | Create a ConfigMap with a Grafana dashboard for CloudNativePG                                                       | `false`         |
 | `byoSuperUserSecret.enabled` | Bring your own secret for super admin credentials                                                  | `false`         |
 | `byoSuperUserSecret.name` | Name of the secret containing the super admin credentials                                             | `""`            |
