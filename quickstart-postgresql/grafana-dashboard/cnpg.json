@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 452,
+  "id": 1,
   "links": [
     {
       "asDropdown": false,
@@ -91,7 +91,7 @@
         "content": "",
         "mode": "markdown"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "title": "Overview",
       "type": "text"
     },
@@ -113,7 +113,7 @@
         "content": "",
         "mode": "markdown"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "title": "Storage",
       "type": "text"
     },
@@ -135,7 +135,7 @@
         "content": "",
         "mode": "markdown"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "title": "Backups",
       "type": "text"
     },
@@ -183,7 +183,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": "${DS_PROMETHEUS}",
@@ -245,7 +245,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": "${DS_PROMETHEUS}",
@@ -314,7 +314,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": "${DS_PROMETHEUS}",
@@ -382,7 +382,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": "${DS_PROMETHEUS}",
@@ -453,7 +453,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": "${DS_PROMETHEUS}",
@@ -521,7 +521,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": "${DS_PROMETHEUS}",
@@ -585,7 +585,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": "${DS_PROMETHEUS}",
@@ -673,7 +673,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": "${DS_PROMETHEUS}",
@@ -753,7 +753,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": "${DS_PROMETHEUS}",
@@ -814,7 +814,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -890,7 +890,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": "${DS_PROMETHEUS}",
@@ -958,7 +958,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": "${DS_PROMETHEUS}",
@@ -1025,7 +1025,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": "${DS_PROMETHEUS}",
@@ -1093,7 +1093,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": "${DS_PROMETHEUS}",
@@ -1162,7 +1162,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": "${DS_PROMETHEUS}",
@@ -1252,7 +1252,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": "${DS_PROMETHEUS}",
@@ -1311,7 +1311,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -1346,7 +1346,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -1380,7 +1380,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -1414,7 +1414,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -1448,7 +1448,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -1482,7 +1482,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -1517,7 +1517,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -1551,7 +1551,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -1585,7 +1585,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -1619,7 +1619,7 @@
         "content": "<table style=\"width:100%; height:100%;border:0px solid black;\">\n  <td style=\"text-align: center;vertical-align: middle;border:0px solid black; \"><p style=\"font-weight: bold;\">$instances</p>\n  </td>\n</table>",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -1695,7 +1695,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -1776,7 +1776,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -1841,7 +1841,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -1903,7 +1903,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -2065,7 +2065,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -2135,7 +2135,7 @@
         "text": {},
         "valueMode": "color"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -2195,7 +2195,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -2259,7 +2259,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -2289,7 +2289,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 15
       },
       "id": 41,
       "panels": [],
@@ -2310,7 +2310,7 @@
         "h": 1,
         "w": 3,
         "x": 0,
-        "y": 19
+        "y": 16
       },
       "id": 187,
       "options": {
@@ -2322,7 +2322,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -2345,7 +2345,7 @@
         "h": 1,
         "w": 3,
         "x": 3,
-        "y": 19
+        "y": 16
       },
       "id": 183,
       "options": {
@@ -2357,7 +2357,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -2379,7 +2379,7 @@
         "h": 1,
         "w": 3,
         "x": 6,
-        "y": 19
+        "y": 16
       },
       "id": 184,
       "options": {
@@ -2391,7 +2391,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -2413,7 +2413,7 @@
         "h": 1,
         "w": 3,
         "x": 9,
-        "y": 19
+        "y": 16
       },
       "id": 185,
       "options": {
@@ -2425,7 +2425,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -2447,7 +2447,7 @@
         "h": 1,
         "w": 3,
         "x": 12,
-        "y": 19
+        "y": 16
       },
       "id": 186,
       "options": {
@@ -2459,7 +2459,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -2481,7 +2481,7 @@
         "h": 1,
         "w": 3,
         "x": 15,
-        "y": 19
+        "y": 16
       },
       "id": 188,
       "options": {
@@ -2493,7 +2493,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -2515,7 +2515,7 @@
         "h": 1,
         "w": 3,
         "x": 18,
-        "y": 19
+        "y": 16
       },
       "id": 189,
       "options": {
@@ -2527,7 +2527,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -2549,7 +2549,7 @@
         "h": 1,
         "w": 3,
         "x": 21,
-        "y": 19
+        "y": 16
       },
       "id": 190,
       "options": {
@@ -2561,7 +2561,7 @@
         "content": "",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -2583,7 +2583,7 @@
         "h": 3,
         "w": 3,
         "x": 0,
-        "y": 20
+        "y": 17
       },
       "id": 86,
       "options": {
@@ -2595,7 +2595,7 @@
         "content": "<table style=\"width:100%; height:100%;border:0px solid black;\">\n  <td style=\"text-align: center;vertical-align: middle;border:0px solid black; \"><p style=\"font-weight: bold;\">$instances</p>\n  </td>\n</table>",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -2635,7 +2635,7 @@
         "h": 3,
         "w": 3,
         "x": 3,
-        "y": 20
+        "y": 17
       },
       "id": 30,
       "options": {
@@ -2653,7 +2653,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -2695,7 +2695,7 @@
         "h": 3,
         "w": 3,
         "x": 6,
-        "y": 20
+        "y": 17
       },
       "id": 24,
       "options": {
@@ -2713,7 +2713,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -2755,7 +2755,7 @@
         "h": 3,
         "w": 3,
         "x": 9,
-        "y": 20
+        "y": 17
       },
       "id": 57,
       "options": {
@@ -2773,7 +2773,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -2815,7 +2815,7 @@
         "h": 3,
         "w": 3,
         "x": 12,
-        "y": 20
+        "y": 17
       },
       "id": 26,
       "options": {
@@ -2833,7 +2833,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -2874,7 +2874,7 @@
         "h": 3,
         "w": 3,
         "x": 15,
-        "y": 20
+        "y": 17
       },
       "id": 47,
       "options": {
@@ -2892,7 +2892,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -2933,7 +2933,7 @@
         "h": 3,
         "w": 3,
         "x": 18,
-        "y": 20
+        "y": 17
       },
       "id": 48,
       "options": {
@@ -2951,7 +2951,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -2992,7 +2992,7 @@
         "h": 3,
         "w": 3,
         "x": 21,
-        "y": 20
+        "y": 17
       },
       "id": 56,
       "options": {
@@ -3010,7 +3010,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeat": "instances",
       "repeatDirection": "v",
       "targets": [
@@ -3058,7 +3058,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 23
       },
       "id": 150,
       "options": {
@@ -3074,7 +3074,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.5.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -3152,7 +3152,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 38
+        "y": 32
       },
       "id": 10,
       "panels": [
@@ -3838,7 +3838,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 39
+        "y": 33
       },
       "id": 35,
       "panels": [
@@ -4398,7 +4398,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 40
+        "y": 34
       },
       "id": 37,
       "panels": [
@@ -4698,7 +4698,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 41
+        "y": 35
       },
       "id": 18,
       "panels": [
@@ -5075,7 +5075,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 42
+        "y": 36
       },
       "id": 231,
       "panels": [
@@ -5289,7 +5289,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 43
+        "y": 37
       },
       "id": 239,
       "panels": [
@@ -5401,7 +5401,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 44
+        "y": 38
       },
       "id": 293,
       "panels": [
@@ -5634,8 +5634,8 @@
       {
         "current": {
           "selected": false,
-          "text": "default",
-          "value": "default"
+          "text": "Prometheus-platform",
+          "value": "Prometheus-platform"
         },
         "hide": 0,
         "includeAll": false,
@@ -5651,27 +5651,22 @@
         "type": "datasource"
       },
       {
-        "current": {
-          "selected": false,
-          "text": "database",
-          "value": "database"
-        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus-platform"
         },
-        "definition": "cnpg_collector_up",
+        "definition": "label_values(exported_namespace)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "namespace",
         "options": [],
         "query": {
-          "query": "cnpg_collector_up",
-          "refId": "StandardVariableQuery"
+          "query": "label_values(exported_namespace)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
-        "regex": "/namespace=\"(?<text>[^\"]+)/g",
+        "regex": "/(.*team\\-*.*)/",
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
@@ -5679,8 +5674,8 @@
       {
         "current": {
           "selected": false,
-          "text": "database-clustermarket-database",
-          "value": "database-clustermarket-database"
+          "text": "my-db",
+          "value": "my-db"
         },
         "datasource": {
           "type": "prometheus",
@@ -5742,8 +5737,8 @@
     "nowDelay": ""
   },
   "timezone": "",
-  "title": "Postgresql Databases ",
+  "title": "Postgresql Databases",
   "uid": "z7FCA4Nnk",
-  "version": 9,
+  "version": 2,
   "weekStart": ""
 }
