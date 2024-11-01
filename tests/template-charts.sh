@@ -1,0 +1,1 @@
+for chart in quickstart-*; do helm template $chart $chart --values=tests/test-values.yaml --output-dir  tests/output/$chart; done
