@@ -18,10 +18,22 @@ env: []
   # - name: TARGET
   #   value: VALUE
 
-## @param annotations Annotations for pods
-## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+## @param annotations for Knative
 ##
-podAnnotations: {}
+annotations: {}
+  ## See https://knative.dev/docs/serving/autoscaling/ for all autoscaling annotations
+  ## Use HPA instead of KPA (default)
+  # autoscaling.knative.dev/class: "kpa.autoscaling.knative.dev"
+  ## Configure metrics
+  # autoscaling.knative.dev/metric: "concurrency"
+  # autoscaling.knative.dev/target-utilization-percentage: "70"
+  ## Scale to zero
+  ## Default scale-to-zero-grace-period is set to 60s
+  ## Scale to zero last retention period
+  # autoscaling.knative.dev/scale-to-zero-pod-retention-period: "1m5s"
+  ## Stable window
+  ## Default stable-window is set to 600s
+  # autoscaling.knative.dev/window: "40s"
 
 ## @param labels Additional labels for pods
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
@@ -32,15 +44,6 @@ podLabels: {}
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 ##
 commonLabels: {}
-
-## @param autoscaling Set autoscaling annotations for the Knative service
-## Will set the following annotations:
-## autoscaling.knative.dev/min-scale: "minReplicas"
-## autoscaling.knative.dev/max-scale: "maxReplicas"
-##
-autoscaling:
-  minReplicas: 0
-  maxReplicas: 10
 
 ## Pods Service Account
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
@@ -59,6 +62,8 @@ serviceAccount:
   ##   - myRegistryKeySecretName
   ##
   imagePullSecrets: []
+  ## Add the harbor-pullsecret when pulling from a private local Harbor registry
+  # - name: harbor-pullsecret
 
 ## Container liveness probe.
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes

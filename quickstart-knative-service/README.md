@@ -6,12 +6,17 @@ The `quickstart-knative-service` Helm chart can be used to create a Knative `Ser
 
 The Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by Application Platform for LKE to get started quickly, but they can also be modified depending on your requirements or be removed from the Catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the platform administrator.
 
+## Using public vs. private registries
+
+To enable Knative to pull images from public repositories, the `harbor-pullsecret` is not added to the `serviceAccount`. Add the `harbor-pullsecret` to pull images from the Team's private image repository.
+
 ## How to use this quick start
 
 1. Create a Build and copy the image repository name of the build (see list of builds)
 2. Go to the `values` tab and fill in a name for your Workload
 3. Add the image repository name of the Build to the `image.repository` parameter value
 4. Add the tag of the Build to the `image.tag` parameter value
+5. Add the `harbor-pullsecret` pull secret to the service account
 5. Optional: Change other parameter values as required
 
 ## Prerequisites
@@ -41,11 +46,11 @@ To use this Helm chart:
 |------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
 | `pullPolicy` | Image pull policy. Choose between `always`, `never` or (default) `IfNotPresent`                                    | `IfNotPresent`  |
 | `env` | Environment variables for containers                                                                                      | `[]`            |
-| `podAnnotations` | Additional Annotations for pods                                                                                | `{}`            |
+| `annotations` | Additional Annotations. See https://knative.dev/docs/serving/autoscaling/ for all auto scaling annotations        | `{}`            |
 | `podLabels` | Additional labels for pods                                                                                          | `{}`            |
 | `commonLabels` | Additional labels for all resources                                                                              | `{}`            |
 | `serviceAccount.annotations` | Annotations for the service account                                                                | `{}`            |
-| `serviceAccount.imagePullSecrets` | Image pull secrets. Only add when using external registries (not the local harbor).           | `[]`            |
+| `serviceAccount.imagePullSecrets` | Image pull secrets. Configure when using the Team local Harbor repository                     | `[]`            |
 | `livenessProbe` | Container liveness probe                                                                                        | `path=/` `port=http1` |
 | `readinessProbe` | Container readiness probe                                                                                      | `{}`            |
 | `containerSecurityContext` | Container security context                                                                           | `{}`            |
