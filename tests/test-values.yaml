@@ -1,0 +1,19 @@
+image:
+  tag: v1.0.0
+  repository: https://test/local
+
+versionTwo:
+  ## @param image.repository your v2 image repository
+  ## @param image.tag image tag (immutable tags are recommended)
+  image:
+    tag: v2.0.0
+    repository: https://test/local
+versionOne:
+  ## @param image.repository your v2 image repository
+  ## @param image.tag image tag (immutable tags are recommended)
+  image:
+    tag: v1.0.0
+    repository: https://test/local
+
+serviceMonitor:
+  create: true
