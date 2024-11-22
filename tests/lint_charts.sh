@@ -1,0 +1,1 @@
+for chart in quickstart-*; do helm lint $chart $chart --values=tests/test-values.yaml; done;
