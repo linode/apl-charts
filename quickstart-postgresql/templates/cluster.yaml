@@ -22,7 +22,7 @@ spec:
       database: {{ include "postgresql.fullname" . }}
       dataChecksums: {{ .Values.bootstrap.initdb.dataChecksums }}
   primaryUpdateStrategy: {{ .Values.primaryUpdateStrategy }}
-  imageName: ghcr.io/cloudnative-pg/postgresql:15.3
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.0
   storage:
     {{- with .Values.storage.storageClass }}
     storageClass: {{ . }}
