@@ -7,6 +7,12 @@ fullnameOverride: ''
 ## default set to 2 for smooth migration between nodes
 instances: 2
 
+## @param postgresMajor Major version of PostgreSQL to be used
+## This specifies the major version of PostgreSQL to deploy. 
+## Ensure compatibility with any extensions or configuration settings.
+## Allowed values are 15 and 17.
+postgresMajor: 17
+
 # @param primaryUpdateStrategy Rolling update strategy
 # Select between unsupervised (automated update of the primary once all
 # replicas have been upgraded) or supervised (requires manual supervision to perform
