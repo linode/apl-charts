@@ -22,7 +22,11 @@ spec:
       database: {{ include "postgresql.fullname" . }}
       dataChecksums: {{ .Values.bootstrap.initdb.dataChecksums }}
   primaryUpdateStrategy: {{ .Values.primaryUpdateStrategy }}
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.2
+  imageCatalogRef:
+    apiGroup: postgresql.cnpg.io
+    kind: ClusterImageCatalog
+    name: platform
+    major: {{ .Values.postgresMajor }}
   storage:
     {{- with .Values.storage.storageClass }}
     storageClass: {{ . }}
