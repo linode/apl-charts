@@ -11,7 +11,23 @@ instances: 2
 ## This specifies the major version of PostgreSQL to deploy. 
 ## Ensure compatibility with any extensions or configuration settings.
 ## Allowed values are 15 and 17.
-postgresMajor: 17
+
+
+## @param imageName Fully qualified image name for the PostgreSQL container
+## When set, this takes precedence over the `imageCatalogRef` parameter.
+## Use this to specify an exact container image for deployment.
+## Set to `null` if `imageCatalogRef` should be used instead.
+imageName: null
+
+## @param imageCatalogRef Reference to a ClusterImageCatalog resource for PostgreSQL
+## Specifies the catalog reference for resolving the PostgreSQL container image.
+## Ignored if `imageName` is set.
+## Use this to dynamically resolve the image based on the catalog. More info: https://cloudnative-pg.io/documentation/1.24/image_catalog/
+imageCatalogRef:
+  apiGroup: postgresql.cnpg.io
+  kind: ClusterImageCatalog
+  name: platform
+  major: 17
 
 # @param primaryUpdateStrategy Rolling update strategy
 # Select between unsupervised (automated update of the primary once all

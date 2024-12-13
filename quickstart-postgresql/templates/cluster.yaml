@@ -22,11 +22,11 @@ spec:
       database: {{ include "postgresql.fullname" . }}
       dataChecksums: {{ .Values.bootstrap.initdb.dataChecksums }}
   primaryUpdateStrategy: {{ .Values.primaryUpdateStrategy }}
-  imageCatalogRef:
-    apiGroup: postgresql.cnpg.io
-    kind: ClusterImageCatalog
-    name: platform
-    major: {{ .Values.postgresMajor }}
+  {{- with .Values.imageName }}
+  imageName: {{ . }}
+  {{- else }}
+  imageCatalogRef: {{ .Values.imageCatalogRef | toYaml | nindent 4 }}
+  {{- end }}
   storage:
     {{- with .Values.storage.storageClass }}
     storageClass: {{ . }}
