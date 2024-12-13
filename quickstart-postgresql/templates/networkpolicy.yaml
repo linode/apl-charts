@@ -17,9 +17,6 @@ spec:
         - namespaceSelector:
             matchLabels:
               name: cnpg-system
-          podSelector:
-            matchLabels:
-              app.kubernetes.io/name: cloudnative-pg
         - namespaceSelector:
             matchLabels:
               name: {{ .Release.Namespace }}
