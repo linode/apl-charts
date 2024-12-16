@@ -16,6 +16,9 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
+              name: cnpg-system
+        - namespaceSelector:
+            matchLabels:
               name: {{ .Release.Namespace }}
           podSelector:
             matchLabels:
