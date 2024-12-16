@@ -22,7 +22,11 @@ spec:
       database: {{ include "postgresql.fullname" . }}
       dataChecksums: {{ .Values.bootstrap.initdb.dataChecksums }}
   primaryUpdateStrategy: {{ .Values.primaryUpdateStrategy }}
-  imageName: ghcr.io/cloudnative-pg/postgresql:15.3
+  {{- with .Values.imageName }}
+  imageName: {{ . }}
+  {{- else }}
+  imageCatalogRef: {{ .Values.imageCatalogRef | toYaml | nindent 4 }}
+  {{- end }}
   storage:
     {{- with .Values.storage.storageClass }}
     storageClass: {{ . }}
