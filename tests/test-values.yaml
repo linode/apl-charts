@@ -17,7 +17,9 @@ versionOne:
 
 serviceMonitor:
   create: true
-
+  endpoints:
+    - port: metrics
+      path: /metrics
 
 annotations:
   a1: 'a1-test'

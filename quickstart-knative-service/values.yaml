@@ -184,3 +184,5 @@ serviceMonitor:
   ## The service monitor is configured to use the private team Prometheus instance
   ## See: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#podmetricsendpoint
   endpoints: []
+    # - port: metrics
+    #   path: /metrics
