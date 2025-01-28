@@ -17,3 +17,13 @@ versionOne:
 
 serviceMonitor:
   create: true
+
+
+annotations:
+  a1: 'a1-test'
+  a2: 'a2-test'
+
+
+podLabels:
+  l1: 'l1-test'
+  l2: 'l2-test'
