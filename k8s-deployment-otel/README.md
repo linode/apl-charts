@@ -1,18 +1,31 @@
-# Quick start for creating a regular workload
+# Quick start for creating a regular workload with OpenTelemetry instrumentation
 
-The `quickstart-k8s-deployment` Helm chart can be used to create a Kubernetes `Deployment` (to deploy a single image), a `Service` and a `ServiceAccount`. Optionally a `HorizontalPodAutoscaler`, a Prometheus `ServiceMonitor` and a `Configmap` can be created.
+The `k8s-deployment-otel` Helm chart can be used to create a Kubernetes `Deployment` (to deploy a single image), a `Service`, a `ServiceAccount`and an `Instrumentation` CR to auto instrument the application only . Optionally a `HorizontalPodAutoscaler`, a Prometheus `ServiceMonitor` and a `Configmap` can be created.
 
-## About Application Platform for LKE quick starts
+## About the quick starts
 
 The Catalog is a library of curated Helm charts to create Kubernetes resources. By default the Catalog contains a set of Helm charts provided by Application Platform for LKE to get started quickly, but they can also be modified depending on your requirements or be removed from the Catalog. The contents of the Catalog and the RBAC configuration (which Team can use which Helm chart) are managed by the platform administrator.
 
 ## How to use this quick start
 
-1.  Create a Build and copy the image repository name of the build (see list of builds)
-2.  Go to the `values` tab and fill in a name for your Workload
-3.  Add the image repository name of the Build to the `image.repository` parameter value
-4.  Add the tag of the Build to the `image.tag` parameter value
-5.  Optional: Change other parameter values as required
+1. Create a Build and copy the image repository name of the build (see list of builds)
+2. Go to the `values` tab and fill in a name for your Workload
+3. Add the image repository name of the Build to the `image.repository` parameter value
+4. Add the tag of the Build to the `image.tag` parameter value
+5. Add the `instrumentation.language`. Choose between `java`, `dotnet`, `python` or `nodejs`
+5. Optional: Change other parameter values as required
+
+## Prerequisites
+
+To use this Helm chart:
+
+- Make sure the administrator has enabled `OpenTelemetry`
+
+To see traces:
+
+- Make sure the administrator configured `Istio` for tracing
+- Make sure the administrator has enabled `Loki` and `Tempo`
+- Make sure `Grafana` is enabled for the Team (see Settings, Managed monitoring)
 
 ## Parameters
 
@@ -27,7 +40,7 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources. 
 
 | Name               | Description                                                                                                    | Value           |
 |--------------------|----------------------------------------------------------------------------------------------------------------|-----------------|
-| `fullnameOverride` | Used by Application Platform for LKE to set the name of all resources using the workload name                  | `""`            |
+| `fullnameOverride` | Used by Application Platform for LKE to set the name of all resources using the workload name                | `""`            |
 
 ### Optional parameters
 
@@ -46,7 +59,7 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources. 
 | `containerSecurityContext` | Container security context                                                                           | `{}`            |
 | `containerPorts` | Configures the container ports to listens on.                                                                  | `8080`          |
 | `servicePorts` | Configures the service ports to listens on. Exposes on port 80 by default, using the http port of the pod.       | `80`            |
-| `resources` | Container resource requests and limits                                                                            | `{}`            |
+| `resources` | Container resource requests and limits                                                                              | `{}`            |
 | `nodeSelector` | Node labels for pod assignment                                                                                   | `{}`            |
 | `tolerations` | Tolerations for pod assignment                                                                                    | `[]`            |
 | `affinity` | Affinity for pod assignment                                                                                          | `{}`            |
@@ -66,3 +79,7 @@ The Catalog is a library of curated Helm charts to create Kubernetes resources. 
 | `configmap.create` | Set to true to create a configMap                                                                            | `false`         |
 | `configmap.mountPath` | Path to mount the configmap to                                                                            | `/etc/config`   |
 | `configmap.data` | Key value pairs stored in the configmap                                                                        | `{}`            |
+| `instrumentation.enabled` | Enable instrumentation to create instrumentation resources and add required annotations               | `true`          |
+| `instrumentation.language` | The Language libraries used for instrumentation                                                      | `java`          |
+| `instrumentation.image` | The image used for auto-instrumentation | `""`
+| `sampler.type` | Defines sampling configuration                                                                                   | `always_on`     |

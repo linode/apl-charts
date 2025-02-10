@@ -1,6 +1,6 @@
 # Quick start for creating a PostgreSQL cluster
 
-The `quickstart-postgresql` Helm chart can be used to create a CloudNativePG PostgreSQL `Cluster`. Optionally a Prometheus `PodMonitor` and a `Configmap` (for adding a postgresql dashboard to Grafana) can be created.
+The `postgresql-cluster` Helm chart can be used to create a CloudNativePG PostgreSQL `Cluster`. Optionally a Prometheus `PodMonitor` and a `Configmap` (for adding a postgresql dashboard to Grafana) can be created.
 
 ## About the Quick starts
 

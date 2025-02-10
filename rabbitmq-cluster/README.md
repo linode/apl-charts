@@ -1,6 +1,6 @@
 # Quick start for creating a RabbitMQ cluster and/or Queues
 
-The `rabbitmq` Helm chart can be used to create:
+The `rabbitmq-cluster` Helm chart can be used to create:
 - A RabbitMQ cluster
 - Queues
 - Policies

@@ -1,6 +1,6 @@
 # Quick start for creating a Redis master-replica cluster
 
-The `quickstart-redis` Helm chart can be used to create master-replica Redis cluster. The `replicaCount` for the replica's by default is set to `1`.
+The `redis-cluster` Helm chart can be used to create master-replica Redis cluster. The `replicaCount` for the replica's by default is set to `1`.
 
 ## About the quick starts
 

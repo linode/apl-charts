@@ -1,6 +1,0 @@
-apiVersion: v2
-name: quickstart-k8s-deployments-canary
-description: APL provided quick start Helm chart for 2 Kubernetes Deployments
-version: 1.2.0
-appVersion: "2.0.0"
-icon: https://linode.github.io/apl-charts/icons/canary.png
