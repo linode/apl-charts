@@ -1,6 +1,6 @@
 apiVersion: v2
-name: quickstart-rabbitmq
-description: A Helm chart for a RabbitmqCluster
+name: rabbitmq-cluster
+description: App Platform quick start Helm chart for creating a RabbitMQ cluster
 
 # A chart can be either an 'application' or a 'library' chart.
 #
