@@ -1,0 +1,10 @@
+## Add the subjects for the kubeflow-pipelines-cache-deployer-clusterrolebinding
+## Add the subject for each team that uses kubeflow pipelines
+## Only change the namespace!
+subjects: 
+  - kind: ServiceAccount
+    name: kubeflow-pipelines-cache-deployer-sa
+    namespace: team-1
+  # - kind: ServiceAccount
+  #   name: kubeflow-pipelines-cache-deployer-sa
+  #   namespace: team-2
