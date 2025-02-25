@@ -1,0 +1,7 @@
+apiVersion: v2
+name: kubeflow-pipelines
+description: Kubeflow cluster wide resources
+type: application
+version: 1.0.0
+appVersion: "2.3.0"
+icon: https://linode.github.io/apl-charts/icons/kubeflow.png
