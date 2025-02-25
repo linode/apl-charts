@@ -1,0 +1,70 @@
+## Create a bucket and an Access Key in Linode.
+## Create a sealedSecret and add the Access Key and Secret Key:
+## name: kubeflow-pipelines-obj-keys
+## keys:
+##  accesskey:
+##  secretkey:
+objectStorage:
+  ## The Linode Region where the bucket is created
+  region: us-ord-1
+  ## The name of the bucket
+  bucket: mlpipeline
+  insecure: false
+  ## Adjust the secretName if a different name is used for the sealedSecrets.
+  secretName: "kubeflow-pipelines-obj-keys"
+
+## Adjust the secretName if a different name is used for the sealedSecrets.
+
+database:
+  postgresClusterName: kubeflow-pipelines
+  metadataDbName: mlmdpostgres
+  pipelineDbName: mlpipeline
+  secret: kubeflow-pipelines-app
+
+
+
+
+apiVersion: v1
+data:
+  POSTGRES_PASSWORD: cGFzc3dvcmQ=
+  POSTGRES_USER: cm9vdA==
+kind: Secret
+metadata:
+  labels:
+    application-crd-id: kubeflow-pipelines
+  name: metadata-postgres-db-secrets
+  namespace: kubeflow
+type: Opaque
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    application-crd-id: kubeflow-pipelines
+  name: mlpipeline-minio-artifact
+  namespace: kubeflow
+stringData:
+  accesskey: minio
+  secretkey: minio123
+---
+apiVersion: v1
+data:
+  root_password: password
+kind: Secret
+metadata:
+  labels:
+    application-crd-id: kubeflow-pipelines
+  name: postgres-secret
+  namespace: kubeflow
+type: Opaque
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    application-crd-id: kubeflow-pipelines
+  name: postgres-secret-extended
+  namespace: kubeflow
+stringData:
+  password: password
+  username: user

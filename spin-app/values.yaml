@@ -1,0 +1,89 @@
+
+## @param fullnameOverride String to fully override deployment.fullname template
+## Used by APL to set the name for all resources based on the workload name
+##
+fullnameOverride: ""
+## @param image.repository your image repository
+## @param image.tag image tag (immutable tags are recommended)
+## @param image.pullPolicy image pull policy
+##
+image:
+  repository: ""
+  tag: ""
+
+## @param replicaCount Number of replicas to deploy
+##
+replicaCount: 2
+
+## @param env Environment variables for the container
+##
+env: []
+  # - name: TARGET
+  #   value: VALUE
+  # - name: DB_PASSWORD
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: user
+  #       key: password
+
+## @param labels Additional labels for all resources
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+##
+commonLabels: {}
+
+## EnableAutoscaling indicates whether the app is allowed to autoscale. If true then the operator leaves 
+## the replica count of the underlying deployment to be managed by an external autoscaler (HPA/KEDA). 
+## Replicas cannot be defined if this is enabled. By default EnableAutoscaling is false.
+enableAutoscaling: false
+
+## Containers' resource requests and limits
+## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+## You can change default resource request in the workload values. This increases the chance the charts will run on environments with little
+## resources, such as Minikube.
+## @param resources.limits The resources limits for the container
+## @param resources.requests The requested resources for the container
+##
+resources: {}
+  # limits:
+  #    cpu: 300m
+  #    memory: 128Mi
+  # requests:
+  #    cpu: 100m
+  #    memory: 32Mi
+
+volumeMounts: []
+  # - name: my-secret
+  #   mountPath: /secrets
+  #   readOnly: true
+  # - mountPath: /tmp
+  #   name: tmp
+  # - name: config-volume
+  #   mountPath: /etc/config
+
+## @param Volumes A list of volumes to be added to the pod
+##
+volumes: []
+  # - name: my-secret
+  #   secret:
+  #     secretName: my-secret
+  # - name: tmp
+  #   emptyDir: {}
+  # - name: config-volume
+  #   configMap:
+  #     name: special-config
+
+## Container liveness probe.
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+##
+livenessProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
+
+## Container readiness probe.
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+##
+readinessProbe: {}
+  # httpGet:
+  #   path: /
+  #   port: http

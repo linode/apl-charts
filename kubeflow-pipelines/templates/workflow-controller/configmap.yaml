@@ -1,0 +1,26 @@
+apiVersion: v1
+data:
+  artifactRepository: |
+    archiveLogs: true
+    s3:
+      endpoint: "us-ord-1.linodeobjects.com:443"
+      bucket: "mlpipeline"
+      keyFormat: "artifacts/{{`{{workflow.name}}`}}/{{`{{workflow.creationTimestamp.Y}}`}}/{{`{{workflow.creationTimestamp.m}}`}}/{{`{{workflow.creationTimestamp.d}}`}}/{{`{{pod.name}}`}}"
+      # insecure will disable TLS. Primarily used for minio installs not configured with TLS
+      insecure: false
+      accessKeySecret:
+        name: {{ .Values.objectStorage.secret }}
+        key: accesskey
+      secretKeySecret:
+        name: {{ .Values.objectStorage.secret }}
+        key: secretkey
+  executor: |
+    imagePullPolicy: IfNotPresent
+kind: ConfigMap
+metadata:
+  annotations:
+    internal.kpt.dev/upstream-identifier: '|ConfigMap|default|workflow-controller-configmap'
+  labels:
+    application-crd-id: kubeflow-pipelines
+  name: workflow-controller-configmap
+---

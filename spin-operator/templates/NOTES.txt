@@ -1,0 +1,26 @@
+spin-operator {{ .Chart.Version }} is now deployed!
+
+Your release is named {{ .Release.Name }}.
+
+To learn more about the release, try:
+
+  $ helm --namespace {{ .Release.Namespace }} status {{ .Release.Name }}
+  $ helm --namespace {{ .Release.Namespace }} get all {{ .Release.Name }}
+
+Note: spin-operator requires a few additional resources to be present on the
+Kubernetes cluster before it can run the first Spin application. If you haven't
+already done so, please ensure the following:
+
+1. Install the containerd-shim-spin SpinAppExecutor:
+
+  $ kubectl apply -f https://github.com/spinkube/spin-operator/releases/download/v{{ .Chart.Version }}/spin-operator.shim-executor.yaml
+
+2. Install the wasmtime-spin-v2 RuntimeClass:
+
+  $ kubectl apply -f https://github.com/spinkube/spin-operator/releases/download/v{{ .Chart.Version }}/spin-operator.runtime-class.yaml
+
+You are now ready to deploy your first Spin app!
+
+For further details, see this chart's README:
+
+  $ helm show readme oci://ghcr.io/spinkube/charts/spin-operator
