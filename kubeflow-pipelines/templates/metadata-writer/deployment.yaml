@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
+  labels: {{- include "kfp.labels" . | nindent 4 }}
     app: metadata-writer
     application-crd-id: kubeflow-pipelines
   name: metadata-writer
@@ -13,7 +13,7 @@ spec:
       application-crd-id: kubeflow-pipelines
   template:
     metadata:
-      labels:
+      labels: {{- include "kfp.labels" . | nindent 8 }}
         app: metadata-writer
         application-crd-id: kubeflow-pipelines
         sidecar.istio.io/inject: "false"

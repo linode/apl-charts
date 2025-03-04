@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
+  labels: {{- include "kfp.labels" . | nindent 4 }}
     application-crd-id: kubeflow-pipelines
     component: metadata-grpc-server
-  name: metadata-grpc-deployment
+  name: metadata-grpc
 spec:
   replicas: 1
   selector:
@@ -13,7 +13,7 @@ spec:
       component: metadata-grpc-server
   template:
     metadata:
-      labels:
+      labels: {{- include "kfp.labels" . | nindent 8 }}
         application-crd-id: kubeflow-pipelines
         component: metadata-grpc-server
         sidecar.istio.io/inject: "false"

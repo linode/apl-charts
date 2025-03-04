@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
+  labels: {{- include "kfp.labels" . | nindent 4 }}
     app: ml-pipeline-scheduledworkflow
     application-crd-id: kubeflow-pipelines
   name: ml-pipeline-scheduledworkflow
@@ -14,7 +14,7 @@ spec:
     metadata:
       annotations:
         cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
-      labels:
+      labels: {{- include "kfp.labels" . | nindent 8 }}
         app: ml-pipeline-scheduledworkflow
         application-crd-id: kubeflow-pipelines
         sidecar.istio.io/inject: "false"

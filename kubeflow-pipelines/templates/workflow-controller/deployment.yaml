@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     internal.kpt.dev/upstream-identifier: apps|Deployment|default|workflow-controller
-  labels:
+  labels: {{- include "kfp.labels" . | nindent 4 }}
     application-crd-id: kubeflow-pipelines
   name: workflow-controller
 spec:
@@ -13,7 +13,7 @@ spec:
       application-crd-id: kubeflow-pipelines
   template:
     metadata:
-      labels:
+      labels: {{- include "kfp.labels" . | nindent 8 }}
         app: workflow-controller
         application-crd-id: kubeflow-pipelines
         sidecar.istio.io/inject: "false"

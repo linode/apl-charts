@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
+  labels: {{- include "kfp.labels" . | nindent 4 }}
     app: cache-deployer
     application-crd-id: kubeflow-pipelines
-  name: cache-deployer-deployment
+  name: cache-deployer
 spec:
   replicas: 1
   selector:
@@ -15,7 +15,7 @@ spec:
     type: Recreate
   template:
     metadata:
-      labels:
+      labels: {{- include "kfp.labels" . | nindent 8 }}
         app: cache-deployer
         application-crd-id: kubeflow-pipelines
         sidecar.istio.io/inject: "false"
