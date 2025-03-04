@@ -3,10 +3,10 @@ rbac:
   k8s-deployment-otel: null
   k8s-deployments-canary: null
   knative-service: null
-  postgresql: null
   redis-cluster: null
   rabbitmq-cluster: null
   spin-app: null
+  postgresql-cluster: null
   spin-operator:
     - team-admin
   spin-shim-executor:
@@ -16,4 +16,4 @@ rbac:
   kubeflow-pipelines:
     - team-admin
 betaCharts:
-  - quickstart-rabbitmq
+  - rabbitmq-cluster
