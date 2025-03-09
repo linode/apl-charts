@@ -6,7 +6,7 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: kubeflow-pipelines-cache-deployer-clusterrole
-{{- with .Values.subjects }}
 subjects:
-{{- toYaml . | nindent 0 }}
-{{- end }} 
+- kind: ServiceAccount
+  name: kubeflow-pipelines-cache-deployer-sa
+  namespace: {{ .Release.Namespace }}

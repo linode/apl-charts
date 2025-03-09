@@ -85,6 +85,9 @@ spec:
         image: gcr.io/ml-pipeline/cache-server:{{ .Chart.AppVersion }}
         imagePullPolicy: Always
         name: server
+        {{- with .Values.cacheServer.resources }}
+        resources: {{- . | toYaml | nindent 12 }}
+        {{- end }}
         ports:
         - containerPort: 8443
           name: webhook-api

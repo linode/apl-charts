@@ -63,6 +63,9 @@ spec:
             port: grpc-api
           timeoutSeconds: 2
         name: container
+        {{- with .Values.metadataGrpc.resources }}
+        resources: {{- . | toYaml | nindent 12 }}
+        {{- end }}
         ports:
         - containerPort: 8080
           name: grpc-api

@@ -70,10 +70,9 @@ spec:
           initialDelaySeconds: 3
           periodSeconds: 5
           timeoutSeconds: 2
-        resources:
-          requests:
-            cpu: 200m
-            memory: 128Mi
+        {{- with .Values.mlPipelineUi.resources }}
+        resources: {{- . | toYaml | nindent 12 }}
+        {{- end }}
         volumeMounts:
         - mountPath: /etc/config
           name: config-volume

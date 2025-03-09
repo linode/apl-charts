@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    internal.kpt.dev/upstream-identifier: apps|Deployment|default|workflow-controller
+    internal.kpt.dev/upstream-identifier: apps|Deployment|{{ .Release.Namespace }}|workflow-controller
   labels: {{- include "kfp.labels" . | nindent 4 }}
     application-crd-id: kubeflow-pipelines
   name: workflow-controller

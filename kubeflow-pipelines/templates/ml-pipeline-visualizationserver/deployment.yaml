@@ -50,9 +50,8 @@ spec:
           initialDelaySeconds: 3
           periodSeconds: 5
           timeoutSeconds: 2
-        resources:
-          requests:
-            cpu: 30m
-            memory: 500Mi
+        {{- with .Values.mlPipelineVisualizationserver.resources }}
+        resources: {{- . | toYaml | nindent 12 }}
+        {{- end }}
       serviceAccountName: ml-pipeline-visualizationserver
 ---

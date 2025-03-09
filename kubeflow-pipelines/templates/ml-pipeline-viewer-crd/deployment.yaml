@@ -30,5 +30,8 @@ spec:
         image: gcr.io/ml-pipeline/viewer-crd-controller:{{ .Chart.AppVersion }}
         imagePullPolicy: Always
         name: ml-pipeline-viewer-crd
+        {{- with .Values.mlPipelineViewer.resources }}
+        resources: {{- . | toYaml | nindent 12 }}
+        {{- end }}
       serviceAccountName: ml-pipeline-viewer-crd-service-account
 ---

@@ -26,5 +26,8 @@ spec:
               fieldPath: metadata.namespace
         image: gcr.io/ml-pipeline/metadata-writer:{{ .Chart.AppVersion }}
         name: main
+        {{- with .Values.metadataWriter.resources }}
+        resources: {{- . | toYaml | nindent 12 }}
+        {{- end }}
       serviceAccountName: kubeflow-pipelines-metadata-writer
 ---

@@ -19,7 +19,7 @@ data:
 kind: ConfigMap
 metadata:
   annotations:
-    internal.kpt.dev/upstream-identifier: '|ConfigMap|default|workflow-controller-configmap'
+    internal.kpt.dev/upstream-identifier: '|ConfigMap|{{ .Release.Namespace }}|workflow-controller-configmap'
   labels:
     application-crd-id: kubeflow-pipelines
   name: workflow-controller-configmap

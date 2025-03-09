@@ -29,6 +29,9 @@ spec:
         image: gcr.io/ml-pipeline/cache-deployer:{{ .Chart.AppVersion }}
         imagePullPolicy: Always
         name: main
+        {{- with .Values.cacheDeployer.resources }}
+        resources: {{- . | toYaml | nindent 10 }}
+        {{- end }}
       restartPolicy: Always
       serviceAccountName: kubeflow-pipelines-cache-deployer-sa
 ---

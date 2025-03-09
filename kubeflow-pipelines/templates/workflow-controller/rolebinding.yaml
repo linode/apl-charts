@@ -2,7 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   annotations:
-    internal.kpt.dev/upstream-identifier: rbac.authorization.k8s.io|RoleBinding|default|argo-binding
+    internal.kpt.dev/upstream-identifier: rbac.authorization.k8s.io|RoleBinding|{{ .Release.Namespace }}|argo-binding
   labels:
     application-crd-id: kubeflow-pipelines
   name: argo-binding

@@ -34,10 +34,9 @@ spec:
         image: gcr.io/ml-pipeline/persistenceagent:{{ .Chart.AppVersion }}
         imagePullPolicy: IfNotPresent
         name: ml-pipeline-persistenceagent
-        resources:
-          requests:
-            cpu: 120m
-            memory: 500Mi
+        {{- with .Values.mlPipelinePersistenceagent.resources }}
+        resources: {{- . | toYaml | nindent 12 }}
+        {{- end }}
         volumeMounts:
         - mountPath: /var/run/secrets/kubeflow/tokens
           name: persistenceagent-sa-token

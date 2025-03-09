@@ -14,6 +14,7 @@ spec:
   template:
     metadata:
       annotations:
+        sidecar.istio.io/inject: "false"
       labels: {{- include "kfp.labels" . | nindent 8 }}
         application-crd-id: kubeflow-pipelines
         component: metadata-envoy
@@ -22,6 +23,9 @@ spec:
       containers:
       - image: gcr.io/ml-pipeline/metadata-envoy:{{ .Chart.AppVersion }}
         name: container
+        {{- with .Values.metadataEnvoy.resources }}
+        resources: {{- . | toYaml | nindent 12 }}
+        {{- end }}
         ports:
         - containerPort: 9090
           name: md-envoy
