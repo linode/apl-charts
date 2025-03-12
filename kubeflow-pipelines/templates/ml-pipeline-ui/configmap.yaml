@@ -10,7 +10,7 @@ data:
                 "name": "AWS_ACCESS_KEY_ID",
                 "valueFrom": {
                   "secretKeyRef": {
-                    "name": "{{ .Values.objectStorage.secret }}",
+                    "name": mlpipeline-minio-artifact,
                     "key": "accesskey"
                   }
                 }
@@ -19,7 +19,7 @@ data:
                 "name": "AWS_SECRET_ACCESS_KEY",
                 "valueFrom": {
                   "secretKeyRef": {
-                    "name": "{{ .Values.objectStorage.secret }}",
+                    "name": "mlpipeline-minio-artifact",
                     "key": "secretkey"
                   }
                 }

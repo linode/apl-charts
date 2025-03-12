@@ -21,4 +21,4 @@ version: 0.4.0
 # It is recommended to use it with quotes.
 # NOTE: this version is kept static in version control but is bumped when packaging and releasing
 appVersion: "v0.4.0"
-icon: https://avatars.githubusercontent.com/u/195972566?s=200&v=4
+icon: https://linode.github.io/apl-charts/icons/spinkube.png

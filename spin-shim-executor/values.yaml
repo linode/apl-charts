@@ -1,2 +1,2 @@
 openTelemetry:
-  enabled: "false"
+  enabled: false

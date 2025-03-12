@@ -26,8 +26,21 @@ spec:
         - --default-authentication-plugin=mysql_native_password
         - --disable-log-bin
         env:
-        - name: MYSQL_ALLOW_EMPTY_PASSWORD
-          value: "true"
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.mysql.secret }}
+              key: password
+        - name: MYSQL_DATABASE
+          value: wordpress
+        - name: MYSQL_USER
+          value: wordpress
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.mysql.secret }}
+              key: password
         image: gcr.io/ml-pipeline/mysql:8.0.26
         name: mysql
         ports:

@@ -27,12 +27,12 @@ spec:
           valueFrom:
             secretKeyRef:
               key: accesskey
-              name: {{ .Values.objectStorage.secret }}
+              name: mlpipeline-minio-artifact
         - name: MINIO_SECRET_KEY
           valueFrom:
             secretKeyRef:
               key: secretkey
-              name: {{ .Values.objectStorage.secret }}
+              name: mlpipeline-minio-artifact
         - name: ALLOW_CUSTOM_VISUALIZATIONS
           value: "true"
         - name: FRONTEND_SERVER_NAMESPACE

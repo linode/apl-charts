@@ -1,8 +1,10 @@
 # Application Platform for LKE Catalog quick starts
 
-This repository contains a set of Helm charts that will be made available as quick starts to all Teams in the Application Platform for LKE Catalog.
+This repository contains a set of curated Helm charts that will be made available as quick starts in the Application Platform for LKE Catalog.
 
-The following Helm charts are added to the Catalog:
+# Team Helm charts
+
+The following Helm charts are added to the Catalog and are available for Teams:
 
 ## Quick start for a regular K8s deployment
 
@@ -31,3 +33,36 @@ The `redis-cluster` Helm chart can be used to create a Redis master-replica clus
 ## Quick start for creating a RabbitMQ cluster
 
 The `rabbitmq-cluster` Helm chart can be used to create a RabbitMQ `cluster` with `queues` and `policies`.
+
+## Quickstart for creating a Spin App
+
+The `spin-app` Helm chart can be used to create a `SpinApp`. Using this chart requires the following Helm charts to be installed by a user with the `platform-admin` role:
+
+- [Kwasm Operator](https://github.com/KWasm/kwasm-operator/blob/kwasm-operator-chart-0.2.3/charts/kwasm-operator/Chart.yaml) This chart needs to be added to the Catalog first.
+- `spin-operator`
+- `spin-shim-executor`
+
+# Platform Helm charts
+
+The following Helm charts are added to the Catalog and are available for `platform-admins`:
+
+## Spin Operator
+
+Using this chart requires the following Helm charts to be installed by a user with the `platform-admin` role:
+
+- [Kwasm Operator](https://github.com/KWasm/kwasm-operator/blob/kwasm-operator-chart-0.2.3/charts/kwasm-operator/Chart.yaml) This chart needs to be added to the Catalog first.
+
+## Spin Shim Executor
+
+The `spin-shim-executor` Helm chart needs to be installed every Team that wants to create Spin Apps.
+
+## Kfp Cluster Resources
+
+Install the `kfp-cluster-resources` first before installing `kubeflow-pipelines`.
+
+## Kubeflow Pipelines
+
+Using this chart requires the following Helm charts to be installed by a user with the `platform-admin` role:
+
+- `kfp-cluster-resources`
+

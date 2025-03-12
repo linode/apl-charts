@@ -27,7 +27,7 @@ data:
   dbHost: mysql
   dbPort: "3306"
   dbType: mysql
-  defaultPipelineRoot: ""
+  defaultPipelineRoot: "minio://{{ .Values.objectStorage.bucket }}/v2/artifacts"
   mlmdDb: metadb
   mysqlHost: mysql
   mysqlPort: "3306"

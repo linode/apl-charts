@@ -7,13 +7,14 @@ rbac:
   rabbitmq-cluster: null
   spin-app: null
   postgresql-cluster: null
-  spin-operator:
-    - team-admin
-  spin-shim-executor:
-    - team-admin
-  kfp-cluster-resources:
-    - team-admin
-  kubeflow-pipelines:
-    - team-admin
+  spin-operator: []
+  spin-shim-executor: []
+  kfp-cluster-resources: []
+  kubeflow-pipelines: []
 betaCharts:
-  - rabbitmq-cluster
+  - spin-app
+  - spin-operator
+  - spin-shim-executor
+  - kubeflow-pipelines
+  - kfp-cluster-resources
+  - kubeflow-pipelines

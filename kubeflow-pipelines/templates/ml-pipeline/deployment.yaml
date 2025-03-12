@@ -36,12 +36,12 @@ spec:
           valueFrom:
             secretKeyRef:
               key: username
-              name: mysql-secret
+              name: {{ .Values.mysql.secret }}
         - name: DBCONFIG_PASSWORD
           valueFrom:
             secretKeyRef:
               key: password
-              name: mysql-secret
+              name: {{ .Values.mysql.secret }}
         - name: DBCONFIG_DBNAME
           valueFrom:
             configMapKeyRef:
@@ -71,12 +71,12 @@ spec:
           valueFrom:
             secretKeyRef:
               key: username
-              name: mysql-secret
+              name: {{ .Values.mysql.secret }}
         - name: DBCONFIG_MYSQLCONFIG_PASSWORD
           valueFrom:
             secretKeyRef:
               key: password
-              name: mysql-secret
+              name: {{ .Values.mysql.secret }}
         - name: DBCONFIG_MYSQLCONFIG_DBNAME
           valueFrom:
             configMapKeyRef:
@@ -96,12 +96,12 @@ spec:
           valueFrom:
             secretKeyRef:
               key: accesskey
-              name: {{ .Values.objectStorage.secret }}
+              name: mlpipeline-minio-artifact
         - name: OBJECTSTORECONFIG_SECRETACCESSKEY
           valueFrom:
             secretKeyRef:
               key: secretkey
-              name: {{ .Values.objectStorage.secret }}
+              name: mlpipeline-minio-artifact
         - name: OBJECTSTORECONFIG_SECURE
           value: "true"
         - name: OBJECTSTORECONFIG_BUCKETNAME
