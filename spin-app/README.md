@@ -1,7 +1,8 @@
-# spin-operator
+# spin-app
 
 spin-operator is a Kubernetes operator in charge of handling the lifecycle of Spin applications based on their SpinApp resources.
 
 ## Prerequisites
 
-- `kwasm-operator` installed
+- `spin-operator` installed
+- `spin-shim-executor` CR added to the team namespace
