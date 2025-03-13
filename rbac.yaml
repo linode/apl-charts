@@ -11,7 +11,9 @@ rbac:
   spin-shim-executor: []
   kfp-cluster-resources: []
   kubeflow-pipelines: []
+  kwasm-operator: []
 betaCharts:
+  - kwasm-operator
   - spin-app
   - spin-operator
   - spin-shim-executor
