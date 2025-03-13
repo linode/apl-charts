@@ -29,3 +29,10 @@ annotations:
 podLabels:
   l1: 'l1-test'
   l2: 'l2-test'
+
+objectStorage:
+  region: fr-par-1
+  bucket: kfp
+
+mysql:
+  secret: mysql-credentials

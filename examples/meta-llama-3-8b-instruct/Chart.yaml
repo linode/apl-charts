@@ -1,5 +1,0 @@
-apiVersion: v2
-name: meta-llama-3-8b-instruct
-description: App Platform example Meta Llama 3 LLM
-version: 1.0.0
-icon: https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/meta-color.png
