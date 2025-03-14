@@ -44,25 +44,25 @@ The `spin-app` Helm chart can be used to create a `SpinApp`. Using this chart re
 
 # Platform Helm charts
 
-The following Helm charts are added to the Catalog and are available for `platform-admins`:
+The following Helm charts are added to the Catalog and are only available for `platform-admins` using the `team-admin`:
+
+## Kwasm Operator
+
+The `kwasm-operator` Helm chart can be used to add WebAssembly support to the Kubernetes Nodes. `kwasm-operator` is a prerequisite for installing `spin-operator`
 
 ## Spin Operator
 
-Using this chart requires the following Helm charts to be installed by a user with the `platform-admin` role:
-
-- [Kwasm Operator](https://github.com/KWasm/kwasm-operator/blob/kwasm-operator-chart-0.2.3/charts/kwasm-operator/Chart.yaml) This chart needs to be added to the Catalog first.
+The `spin-operator` Helm chart can be used to enable deploying Spin applications to Kubernetes.
 
 ## Spin Shim Executor
 
-The `spin-shim-executor` Helm chart needs to be installed every Team that wants to create Spin Apps.
+The `spin-shim-executor` Helm chart can be used to create a `SpinAppExecutor` utilized by Spin Operator to determine which executor type should be used in running a SpinApp.
 
-## Kfp Cluster Resources
+## KubeFlow Pipelines Cluster Resources
 
-Install the `kfp-cluster-resources` first before installing `kubeflow-pipelines`.
+The `kfp-cluster-resources` Helm chart can be used to install the KubeFlow Pipelines CRDs.
 
 ## Kubeflow Pipelines
 
-Using this chart requires the following Helm charts to be installed by a user with the `platform-admin` role:
-
-- `kfp-cluster-resources`
+The `kubeflow-pipelines` Helm chart can be used to install KubeFlow Pipelines in any Team.
 
