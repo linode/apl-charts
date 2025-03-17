@@ -25,7 +25,7 @@ dependencies:
   version: 2.x.x
 description: App Platform quick start Helm chart for creating a Redis cluster
 home: https://bitnami.com
-icon: https://bitnami.com/assets/stacks/redis/img/redis-stack-220x234.png
+icon: https://linode.github.io/apl-charts/icons/redis.png
 keywords:
 - redis
 - keyvalue
