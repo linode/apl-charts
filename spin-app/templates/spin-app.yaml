@@ -10,14 +10,16 @@ spec:
   image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
   executor: containerd-shim-spin
   replicas: {{ .Values.replicaCount }}
+  {{- with .Values.runtimeConfig }}
+  runtimeConfig: {{- . | toYaml | nindent 4 }}
+  {{- end }}
   enableAutoscaling: {{ .Values.enableAutoscaling }}
-  podLabels:
-    sidecar.istio.io/inject: "false"
+  podLabels: {{- include "spinapp.labels" . | nindent 4 }}
   {{- with .Values.resources }}
   resources: {{- . | toYaml | nindent 4 }}
   {{- end }}
   {{- with .Values.env }}
-  variables: {{- toYaml . | nindent 12 }}
+  variables: {{- toYaml . | nindent 4 }}
   {{- end }}
   {{- with .Values.volumeMounts }}
   volumeMounts:

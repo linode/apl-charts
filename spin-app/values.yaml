@@ -15,6 +15,9 @@ image:
 ##
 replicaCount: 2
 
+## RuntimeConfig defines configuration to be applied at runtime for this app.
+runtimeConfig: {}
+
 ## @param env Environment variables for the container
 ##
 env: []
