@@ -28,4 +28,5 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/name: {{ include "spinapp.fullname" . }}
 app.kubernetes.io/owner: {{ .Release.Namespace }}
 otomi.io/app: {{ include "spinapp.fullname" . }}
+sidecar.istio.io/inject: "false"
 {{- end }}
