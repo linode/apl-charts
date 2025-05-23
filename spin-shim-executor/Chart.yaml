@@ -1,7 +1,0 @@
-apiVersion: v2
-name: spin-operator
-description: A Helm chart for Kubernetes
-type: application
-version: 0.3.0
-appVersion: "v0.3.0"
-icon: https://linode.github.io/apl-charts/icons/spinkube.png
