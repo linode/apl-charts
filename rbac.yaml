@@ -5,18 +5,9 @@ rbac:
   knative-service: null
   redis-cluster: null
   rabbitmq-cluster: null
-  spin-app: null
   postgresql-cluster: null
-  spin-operator: []
-  spin-shim-executor: []
   kfp-cluster-resources: []
   kubeflow-pipelines: []
-  kwasm-operator: []
 betaCharts:
-  - kwasm-operator
-  - spin-app
-  - spin-operator
-  - spin-shim-executor
   - kubeflow-pipelines
   - kfp-cluster-resources
-  - kubeflow-pipelines
