@@ -2,3 +2,4 @@
 .cache
 .history
 tests/output
+/.idea/
