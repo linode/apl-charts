@@ -1,0 +1,48 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ include "pgvector.fullname" . }}
+  labels: {{- include "pgvector.labels" . | nindent 4 }}
+  {{- with .Values.commonLabels }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  inheritedMetadata:
+    labels: {{- include "pgvector.labels" . | nindent 6 }}
+      {{- with .Values.commonLabels }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  instances: {{ .Values.instances }}
+  {{- if .Values.byoSuperUserSecret.enabled }}
+  superuserSecret:
+    name: {{ .Values.byoSuperUserSecret.name }}
+  {{- end }}
+  bootstrap:
+    initdb:
+      {{/* Don't specify database name - let CloudNativePG use default "app" */}}
+      dataChecksums: {{ .Values.bootstrap.initdb.dataChecksums }}
+  primaryUpdateStrategy: {{ .Values.primaryUpdateStrategy }}
+  {{- with .Values.imageName }}
+  imageName: {{ . }}
+  {{- else }}
+  imageCatalogRef: {{ .Values.imageCatalogRef | toYaml | nindent 4 }}
+  {{- end }}
+  {{- if .Values.postgresql.parameters }}
+  postgresql:
+    parameters:
+      {{- toYaml .Values.postgresql.parameters | nindent 6 }}
+  {{- end }}
+  storage:
+    {{- with .Values.storage.storageClass }}
+    storageClass: {{ . }}
+    {{- end }}
+    size: {{ .Values.storage.size }}
+  walStorage:
+    {{- with .Values.walStorage.storageClass }}
+    storageClass: {{ . }}
+    {{- end }}
+    size: {{ .Values.walStorage.size }}
+  resources:
+    {{- with .Values.resources }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
