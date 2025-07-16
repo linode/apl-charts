@@ -1,40 +1,34 @@
-# Application Platform for LKE Catalog curated Helm charts
+# Akamai App Platform curated Helm charts
 
 This repository contains a set of curated Helm charts that are available in the Akamai App Platform Catalog.
 
-## Team Helm charts
+## k8s-deployment
 
-The following Helm charts are added to the Catalog and are available for Teams:
+The `k8s-deployment` Helm chart can be used to create a Kubernetes `Deployment` (to deploy a single image), a `Service` and a `ServiceAccount`. Optionally a `HorizontalPodAutoscaler`, a Prometheus `ServiceMonitor` and a `Configmap` can be created.
 
-### Quick start for creating a K8s Deployment with Open Telemetry Instrumentation
+## k8s-deployment-otel
 
-The `k8s-deployment-otel` Helm chart can be used to create a Kubernetes `Deployment` (to deploy a single image), a `Service`, a `ServiceAccount`, an `OpenTelemetryCollector` and an `Instrumentation`. Optionally a `HorizontalPodAutoscaler`, a Prometheus `ServiceMonitor` and a `Configmap` can be created.
+The `k8s-deployment-otel` Helm chart can be used to create a Kubernetes `Deployment` (to deploy a single image), a `Service`, a `ServiceAccount` and an `Instrumentation` resource. Optionally a `HorizontalPodAutoscaler`, a Prometheus `ServiceMonitor` and a `Configmap` can be created.
 
-### Quick start for creating a Knative Service
+## k8s-deployments-canary
+
+The `k8s-deployments-canary` Helm chart can be used to create 2 Kubernetes `Deployments` (to deploy 2 versions of an image), a `Service` and a `ServiceAccount` resource. Optionally a `HorizontalPodAutoscaler`, a Prometheus `ServiceMonitor` and a `Configmap` (for each version) can be created.
+
+## knative-service
 
 The `knative-service` Helm chart can be used to create a Knative `Service` (to deploy a single image), a `Service` and a  `ServiceAccount`. Optionally a Prometheus `ServiceMonitor` can be created.
 
-### Quick start for creating a PostgreSQL cluster
+## postgresql-cluster
 
 The `postgresql-cluster` Helm chart can be used to create a cloudnativepg PostgreSQL `Cluster`. Optionally a Prometheus `PodMonitor` and a `Configmap` (for adding a postgresql dashboard to Grafana) can be created.
 
-### Quick start for creating a Redis master-replica cluster
+## redis-cluster
 
 The `redis-cluster` Helm chart can be used to create a Redis master-replica cluster.
 
-### Quick start for creating a RabbitMQ cluster
+## rabbitmq-cluster
 
-The `rabbitmq-cluster` Helm chart can be used to create a RabbitMQ `cluster` with `queues` and `policies`.
+The `rabbitmq-cluster` Helm chart can be used to create a `RabbitmqCluster`, `queues` and `Policy`s.
 
-## Platform Helm charts
-
-The following Helm charts are added to the Catalog and are only available for `platform-admins` using the `team-admin`:
-
-### KubeFlow Pipelines Cluster Resources
-
-The `kfp-cluster-resources` Helm chart can be used to install the KubeFlow Pipelines CRDs.
-
-### Kubeflow Pipelines
-
-The `kubeflow-pipelines` Helm chart can be used to install KubeFlow Pipelines in any Team.
+Using the `rabbitmq-cluster` Helm chart requires `RabbitMQ` to be enabled by a platform administrator.
 
