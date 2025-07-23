@@ -86,10 +86,10 @@ databases:
 CloudNativePG creates the default database named `app` and the Database CRD adds extensions to it.
 
 This approach gives you:
-- ✅ **Full `kubectl get database` visibility**
-- ✅ **Declarative lifecycle management** for all databases
-- ✅ **Consistent approach** using Database CRDs
-- ✅ **Proper timing** by using CloudNativePG's default database
+- **Full `kubectl get database` visibility**
+- **Declarative lifecycle management** for all databases
+- **Consistent approach** using Database CRDs
+- **Proper timing** by using CloudNativePG's default database
 
 ### Adding Additional Databases
 

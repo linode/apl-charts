@@ -61,8 +61,8 @@ postgresql:
     # Memory settings optimized for vector operations
     shared_buffers: "256MB"
     effective_cache_size: "1GB"
-    maintenance_work_mem: "256MB"  # Increased for vector index building
-    work_mem: "64MB"               # Increased for vector operations
+    maintenance_work_mem: "256MB" # Increased for vector index building
+    work_mem: "64MB" # Increased for vector operations
 
     # Checkpoint and WAL settings
     checkpoint_completion_target: "0.9"
@@ -126,7 +126,7 @@ resources:
     memory: 1Gi
   requests:
     cpu: 200m
-    memory: 256Mi
+    memory: 512Mi
 
 ## @param networkpolicies Create network policies for the PostgreSQL deployment
 ## @param create Set to true to create network policies
