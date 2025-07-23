@@ -4,5 +4,3 @@ helm lint postgres-cluster --values=tests/test-values.yaml
 helm lint pgvector-cluster --values=tests/test-values.yaml
 helm lint redis-cluster --values=tests/test-values.yaml
 helm lint rabbitmq-cluster --values=tests/test-values.yaml
-helm lint kfp-cluster-resources --values=tests/test-values.yaml
-helm lint kubeflow-pipelines --values=tests/test-values.yaml

@@ -4,5 +4,3 @@ helm template postgres-cluster --values=tests/test-values.yaml --output-dir  tes
 helm template pgvector-cluster --values=tests/test-values.yaml --output-dir  tests/output/pgvector-cluster
 helm template redis-cluster --values=tests/test-values.yaml --output-dir  tests/output/redis-cluster
 helm template rabbitmq-cluster --values=tests/test-values.yaml --output-dir  tests/output/rabbitmq-cluster
-helm template kfp-cluster-resources --values=tests/test-values.yaml --output-dir  tests/output/kfp-cluster-resources
-helm template kubeflow-pipelines --values=tests/test-values.yaml --output-dir  tests/output/kubeflow-pipelines
