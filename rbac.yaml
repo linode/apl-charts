@@ -8,6 +8,7 @@ rbac:
   postgresql-cluster: null
   kfp-cluster-resources: []
   kubeflow-pipelines: []
+  cassandra: null
 betaCharts:
   - kubeflow-pipelines
   - kfp-cluster-resources
