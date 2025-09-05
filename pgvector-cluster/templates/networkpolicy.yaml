@@ -17,11 +17,11 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: cnpg-system
+              name: cnpg-system
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: kfp
+              name: kfp
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: {{ .Release.Namespace }}
+              name: {{ .Release.Namespace }}
 {{- end }}
