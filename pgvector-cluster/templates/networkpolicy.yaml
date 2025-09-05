@@ -20,5 +20,8 @@ spec:
               kubernetes.io/metadata.name: cnpg-system
         - namespaceSelector:
             matchLabels:
+              kubernetes.io/metadata.name: kfp
+        - namespaceSelector:
+            matchLabels:
               kubernetes.io/metadata.name: {{ .Release.Namespace }}
 {{- end }}
