@@ -1,0 +1,13 @@
+{{- if .Values.dashboard }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "pgvector.fullname" . }}-dashboard
+  labels: {{- include "pgvector.dbLabels" . | nindent 4 }}
+  {{- with .Values.commonLabels }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+  cnpg-pgvector.json: |-
+{{- .Files.Get "grafana-dashboard/cnpg-pgvector.json" | nindent 4 }}
+{{- end }}

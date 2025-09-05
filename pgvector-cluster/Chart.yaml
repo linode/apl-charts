@@ -1,0 +1,7 @@
+apiVersion: v2
+name: pgvector-cluster
+description: App Platform quick start Helm chart for creating a PostgreSQL Cluster with pgvector extension
+type: application
+version: 1.0.0
+appVersion: "2.0.0"
+icon: https://linode.github.io/apl-charts/icons/postgresql.png

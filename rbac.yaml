@@ -6,9 +6,7 @@ rbac:
   redis-cluster: null
   rabbitmq-cluster: null
   postgresql-cluster: null
-  kfp-cluster-resources: []
-  kubeflow-pipelines: []
-  cassandra: null
+  pgvector-cluster: null
 betaCharts:
   - kubeflow-pipelines
   - kfp-cluster-resources

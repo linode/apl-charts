@@ -1,0 +1,16 @@
+{{- if .Values.monitoring }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  labels:
+    cnpg.io/cluster: {{ include "pgvector.fullname" . }}
+    prometheus: system
+  name: {{ include "pgvector.fullname" . }}-pm
+spec:
+  namespaceSelector:
+    matchNames: [{{ .Release.Namespace }}]
+  podMetricsEndpoints:
+  - port: metrics
+  selector:
+    matchLabels: {{- include "pgvector.selectorLabels" . | nindent 6 }}
+{{- end }}

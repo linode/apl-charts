@@ -1,0 +1,23 @@
+{{- range .Values.databases }}
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: {{ include "pgvector.fullname" $ }}-{{ .name }}
+  labels: {{- include "pgvector.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: database
+  {{- with $.Values.commonLabels }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  name: {{ .name }}
+  owner: {{ .owner | default "app" }}
+  cluster:
+    name: {{ include "pgvector.fullname" $ }}
+  {{- if .extensions }}
+  extensions:
+    {{- range .extensions }}
+    - name: {{ . }}
+    {{- end }}
+  {{- end }}
+{{- end }}
