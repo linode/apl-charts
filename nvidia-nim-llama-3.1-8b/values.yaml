@@ -1,0 +1,15 @@
+labels:
+  modelType: foundation
+  modelName: nvidia-nim-llama-3.1-8b-instruct
+
+annotations: {}
+
+resources:
+  limits:
+    cpu: "12"
+    memory: 24Gi
+    nvidia.com/gpu: "1"
+  requests:
+    cpu: "12"
+    memory: 24Gi
+    nvidia.com/gpu: "1"

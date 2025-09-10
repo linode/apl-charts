@@ -1,0 +1,5 @@
+apiVersion: v2
+name: hf-meta-llama-3-8b
+description: App Platform quick start Meta Llama 3 8b LLM
+version: 1.0.0
+icon: https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.png

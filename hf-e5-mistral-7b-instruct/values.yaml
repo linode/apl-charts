@@ -1,0 +1,40 @@
+fullnameOverride: ""
+
+labels:
+  modelType: embedding
+  modelName: e5-mistral-7b-instruct
+  modelDimension: "4096"
+
+gpu:
+  product: NVIDIA-RTX-4000-Ada-Generation
+
+annotations: {}
+
+env:
+  - name: HF_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: hf-secret
+        key: HF_TOKEN
+        optional: false
+
+args:
+  - --model_id=intfloat/e5-mistral-7b-instruct
+  - --model_name=e5-mistral-7b-instruct
+  - --task=embed
+
+resources:
+  limits:
+    cpu: "24"
+    memory: 24Gi
+    nvidia.com/gpu: "1"
+  requests:
+    cpu: "6"
+    memory: 12Gi
+    nvidia.com/gpu: "1"
+
+metrics:
+  enabled: false
+  endpoints: []
+    # - port: http-usermetric
+    #   path: /metrics

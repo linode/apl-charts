@@ -1,0 +1,5 @@
+apiVersion: v2
+name: nvidia-nim-llama-3.1-8b
+description: App Platform quick start nvidia-nim-llama-3.1-8b LLM
+version: 1.0.0
+icon: https://developers.google.com/static/profile/badges/playlists/nvidia-deploy-with-gen-ai/badge.svg

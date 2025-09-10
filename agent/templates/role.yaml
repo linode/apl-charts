@@ -1,0 +1,10 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "pipelines.name" . }}-secret-reader
+  namespace: {{ include "pipelines.namespace" . }}
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: ["pgvector-app"]
+    verbs: ["get", "list"]
