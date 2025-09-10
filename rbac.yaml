@@ -9,6 +9,13 @@ rbac:
   kfp-cluster-resources: []
   kubeflow-pipelines: []
   cassandra: null
+  hf-meta-llama-3-8b-instruct: []
+  hf-meta-llama-3.1-8b-instruct: []
+  hf-e5-mistral-7b-instruct: []
+  hf-all-minilm-l6-v2: []
+  nvidia-nim-llama-3.1-8b: []
+  nvidia-nim-llama-3-8b: []
+  agent: null
 betaCharts:
   - kubeflow-pipelines
   - kfp-cluster-resources

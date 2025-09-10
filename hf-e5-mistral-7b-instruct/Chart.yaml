@@ -1,0 +1,5 @@
+apiVersion: v2
+name: hf-e5-mistral-7b-instruct
+description: App Platform e5-mistral-7b-instruct LLM
+version: 1.0.0
+icon: https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.png

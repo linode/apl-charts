@@ -1,0 +1,22 @@
+{{- if .Values.metrics.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "inferenceService.fullname" . }}
+  labels: 
+    prometheus: system
+    {{- include "inferenceService.labels" . | nindent 4 }}
+    {{- with .Values.commonLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+  selector:
+    matchLabels: {{- include "inferenceService.selectorLabels" . | nindent 6 }}
+  {{- with .Values.metrics.endPoints }}
+  endpoints:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

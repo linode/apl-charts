@@ -1,0 +1,149 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pipelines-files
+data:
+  pipeline-requirements.txt: |
+    requests
+    psycopg2-binary
+    llama-index
+    llama-index-vector-stores-postgres
+    llama-index-embeddings-openai-like
+    llama-index-llms-openai-like
+    opencv-python-headless
+    kubernetes
+  rag-pipeline.py: |
+    """
+    title: Linode Agent Template
+    version: 1.0
+    description: Template used to configure Linode Agents
+    """
+    from typing import List, Optional, Union, Generator, Iterator
+
+    import os
+    namespace_name = os.getenv('NAMESPACE')
+    embedding_model_endpoint = os.getenv('EMBEDDING_MODEL_ENDPOINT')
+    embedding_model_name = os.getenv('EMBEDDING_MODEL_NAME')
+    embedding_dimension = os.getenv('EMBEDDING_DIMENSION')
+    foundation_model_name = os.getenv('FOUNDATION_MODEL_NAME')
+    foundation_model_endpoint = os.getenv('FOUNDATION_MODEL_ENDPOINT')
+    agent_system_prompt = os.getenv('SYSTEM_PROMPT')
+    db_host = os.getenv('DB_HOST_READ')
+    db_name = os.getenv('DB_NAME')
+    db_secret_name = os.getenv('DB_SECRET_NAME')
+    db_port = os.getenv('DB_PORT')
+    agent_name = os.getenv('AGENT_NAME')
+    
+    class Pipeline:
+        
+        def __init__(self):
+            self.name = "Linode Docs Chatbot"
+            self.index = None
+            pass
+        
+        async def on_startup(self):
+            from llama_index.embeddings.openai_like import OpenAILikeEmbedding
+            from llama_index.core import Settings, VectorStoreIndex
+            from llama_index.llms.openai_like import OpenAILike
+            from llama_index.vector_stores.postgres import PGVectorStore
+            from kubernetes import client, config
+            import base64
+            import logging
+            
+            print(f"on_startup:{__name__}")
+            
+            # Configure LLM with chat model support for streaming
+            llm = OpenAILike(
+                model=foundation_model_name,
+                api_base=f"http://{foundation_model_endpoint}/openai/v1",
+                api_key="EMPTY",
+                max_tokens=512,
+                is_chat_model=True  # Enable chat model format for better streaming
+            )
+
+            Settings.llm = llm
+            
+            # ONLY configure embedding model if KB is selected
+            Settings.embed_model = OpenAILikeEmbedding(
+                model_name=embedding_model_name,
+                api_base=f"http://{embedding_model_endpoint}/openai/v1",
+                api_key="EMPTY",
+                embed_batch_size=10,
+                max_retries=3,
+                timeout=180.0
+            )
+            
+            # ONLY configure vector store if KB is selected
+            def get_secret_credentials():
+                try:
+                    config.load_incluster_config()  # For in-cluster access
+                    v1 = client.CoreV1Api()
+                    secret = v1.read_namespaced_secret(name=db_secret_name, namespace=namespace_name)
+                    password = base64.b64decode(secret.data['password']).decode('utf-8')
+                    username = base64.b64decode(secret.data['username']).decode('utf-8')
+                    return username, password
+                except Exception as e:
+                    print(f"Error getting secret: {e}")
+                    return 'app', 'changeme'
+            
+            pg_user, pg_password = get_secret_credentials()
+            
+            vector_store = PGVectorStore.from_params(
+                database="app",
+                host=db_host,
+                port=db_port,
+                user=pg_user,
+                password=pg_password,
+                table_name="lg_linode_docs",
+                embed_dim=embedding_dimension
+            )
+            
+            self.index = VectorStoreIndex.from_vector_store(vector_store)
+            
+            pass
+        
+        async def on_shutdown(self):
+            print(f"on_shutdown:{__name__}")
+            pass
+        
+        def pipe(
+            self, user_message: str, model_id: str, messages: List[dict], body: dict
+        ) -> Union[str, Generator, Iterator]:
+            print(f"pipe:{__name__}")
+            
+            try:
+                # SET 
+                system_prompt=agent_system_prompt
+                
+                # Create query engine with custom system prompt
+                from llama_index.core.prompts import PromptTemplate
+                
+                qa_prompt_tmpl = (
+                    "Context information is below:\n"
+                    "---------------------\n"
+                    "{context_str}\n"
+                    "---------------------\n"
+                    f"{system_prompt}\n\n"
+                    "Given the context information and not prior knowledge, "
+                    "answer the query.\n"
+                    "Query: {query_str}\n"
+                    "Answer: "
+                )
+                
+                qa_prompt = PromptTemplate(qa_prompt_tmpl)
+                
+                query_engine = self.index.as_query_engine(
+                    streaming=True,
+                    similarity_top_k=3,
+                    text_qa_template=qa_prompt
+                )
+                
+                # Get streaming response
+                streaming_response = query_engine.query(user_message)
+                
+                # Yield tokens for streaming output
+                for token in streaming_response.response_gen:
+                    yield token
+                    
+            except Exception as e:
+                yield f"Error: {str(e)}"

@@ -1,0 +1,39 @@
+fullnameOverride: ""
+
+labels:
+  modelType: embedding
+  modelName: all-MiniLM-L6-v2
+  modelDimension: "384"
+
+annotations: {}
+
+## Create a secret with the Hugging Face token and use it as a secretKeyRef:
+env:
+  - name: HF_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: hf-secret
+        key: HF_TOKEN
+        optional: false
+  
+
+args:
+  - --model_id=sentence-transformers/all-MiniLM-L6-v2
+  - --model_name=allmini
+  - --task=embed
+
+resources:
+  limits:
+    cpu: "24"
+    memory: 24Gi
+    nvidia.com/gpu: "1"
+  requests:
+    cpu: "6"
+    memory: 12Gi
+    nvidia.com/gpu: "1"
+
+metrics:
+  enabled: false
+  endpoints: []
+    # - port: http-usermetric
+    #   path: /metrics

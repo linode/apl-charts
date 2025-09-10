@@ -1,0 +1,20 @@
+apiVersion: v2
+name: pipelines
+version: 0.9.0
+appVersion: "alpha"
+
+home: https://github.com/open-webui/pipelines
+icon: https://cdn-icons-png.flaticon.com/512/14313/14313824.png
+
+description: "Pipelines: UI-Agnostic OpenAI API Plugin Framework"
+keywords:
+  - llm
+  - chat
+  - web-ui
+
+sources:
+  - https://github.com/open-webui/helm-charts
+  - https://github.com/open-webui/pipelines/pkgs/container/pipelines
+
+annotations:
+  licenses: MIT

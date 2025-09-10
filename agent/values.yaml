@@ -1,0 +1,155 @@
+nameOverride: ""
+namespaceOverride: ""
+
+# -- Value of cluster domain
+clusterDomain: cluster.local
+extraLabels: {}
+annotations: {}
+podAnnotations: {}
+podLabels: {}
+replicaCount: 1
+# -- Strategy for updating the deployment
+strategy: {}
+image:
+  repository: ghcr.io/open-webui/pipelines
+  tag: main
+  pullPolicy: Always
+
+# -- Configure imagePullSecrets to use private registry
+# ref: <https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry>
+imagePullSecrets: []
+# imagePullSecrets:
+# - name: myRegistryKeySecretName
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: "1"
+    memory: 1Gi
+ingress:
+  enabled: false
+persistence:
+  enabled: true
+  size: 2Gi
+  existingClaim: ""
+  # -- If using multiple replicas, you must update accessModes to ReadWriteMany
+  accessModes:
+    - ReadWriteOnce
+  storageClass: ""
+  selector: {}
+  annotations: {}
+
+serviceAccount:
+  enable: true
+  automountServiceAccountToken: true
+
+# -- Configure pod security context
+# ref: <https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container>
+podSecurityContext:
+  {}
+  # fsGroupChangePolicy: Always
+  # sysctls: []
+  # supplementalGroups: []
+  # fsGroup: 1001
+
+# -- Configure container security context
+# ref: <https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-containe>
+containerSecurityContext:
+  {}
+  # runAsUser: 1001
+  # runAsGroup: 1001
+  # runAsNonRoot: true
+  # privileged: false
+  # allowPrivilegeEscalation: false
+  # readOnlyRootFilesystem: false
+  # capabilities:
+  #   drop:
+  #     - ALL
+  # seccompProfile:
+  #   type: "RuntimeDefault"
+
+# -- Node labels for pod assignment.
+nodeSelector: {}
+
+# -- Tolerations for pod assignment
+tolerations: []
+
+# -- Affinity for pod assignment
+affinity: {}
+
+# -- HostAliases to be added to hosts-file of each container
+hostAliases: []
+
+service:
+  type: ClusterIP
+  annotations: {}
+  port: 9099
+  containerPort: 9099
+  nodePort: ""
+  labels: {}
+  loadBalancerClass: ""
+
+# -- Additional environments variables on the output Deployment definition. These are used to pull initial Pipeline files, and help configure Pipelines with required values (e.g. Langfuse API keys)
+extraEnvVars:
+  - name: PIPELINES_REQUIREMENTS_PATH
+    value: /opt/pipeline-requirements.txt
+  - name: PIPELINES_URLS
+    value: file:///opt/rag-pipeline.py
+  - name: EMBEDDING_MODEL_ENDPOINT
+    value: e5-mistral-7b-predictor.team-admin.svc.cluster.local
+  - name: EMBEDDING_MODEL_NAME
+    value: e5-mistral-7b
+  - name: EMBEDDING_DIMENSION
+    value: "4096"
+  - name: FOUNDATION_MODEL_ENDPOINT
+    value: llama-3-1-8b-predictor.team-admin.svc.cluster.local
+  - name: FOUNDATION_MODEL_NAME
+    value: llama-3-1
+  - name: DB_HOST_READ_WRITE
+    value: pgvector-rw.team-demo.svc.cluster.local
+  - name: DB_HOST_READ
+    value: pgvector-r.team-demo.svc.cluster.local
+  - name: DB_NAME
+    value: app
+  - name: DB_PORT
+    value: "5432"
+  - name: DB_SECRET_NAME
+    value: pgvector-app
+
+# -- Additional environments variables on the output Deployment definition, common across environments.
+commonEnvVars: []
+
+# -- Configure container volume mounts
+# ref: <https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/>
+volumeMounts:
+  - name: config-volume
+    mountPath: /opt
+
+# -- Additional init containers to add to the deployment
+# ref: <https://kubernetes.io/docs/concepts/workloads/pods/init-containers/>
+extraInitContainers: []
+# - name: custom-init
+#   image: busybox:latest
+#   command: ['sh', '-c', 'echo "Custom init container running"']
+#   volumeMounts:
+#   - name: data
+#     mountPath: /data
+
+# -- Configure pod volumes
+# ref: <https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/>
+volumes:
+  - name: config-volume
+    configMap:
+      name: pipelines-files
+
+# -- Extra resources to deploy with Open WebUI Pipelines
+extraResources:
+  []
+  # - apiVersion: v1
+  #   kind: ConfigMap
+  #   metadata:
+  #     name: example-configmap
+  #   data:
+  #     example-key: example-value

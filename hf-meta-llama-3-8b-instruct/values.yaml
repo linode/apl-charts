@@ -1,0 +1,38 @@
+fullnameOverride: ""
+
+labels:
+  modelType: foundation
+  modelName: meta-llama-3-8b-instruct
+
+gpu:
+  product: NVIDIA-RTX-4000-Ada-Generation
+
+annotations: {}
+
+env:
+  - name: HF_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: hf-secret
+        key: HF_TOKEN
+        optional: false
+
+args:
+  - --model_id=meta-llama/meta-llama-3-8b-instruct
+  - --model_name=llama3
+
+resources:
+  limits:
+    cpu: "12"
+    memory: 24Gi
+    nvidia.com/gpu: "1"
+  requests:
+    cpu: "12"
+    memory: 24Gi
+    nvidia.com/gpu: "1"
+
+metrics:
+  enabled: false
+  endpoints: []
+    # - port: http-usermetric
+    #   path: /metrics
