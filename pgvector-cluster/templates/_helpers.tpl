@@ -28,6 +28,8 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/name: {{ include "pgvector.fullname" . }}
 app.kubernetes.io/owner: {{ .Release.Namespace }}
 otomi.io/app: {{ include "pgvector.fullname" . }}
+apl.akamai.com/purpose: knowledge-base
+apl.akamai.com/workload-type: ai-ml
 {{- end }}
 
 {{/*
