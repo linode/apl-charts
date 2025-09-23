@@ -1061,3 +1061,9 @@ splitBrainDetection:
   retryInterval: 10
   # -- splitBrainDetection resources
   resources: {}
+
+## APL specific configuration
+apl:
+  networkPolicies:
+    # -- Create APL-specific network policies
+    create: true

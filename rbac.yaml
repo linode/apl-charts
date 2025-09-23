@@ -3,7 +3,7 @@ rbac:
   k8s-deployment-otel: null
   k8s-deployments-canary: null
   knative-service: null
-  redis-cluster: null
+  redis-ha: null
   rabbitmq-cluster: null
   postgresql-cluster: null
   pgvector-cluster: null
