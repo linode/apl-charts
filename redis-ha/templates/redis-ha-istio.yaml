@@ -1,0 +1,165 @@
+{{- if .Values.istio.enabled }}
+{{- $ := . }}
+{{- $clusterName := include "redis-ha.fullname" $ }}
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: {{ $clusterName }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+{{ include "labels.standard" . | indent 4 }}
+    {{- range $key, $value := .Values.extraLabels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "redis-ha.name" . }}
+      release: {{ .Release.Name }}
+  mtls:
+    mode: PERMISSIVE
+  portLevelMtls:
+    6379:
+      mode: DISABLE
+    26379:
+      mode: DISABLE
+---
+{{- if .Values.haproxy.enabled }}
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: {{ $clusterName }}-haproxy
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+{{ include "labels.standard" . | indent 4 }}
+    component: haproxy
+    {{- range $key, $value := .Values.extraLabels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "redis-ha.name" . }}-haproxy
+      release: {{ .Release.Name }}
+      component: haproxy
+  mtls:
+    mode: PERMISSIVE
+  portLevelMtls:
+    6379:
+      mode: DISABLE
+    8888:
+      mode: DISABLE
+---
+{{- end }}
+{{- if .Values.istio.trafficPolicy }}
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: {{ $clusterName }}-mtls
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+{{ include "labels.standard" . | indent 4 }}
+    {{- range $key, $value := .Values.extraLabels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  host: {{ $clusterName }}
+  trafficPolicy:
+    {{- if .Values.istio.trafficPolicy.connectionPool }}
+    connectionPool:
+      {{- if .Values.istio.trafficPolicy.connectionPool.tcp }}
+      tcp:
+        {{- with .Values.istio.trafficPolicy.connectionPool.tcp.connectTimeout }}
+        connectTimeout: {{ . }}
+        {{- end }}
+        {{- if .Values.istio.trafficPolicy.connectionPool.tcp.keepAlive }}
+        keepAlive:
+          {{- with .Values.istio.trafficPolicy.connectionPool.tcp.keepAlive.time }}
+          time: {{ . }}
+          {{- end }}
+          {{- with .Values.istio.trafficPolicy.connectionPool.tcp.keepAlive.interval }}
+          interval: {{ . }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+      {{- if .Values.istio.trafficPolicy.connectionPool.http }}
+      http:
+        {{- with .Values.istio.trafficPolicy.connectionPool.http.http1MaxPendingRequests }}
+        http1MaxPendingRequests: {{ . }}
+        {{- end }}
+        {{- with .Values.istio.trafficPolicy.connectionPool.http.maxRequestsPerConnection }}
+        maxRequestsPerConnection: {{ . }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+    {{- if .Values.istio.trafficPolicy.outlierDetection }}
+    outlierDetection:
+      {{- with .Values.istio.trafficPolicy.outlierDetection.consecutiveErrors }}
+      consecutiveErrors: {{ . }}
+      {{- end }}
+      {{- with .Values.istio.trafficPolicy.outlierDetection.interval }}
+      interval: {{ . }}
+      {{- end }}
+      {{- with .Values.istio.trafficPolicy.outlierDetection.baseEjectionTime }}
+      baseEjectionTime: {{ . }}
+      {{- end }}
+    {{- end }}
+---
+{{- if .Values.haproxy.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: {{ $clusterName }}-haproxy-mtls
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+{{ include "labels.standard" . | indent 4 }}
+    component: haproxy
+    {{- range $key, $value := .Values.extraLabels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  host: {{ $clusterName }}-haproxy
+  trafficPolicy:
+    {{- if .Values.istio.trafficPolicy.connectionPool }}
+    connectionPool:
+      {{- if .Values.istio.trafficPolicy.connectionPool.tcp }}
+      tcp:
+        {{- with .Values.istio.trafficPolicy.connectionPool.tcp.connectTimeout }}
+        connectTimeout: {{ . }}
+        {{- end }}
+        {{- if .Values.istio.trafficPolicy.connectionPool.tcp.keepAlive }}
+        keepAlive:
+          {{- with .Values.istio.trafficPolicy.connectionPool.tcp.keepAlive.time }}
+          time: {{ . }}
+          {{- end }}
+          {{- with .Values.istio.trafficPolicy.connectionPool.tcp.keepAlive.interval }}
+          interval: {{ . }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+      {{- if .Values.istio.trafficPolicy.connectionPool.http }}
+      http:
+        {{- with .Values.istio.trafficPolicy.connectionPool.http.http1MaxPendingRequests }}
+        http1MaxPendingRequests: {{ . }}
+        {{- end }}
+        {{- with .Values.istio.trafficPolicy.connectionPool.http.maxRequestsPerConnection }}
+        maxRequestsPerConnection: {{ . }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+    {{- if .Values.istio.trafficPolicy.outlierDetection }}
+    outlierDetection:
+      {{- with .Values.istio.trafficPolicy.outlierDetection.consecutiveErrors }}
+      consecutiveErrors: {{ . }}
+      {{- end }}
+      {{- with .Values.istio.trafficPolicy.outlierDetection.interval }}
+      interval: {{ . }}
+      {{- end }}
+      {{- with .Values.istio.trafficPolicy.outlierDetection.baseEjectionTime }}
+      baseEjectionTime: {{ . }}
+      {{- end }}
+    {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

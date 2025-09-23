@@ -77,6 +77,32 @@ Note that Application Platform for LKE provides mutual TLS through the Istio ser
 
 TLS support can be enabled for Redis itself by configuring the `tls.*` parameters if needed for specific security requirements.
 
+### Istio Service Mesh Integration
+
+This chart provides built-in support for Istio service mesh integration. When Istio is enabled, the chart automatically configures:
+
+- Sidecar injection with optimized resource allocation
+- Traffic exclusion for Redis and Sentinel ports to prevent interference
+- PeerAuthentication policies with PERMISSIVE mTLS for Redis ports
+- DestinationRule policies for connection pooling and outlier detection
+
+To enable Istio integration:
+
+```yaml
+istio:
+  enabled: true
+  proxy:
+    resources:
+      requests:
+        cpu: "10m"
+        memory: "128Mi"
+      limits:
+        cpu: "100m"
+        memory: "128Mi"
+```
+
+This configuration ensures Redis traffic bypasses Istio's proxy while maintaining service mesh observability and security for other traffic.
+
 ### Monitoring Integration
 
 Enable Prometheus metrics collection and Platform Prometheus integration:
@@ -421,6 +447,8 @@ sysctlImage:
 4. **Persistent Storage**: Ensure your cluster has dynamic volume provisioning or manually create persistent volumes
 
 5. **Network Connectivity**: When using network policies, verify that applications can reach the Redis service on the configured ports (6379 for Redis, 26379 for Sentinel)
+
+6. **Istio Service Mesh Issues**: If pods are failing with `CrashLoopBackOff` and you're using Istio, enable the Istio integration by setting `istio.enabled: true` to properly configure sidecar injection and traffic policies
 
 ### High Availability Behavior
 

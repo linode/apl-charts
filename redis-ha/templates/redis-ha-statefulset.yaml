@@ -32,6 +32,15 @@ spec:
     metadata:
       annotations:
         checksum/init-config: {{ print (include "config-redis.conf" .) (include "config-sentinel.conf" .) (include "config-init.sh" .) (include "fix-split-brain.sh" .) (include "redis_liveness.sh" .) (include "redis_readiness.sh" .) (include "sentinel_liveness.sh" .) (include "trigger-failover-if-master.sh" .)| sha256sum }}
+      {{- if .Values.istio.enabled }}
+        sidecar.istio.io/inject: "true"
+        traffic.sidecar.istio.io/excludeInboundPorts: "6379,26379"
+        traffic.sidecar.istio.io/excludeOutboundPorts: "6379,26379"
+        sidecar.istio.io/proxyCPU: "{{ .Values.istio.proxy.resources.requests.cpu | default "10m" }}"
+        sidecar.istio.io/proxyMemory: "{{ .Values.istio.proxy.resources.requests.memory | default "128Mi" }}"
+        sidecar.istio.io/proxyCPULimit: "{{ .Values.istio.proxy.resources.limits.cpu | default "100m" }}"
+        sidecar.istio.io/proxyMemoryLimit: "{{ .Values.istio.proxy.resources.limits.memory | default "128Mi" }}"
+      {{- end }}
       {{- if .Values.redis.podAnnotations }}
 {{ toYaml .Values.redis.podAnnotations | indent 8 }}
       {{- end }}

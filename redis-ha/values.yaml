@@ -1009,7 +1009,7 @@ extraLabels: {}
 networkPolicy:
   # -- whether NetworkPolicy for Redis StatefulSets should be created.
   # when enabled, inter-Redis connectivity is created
-  enabled: true
+  enabled: false
   # -- Annotations for NetworkPolicy
   annotations: {}
   # -- Labels for NetworkPolicy
@@ -1053,3 +1053,48 @@ splitBrainDetection:
   retryInterval: 10
   # -- splitBrainDetection resources
   resources: {}
+
+## Istio service mesh configuration
+istio:
+  # -- Enable Istio service mesh integration
+  enabled: false
+  # -- Istio sidecar proxy configuration
+  proxy:
+    # -- Resource configuration for Istio sidecar proxy
+    resources:
+      requests:
+        # -- CPU request for Istio sidecar proxy
+        cpu: "10m"
+        # -- Memory request for Istio sidecar proxy
+        memory: "128Mi"
+      limits:
+        # -- CPU limit for Istio sidecar proxy
+        cpu: "100m"
+        # -- Memory limit for Istio sidecar proxy
+        memory: "128Mi"
+  # -- Additional Istio-specific pod annotations
+  annotations: {}
+  # -- Istio traffic policy configuration
+  trafficPolicy:
+    # -- Connection pool settings for Istio traffic policy
+    connectionPool:
+      tcp:
+        # -- TCP connection timeout
+        connectTimeout: 30s
+        # -- TCP keep alive settings
+        keepAlive:
+          time: 7200s
+          interval: 75s
+      http:
+        # -- HTTP1 max pending requests
+        http1MaxPendingRequests: 1024
+        # -- Maximum number of requests to a backend
+        maxRequestsPerConnection: 10
+    # -- Outlier detection settings
+    outlierDetection:
+      # -- Number of errors before a host is ejected
+      consecutiveErrors: 5
+      # -- Time interval for analysis
+      interval: 30s
+      # -- Minimum ejection duration
+      baseEjectionTime: 30s
