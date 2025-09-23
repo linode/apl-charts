@@ -90,16 +90,6 @@ exporter:
       prometheus: system
 ```
 
-### Network Policies
-
-Application Platform for LKE provides centralized networking policy management. The chart includes APL-specific network policies:
-
-```yaml
-apl:
-  networkPolicies:
-    create: true
-```
-
 ### Performance Tuning
 
 For high-performance deployments, Redis may require kernel-level optimizations:
@@ -417,12 +407,6 @@ sysctlImage:
 | `prometheusRule.interval` | How often rules in the group are evaluated (falls back to `global.evaluation_interval` if not set). | string | `"10s"` |
 | `prometheusRule.namespace` | Namespace which Prometheus is running in. | string | `nil` |
 | `prometheusRule.rules` | Rules spec template for Prometheus Operator PrometheusRule | list | `[]` |
-
-### APL specific parameters
-
-| Parameter | Description | Type | Default |
-|-----|------|---------|-------------|
-| `apl.networkPolicies.create` | Create network policies for APL environment | bool | `true` |
 
 ## Troubleshooting
 
