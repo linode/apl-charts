@@ -1046,6 +1046,20 @@ networkPolicy:
           protocol: UDP
         - port: 53
           protocol: TCP
+    - selectors:
+      # -- Allow egress to Istio control plane for service mesh communication
+      - namespaceSelector:
+          matchLabels:
+            name: istio-system
+      ports:
+        - port: 15010
+          protocol: TCP
+        - port: 15011
+          protocol: TCP
+        - port: 15012
+          protocol: TCP
+        - port: 15014
+          protocol: TCP
 
 splitBrainDetection:
   # -- Interval between redis sentinel and server split brain checks (in seconds)
