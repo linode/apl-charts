@@ -1,7 +1,18 @@
 apiVersion: v2
 name: redis-ha
+home: https://redis.io/
+keywords:
+- redis
+- keyvalue
+- database
+version: 4.34.13
+appVersion: 8.2.1
 description: App Platform quick start Helm chart for creating a Redis high availability cluster
-type: application
-version: 1.0.0
-appVersion: "8.2.1"
 icon: https://linode.github.io/apl-charts/icons/redis.png
+maintainers:
+- email: aaron.layfield@gmail.com
+  name: dandydeveloper
+sources:
+- https://redis.io/download
+- https://github.com/DandyDeveloper/charts/blob/master/charts/redis-ha
+- https://github.com/oliver006/redis_exporter
