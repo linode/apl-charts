@@ -27,7 +27,11 @@ data:
   fix-split-brain.sh: |
 {{- include "fix-split-brain.sh" . }}
 
-{{ if .Values.haproxy.enabled }}
+{{- $haproxyEnabled := .Values.haproxy.enabled }}
+{{- if and (not .Values.haproxy.enabled) (gt (int .Values.replicas) 1) }}
+  {{- $haproxyEnabled = true }}
+{{- end }}
+{{- if $haproxyEnabled }}
   haproxy.cfg: |
 {{- include "config-haproxy.cfg" . }}
 {{- end }}

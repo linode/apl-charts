@@ -1,4 +1,8 @@
-{{- if .Values.haproxy.enabled }}
+{{- $haproxyEnabled := .Values.haproxy.enabled }}
+{{- if and (not .Values.haproxy.enabled) (gt (int .Values.replicas) 1) }}
+  {{- $haproxyEnabled = true }}
+{{- end }}
+{{- if $haproxyEnabled }}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -22,7 +26,7 @@ spec:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   revisionHistoryLimit: 1
-  replicas: {{ .Values.haproxy.replicas }}
+  replicas: {{ min (int .Values.replicas) 3 }}
   selector:
     matchLabels:
       app: {{ template "redis-ha.name" . }}-haproxy

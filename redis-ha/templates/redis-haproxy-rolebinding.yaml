@@ -1,4 +1,8 @@
-{{- if .Values.haproxy.enabled }}
+{{- $haproxyEnabled := .Values.haproxy.enabled }}
+{{- if and (not .Values.haproxy.enabled) (gt (int .Values.replicas) 1) }}
+  {{- $haproxyEnabled = true }}
+{{- end }}
+{{- if $haproxyEnabled }}
 {{- if and .Values.haproxy.serviceAccount.create .Values.rbac.create }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding

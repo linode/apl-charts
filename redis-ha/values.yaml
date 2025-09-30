@@ -33,7 +33,7 @@ imagePullSecrets: []
 # - name: "image-pull-secret"
 
 # -- Number of redis master/slave
-replicas: 3
+replicas: 1
 
 ## Customize the statefulset pod management policy:
 ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
@@ -93,7 +93,9 @@ serviceAccount:
 ## ref: https://cbonte.github.io/haproxy-dconv/1.9/intro.html
 haproxy:
   # -- Enabled HAProxy LoadBalancing/Proxy
-  enabled: true
+  # When false: HAProxy is automatically enabled when replicas > 1 (for HA setups)
+  # When true: HAProxy is always enabled regardless of replica count
+  enabled: false
   # -- Modify HAProxy service port
   servicePort: 6379
   # -- Modify HAProxy deployment container port
@@ -117,7 +119,7 @@ haproxy:
     # -- Port for the read-only redis-slaves
     port: 6380
   # -- Number of HAProxy instances
-  replicas: 3
+  replicas: 1
   # -- Deployment strategy for the haproxy deployment
   deploymentStrategy:
     type: RollingUpdate
@@ -451,7 +453,7 @@ redis:
   config:
     ## -- Additional redis conf options can be added below
     ## -- For all available options see http://download.redis.io/redis-stable/redis.conf
-    min-replicas-to-write: 1
+    min-replicas-to-write: 0
     # -- Value in seconds
     min-replicas-max-lag: 5
     # -- Max memory to use for each redis instance. Default is unlimited.
@@ -1008,8 +1010,10 @@ extraLabels: {}
 
 networkPolicy:
   # -- whether NetworkPolicy for Redis StatefulSets should be created.
+  # When false: NetworkPolicy is automatically enabled when replicas > 1 (for secure pod-to-pod communication)
+  # When true: NetworkPolicy is always enabled regardless of replica count
   # when enabled, inter-Redis connectivity is created
-  enabled: true
+  enabled: false
   # -- Annotations for NetworkPolicy
   annotations: {}
   # -- Labels for NetworkPolicy
@@ -1045,20 +1049,6 @@ networkPolicy:
         - port: 53
           protocol: UDP
         - port: 53
-          protocol: TCP
-    - selectors:
-      # -- Allow egress to Istio control plane for service mesh communication
-      - namespaceSelector:
-          matchLabels:
-            name: istio-system
-      ports:
-        - port: 15010
-          protocol: TCP
-        - port: 15011
-          protocol: TCP
-        - port: 15012
-          protocol: TCP
-        - port: 15014
           protocol: TCP
 
 splitBrainDetection:

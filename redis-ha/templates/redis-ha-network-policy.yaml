@@ -1,4 +1,8 @@
-{{- if .Values.networkPolicy.enabled }}
+{{- $networkPolicyEnabled := .Values.networkPolicy.enabled }}
+{{- if and (not .Values.networkPolicy.enabled) (gt (int .Values.replicas) 1) }}
+  {{- $networkPolicyEnabled = true }}
+{{- end }}
+{{- if $networkPolicyEnabled }}
 {{- $root := . }}
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
@@ -30,6 +34,20 @@ spec:
             otomi.io/app: {{ .Release.Name }}
       ports:
       {{- include "redis-ports" . | nindent 6 }}
+    # Always allow egress to Istio control plane for service mesh communication
+    - to:
+      - namespaceSelector:
+          matchLabels:
+            name: istio-system
+      ports:
+        - port: 15010
+          protocol: TCP
+        - port: 15011
+          protocol: TCP
+        - port: 15012
+          protocol: TCP
+        - port: 15014
+          protocol: TCP
 {{-  range $rule := .Values.networkPolicy.egressRules }}
     - to:
 {{ (tpl (toYaml $rule.selectors) $) | indent 7 }}
