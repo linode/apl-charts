@@ -28,6 +28,9 @@ spec:
         {{- end }}
       annotations:
         checksum/config: {{ include (print $.Chart.Name "/templates/" "instruction-configmap.yaml") . | sha256sum }}
+        {{- if .Values.istio.excludeKubernetesAPI }}
+        traffic.sidecar.istio.io/excludeOutboundIPRanges: "{{ .Values.istio.kubernetesAPIIP }}/32"
+        {{- end }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}

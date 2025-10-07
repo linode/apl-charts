@@ -1,0 +1,67 @@
+{{- if .Values.networkPolicy.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "pipelines.name" . }}
+  namespace: {{ include "pipelines.namespace" . }}
+  labels:
+    {{- include "pipelines.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "pipelines.selectorLabels" . | nindent 6 }}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector: {}
+    ports:
+    - protocol: TCP
+      port: {{ .Values.service.containerPort }}
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: otomi
+    ports:
+    - protocol: TCP
+      port: {{ .Values.service.containerPort }}
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+  # Allow HTTPS for pip package downloads (PyPI) and Kubernetes API - external and internal
+  - ports:
+    - protocol: TCP
+      port: 443
+  - ports:
+    - protocol: TCP
+      port: 6443
+  # Allow Istio control plane (istiod) communication
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: istio-system
+    ports:
+    - protocol: TCP
+      port: 15012  # istiod gRPC
+    - protocol: TCP
+      port: 15017  # istiod webhook
+  # Allow access to LiteLLM proxies and pgvector within namespace
+  - to:
+    - podSelector: {}
+    ports:
+    - protocol: TCP
+      port: 80
+    - protocol: TCP
+      port: 4000  # LiteLLM container port (for Istio direct pod routing)
+    - protocol: TCP
+      port: 5432
+    - protocol: TCP
+      port: 11434
+{{- end }}

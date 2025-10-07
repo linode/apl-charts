@@ -9,9 +9,11 @@ data:
     llama-index
     llama-index-vector-stores-postgres
     llama-index-embeddings-openai-like
+    llama-index-embeddings-huggingface
     llama-index-llms-openai-like
     opencv-python-headless
     kubernetes
+    sentence-transformers
   rag-pipeline.py: |
     """
     title: Linode Agent Template
@@ -22,13 +24,15 @@ data:
 
     import os
     namespace_name = os.getenv('NAMESPACE')
+    embedding_model_type = os.getenv('EMBEDDING_MODEL_TYPE', 'openai-like')  # 'openai-like' or 'huggingface'
     embedding_model_endpoint = os.getenv('EMBEDDING_MODEL_ENDPOINT')
     embedding_model_name = os.getenv('EMBEDDING_MODEL_NAME')
     embedding_dimension = os.getenv('EMBEDDING_DIMENSION')
     foundation_model_name = os.getenv('FOUNDATION_MODEL_NAME')
     foundation_model_endpoint = os.getenv('FOUNDATION_MODEL_ENDPOINT')
     agent_system_prompt = os.getenv('SYSTEM_PROMPT')
-    db_host = os.getenv('DB_HOST_READ')
+    db_host_read = os.getenv('DB_HOST_READ')
+    db_host_rw = os.getenv('DB_HOST_READ_WRITE')
     db_name = os.getenv('DB_NAME')
     db_secret_name = os.getenv('DB_SECRET_NAME')
     db_port = os.getenv('DB_PORT')
@@ -42,36 +46,48 @@ data:
             pass
         
         async def on_startup(self):
-            from llama_index.embeddings.openai_like import OpenAILikeEmbedding
             from llama_index.core import Settings, VectorStoreIndex
             from llama_index.llms.openai_like import OpenAILike
             from llama_index.vector_stores.postgres import PGVectorStore
             from kubernetes import client, config
             import base64
             import logging
-            
+
             print(f"on_startup:{__name__}")
-            
+
             # Configure LLM with chat model support for streaming
             llm = OpenAILike(
                 model=foundation_model_name,
-                api_base=f"http://{foundation_model_endpoint}/openai/v1",
+                api_base=f"http://{foundation_model_endpoint}/v1",
                 api_key="EMPTY",
                 max_tokens=512,
                 is_chat_model=True  # Enable chat model format for better streaming
             )
 
             Settings.llm = llm
-            
-            # ONLY configure embedding model if KB is selected
-            Settings.embed_model = OpenAILikeEmbedding(
-                model_name=embedding_model_name,
-                api_base=f"http://{embedding_model_endpoint}/openai/v1",
-                api_key="EMPTY",
-                embed_batch_size=10,
-                max_retries=3,
-                timeout=180.0
-            )
+
+            # Configure embedding model based on type
+            print(f"DEBUG: Embedding model type: {embedding_model_type}")
+
+            if embedding_model_type == 'huggingface':
+                from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+                print(f"DEBUG: Loading HuggingFace embedding model: {embedding_model_name}")
+                Settings.embed_model = HuggingFaceEmbedding(
+                    model_name=embedding_model_name,
+                    embed_batch_size=10,
+                    max_length=512
+                )
+            else:
+                from llama_index.embeddings.openai_like import OpenAILikeEmbedding
+                print(f"DEBUG: Loading OpenAI-like embedding model: {embedding_model_name}")
+                Settings.embed_model = OpenAILikeEmbedding(
+                    model_name=embedding_model_name,
+                    api_base=f"http://{embedding_model_endpoint}/v1",
+                    api_key="EMPTY",
+                    embed_batch_size=10,
+                    max_retries=3,
+                    timeout=180.0
+                )
             
             # ONLY configure vector store if KB is selected
             def get_secret_credentials():
@@ -87,19 +103,39 @@ data:
                     return 'app', 'changeme'
             
             pg_user, pg_password = get_secret_credentials()
-            
+
+            # Use read-write host for initialization (needs to create extension)
+            # Use read host for queries
             vector_store = PGVectorStore.from_params(
                 database="app",
-                host=db_host,
+                host=db_host_rw,  # Use read-write host for initialization
                 port=db_port,
                 user=pg_user,
                 password=pg_password,
-                table_name="lg_linode_docs",
-                embed_dim=4096
+                table_name="data_lg_linode_docs",  # LlamaIndex adds data_ prefix
+                embed_dim=int(embedding_dimension)
             )
-            
-            self.index = VectorStoreIndex.from_vector_store(vector_store)
-            
+
+            print(f"DEBUG: Vector store created, table=lg_linode_docs, embed_dim={embedding_dimension}")
+
+            # Create index from vector store with explicit embed model
+            self.index = VectorStoreIndex.from_vector_store(
+                vector_store=vector_store,
+                embed_model=Settings.embed_model
+            )
+
+            print(f"DEBUG: VectorStoreIndex created")
+
+            # Test retrieval
+            try:
+                test_results = vector_store.query(
+                    query_embedding=[0.0] * int(embedding_dimension),
+                    similarity_top_k=1
+                )
+                print(f"DEBUG: Test query returned {len(test_results.nodes) if test_results and hasattr(test_results, 'nodes') else 0} nodes")
+            except Exception as e:
+                print(f"DEBUG: Test query error: {e}")
+
             pass
         
         async def on_shutdown(self):
@@ -110,14 +146,14 @@ data:
             self, user_message: str, model_id: str, messages: List[dict], body: dict
         ) -> Union[str, Generator, Iterator]:
             print(f"pipe:{__name__}")
-            
+
             try:
-                # SET 
+                # SET
                 system_prompt=agent_system_prompt
-                
+
                 # Create query engine with custom system prompt
                 from llama_index.core.prompts import PromptTemplate
-                
+
                 qa_prompt_tmpl = (
                     "Based on the provided context information below:\n"
                     "---------------------\n"
@@ -126,21 +162,53 @@ data:
                     f"{system_prompt}\n\n"
                     "Given this information, please answer the question: {query_str}\n"
                 )
-                
+
                 qa_prompt = PromptTemplate(qa_prompt_tmpl)
-                
+
                 query_engine = self.index.as_query_engine(
-                    streaming=True,
+                    streaming=False,  # Try non-streaming first to debug
                     similarity_top_k=3,
                     text_qa_template=qa_prompt
                 )
-                
-                # Get streaming response
-                streaming_response = query_engine.query(user_message)
-                
-                # Yield tokens for streaming output
-                for token in streaming_response.response_gen:
-                    yield token
-                    
+
+                # Get response
+                print(f"DEBUG: Querying with message: {user_message}")
+
+                # First, manually test retrieval
+                try:
+                    retriever = self.index.as_retriever(similarity_top_k=3)
+                    print(f"DEBUG: Created retriever")
+
+                    retrieved_nodes = retriever.retrieve(user_message)
+                    print(f"DEBUG: Manual retrieval found {len(retrieved_nodes)} nodes")
+                    if retrieved_nodes:
+                        for i, node in enumerate(retrieved_nodes[:2]):
+                            print(f"DEBUG: Retrieved node {i}: score={node.score if hasattr(node, 'score') else 'N/A'}, text={node.text[:80] if hasattr(node, 'text') else node.node.text[:80]}")
+                except Exception as e:
+                    print(f"DEBUG: Manual retrieval error: {e}")
+
+                response = query_engine.query(user_message)
+                print(f"DEBUG: Got response object")
+
+                # Get response text
+                response_text = str(response)
+                print(f"DEBUG: Response length={len(response_text)}")
+                print(f"DEBUG: Response text: {repr(response_text[:500])}")
+
+                # Also check source nodes
+                print(f"DEBUG: Source nodes: {len(response.source_nodes) if hasattr(response, 'source_nodes') else 0}")
+                if hasattr(response, 'source_nodes') and response.source_nodes:
+                    for i, node in enumerate(response.source_nodes[:2]):
+                        print(f"DEBUG: Node {i}: {node.text[:100]}")
+
+                # If no content was generated or LLM returned "Empty Response", provide a helpful message
+                if not response_text or response_text.strip() == "" or "Empty Response" in response_text:
+                    print(f"DEBUG: Detected empty/invalid response, returning fallback")
+                    yield "I apologize, but I don't have enough information in my knowledge base to answer that question. Please try asking about a different topic or provide more context."
+                else:
+                    # Yield the complete response
+                    print(f"DEBUG: Returning LLM response")
+                    yield response_text
+
             except Exception as e:
                 yield f"Error: {str(e)}"

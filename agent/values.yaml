@@ -7,6 +7,13 @@ extraLabels: {}
 annotations: {}
 podAnnotations: {}
 podLabels: {}
+
+# Istio configuration
+istio:
+  # Exclude Kubernetes API from Istio interception to allow secret retrieval
+  excludeKubernetesAPI: true
+  # Kubernetes API service IP (default for most clusters)
+  kubernetesAPIIP: "10.128.0.1"
 replicaCount: 1
 # -- Strategy for updating the deployment
 strategy: {}
@@ -153,6 +160,11 @@ volumes:
   - name: config-volume
     configMap:
       name: pipelines-files
+
+# Network policy
+networkPolicy:
+  # -- Enable network policy
+  enabled: false
 
 # -- Extra resources to deploy with Open WebUI Pipelines
 extraResources:
