@@ -1,0 +1,19 @@
+{{- if .Values.istio.serviceEntry.enabled }}
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: {{ include "pipelines.name" . }}-pypi-egress
+  namespace: {{ include "pipelines.namespace" . }}
+  labels:
+    {{- include "pipelines.labels" . | nindent 4 }}
+spec:
+  hosts:
+  - files.pythonhosted.org
+  - pypi.org
+  ports:
+  - number: 443
+    name: https
+    protocol: HTTPS
+  location: MESH_EXTERNAL
+  resolution: DNS
+{{- end }}

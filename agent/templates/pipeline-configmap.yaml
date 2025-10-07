@@ -112,7 +112,7 @@ data:
                 port=db_port,
                 user=pg_user,
                 password=pg_password,
-                table_name="data_lg_linode_docs",  # LlamaIndex adds data_ prefix
+                table_name="lg_linode_docs",  # LlamaIndex will add data_ prefix automatically
                 embed_dim=int(embedding_dimension)
             )
 

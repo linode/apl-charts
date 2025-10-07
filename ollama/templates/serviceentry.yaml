@@ -1,0 +1,19 @@
+{{- if .Values.istio.serviceEntry.enabled }}
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: {{ include "ollama.fullname" . }}-registry-egress
+  namespace: {{ include "ollama.namespace" . }}
+  labels:
+    {{- include "ollama.labels" . | nindent 4 }}
+spec:
+  hosts:
+  - registry.ollama.ai
+  - "*.r2.cloudflarestorage.com"
+  ports:
+  - number: 443
+    name: https
+    protocol: TLS
+  location: MESH_EXTERNAL
+  resolution: NONE
+{{- end }}

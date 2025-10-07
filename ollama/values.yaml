@@ -43,6 +43,15 @@ fullnameOverride: ""
 # -- String to fully override namespace
 namespaceOverride: ""
 
+# Istio configuration
+istio:
+  # ServiceEntry to allow egress to Ollama Registry for model downloads
+  serviceEntry:
+    enabled: true
+  # DestinationRule to configure connection pooling and retry logic
+  destinationRule:
+    enabled: true
+
 # Ollama parameters
 ollama:
   # Port Ollama is listening on

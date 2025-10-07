@@ -14,6 +14,9 @@ istio:
   excludeKubernetesAPI: true
   # Kubernetes API service IP (default for most clusters)
   kubernetesAPIIP: "10.128.0.1"
+  # ServiceEntry to allow egress to PyPI for package installation
+  serviceEntry:
+    enabled: true
 replicaCount: 1
 # -- Strategy for updating the deployment
 strategy: {}
