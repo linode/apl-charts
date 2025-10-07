@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "pipelines.name" . }}-secret-reader
+  namespace: {{ include "pipelines.namespace" . }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "pipelines.name" . }}-secret-reader
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Values.serviceAccount.name | default (include "pipelines.name" .) }}
+    namespace: {{ include "pipelines.namespace" . }}
