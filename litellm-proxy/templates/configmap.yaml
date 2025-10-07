@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "litellm-proxy.fullname" . }}-config
+  namespace: {{ .Values.namespaceOverride | default .Release.Namespace }}
+  labels:
+    {{- include "litellm-proxy.labels" . | nindent 4 }}
+data:
+  config.yaml: |
+    model_list:
+    {{- range .Values.config.modelList }}
+      - model_name: {{ .model_name }}
+        litellm_params:
+          model: {{ .litellm_params.model }}
+          api_base: {{ .litellm_params.api_base }}
+    {{- end }}
+
+    litellm_settings:
+      {{- toYaml .Values.config.litellmSettings | nindent 6 }}
+
+    router_settings:
+      {{- toYaml .Values.config.routerSettings | nindent 6 }}

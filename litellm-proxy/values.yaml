@@ -1,0 +1,46 @@
+nameOverride: ""
+namespaceOverride: ""
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/berriai/litellm
+  tag: main-latest
+  pullPolicy: Always
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+
+service:
+  type: ClusterIP
+  port: 80
+  containerPort: 4000
+
+# Network policy
+networkPolicy:
+  enabled: true
+
+# Istio configuration
+istio:
+  destinationRule:
+    enabled: false
+    tlsMode: DISABLE  # Options: DISABLE, SIMPLE, MUTUAL, ISTIO_MUTUAL
+
+# LiteLLM configuration
+config:
+  modelList:
+    - model_name: all-minilm
+      litellm_params:
+        model: ollama/all-minilm
+        api_base: http://my-embed.team-demo.svc.cluster.local:11434
+
+  litellmSettings:
+    drop_params: true
+
+  routerSettings:
+    enable_pre_call_checks: false

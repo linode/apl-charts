@@ -1,0 +1,23 @@
+{{- if .Values.networkPolicy.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-to-{{ include "litellm-proxy.fullname" . }}
+  namespace: {{ .Values.namespaceOverride | default .Release.Namespace }}
+  labels:
+    {{- include "litellm-proxy.labels" . | nindent 4 }}
+spec:
+  ingress:
+  - from:
+    - podSelector: {}
+    ports:
+    - port: {{ .Values.service.containerPort }}
+      protocol: TCP
+    - port: {{ .Values.service.port }}
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      {{- include "litellm-proxy.selectorLabels" . | nindent 6 }}
+  policyTypes:
+  - Ingress
+{{- end }}

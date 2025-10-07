@@ -1,0 +1,14 @@
+{{- if .Values.istio.destinationRule.enabled -}}
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: {{ include "litellm-proxy.fullname" . }}
+  namespace: {{ .Values.namespaceOverride | default .Release.Namespace }}
+  labels:
+    {{- include "litellm-proxy.labels" . | nindent 4 }}
+spec:
+  host: {{ include "litellm-proxy.fullname" . }}.{{ .Values.namespaceOverride | default .Release.Namespace }}.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: {{ .Values.istio.destinationRule.tlsMode }}
+{{- end }}
