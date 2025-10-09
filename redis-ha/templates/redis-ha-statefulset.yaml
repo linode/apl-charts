@@ -126,6 +126,14 @@ spec:
         {{- end }}
         command: {{ toYaml .Values.sysctlImage.command | nindent 10 }}
         securityContext: {{- include "compatibility.renderSecurityContext" (dict "secContext" .Values.containerSecurityContext "context" $) | nindent 10 }}
+        livenessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - "true"
+          initialDelaySeconds: 1
+          periodSeconds: 10
       {{- end }}
 {{- if and .Values.hostPath.path .Values.hostPath.chown }}
       - name: hostpath-chown
@@ -138,6 +146,14 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /data
+        livenessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - "true"
+          initialDelaySeconds: 1
+          periodSeconds: 10
 {{- end }}
       - name: config-init
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
@@ -149,6 +165,14 @@ spec:
         args:
         - /readonly-config/init.sh
         securityContext: {{- include "compatibility.renderSecurityContext" (dict "secContext" .Values.containerSecurityContext "context" $) | nindent 10 }}
+        livenessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - "pgrep -f init.sh || true"
+          initialDelaySeconds: 1
+          periodSeconds: 10
         env:
 {{- $replicas := int (toString .Values.replicas) -}}
 {{- range $i := until $replicas }}
@@ -203,6 +227,14 @@ spec:
            && if test -s /data/dump.rdb; \
               then cp -v /data/dump.rdb /data/dump.rdb_orig; fi \
            && mv -v /data/dump.rdb_ /data/dump.rdb"
+        livenessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - "pgrep aws || true"
+          initialDelaySeconds: 1
+          periodSeconds: 10
         envFrom:
         - secretRef:
           {{- if .Values.restore.existingSecret }}
@@ -238,6 +270,14 @@ spec:
               then cp -v /data/dump.rdb /data/dump.rdb_orig; fi \
            && mv -v /data/dump.rdb_ /data/dump.rdb"
         securityContext: {{- include "compatibility.renderSecurityContext" (dict "secContext" .Values.containerSecurityContext "context" $) | nindent 10 }}
+        livenessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - "pgrep sh || true"
+          initialDelaySeconds: 1
+          periodSeconds: 10
         envFrom:
         - secretRef:
           {{- if .Values.restore.existingSecret }}
@@ -268,6 +308,14 @@ spec:
           && if test -s /data/dump.rdb; \
               then cp -v /data/dump.rdb /data/dump.rdb_orig; fi \
           && mv -v /data/dump.rdb_ /data/dump.rdb || true"
+        livenessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - "pgrep redis-cli || pgrep sh || true"
+          initialDelaySeconds: 1
+          periodSeconds: 10
         {{- if .Values.restore.existingSecret }}
         envFrom:
         - secretRef:
