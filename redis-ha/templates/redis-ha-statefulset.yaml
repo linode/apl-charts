@@ -189,7 +189,7 @@ spec:
         {{- end}}
 {{ if regexFind $regexRestoreS3 (toString .Values.restore.s3.source) }}
       - name: restore-s3
-        image: s3cmd/s3cmd:latest
+        image: {{ .Values.restore.s3.image.repository }}:{{ .Values.restore.s3.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
 {{ toYaml .Values.init.resources | indent 10 }}
@@ -197,8 +197,8 @@ spec:
         - sh
         args:
         - "-c"
-        - "timeout -t {{ .Values.restore.timeout }} \
-             s3cmd get {{ if .Values.restore.s3.region }}--region {{ .Values.restore.s3.region }} {{ end }}--force '{{ .Values.restore.s3.source }}' /data/dump.rdb_ \
+        - "timeout {{ .Values.restore.timeout }} \
+             aws s3 cp {{ if .Values.restore.s3.region }}--region {{ .Values.restore.s3.region }} {{ end }}'{{ .Values.restore.s3.source }}' /data/dump.rdb_ \
            && test -s /data/dump.rdb_ \
            && if test -s /data/dump.rdb; \
               then cp -v /data/dump.rdb /data/dump.rdb_orig; fi \
@@ -216,7 +216,7 @@ spec:
 {{- end }}
 {{ if regexFind $regexRestoreSSH (toString .Values.restore.ssh.source) }}
       - name: restore-ssh
-        image: lgatica/openssh-client:latest
+        image: {{ .Values.restore.ssh.image.repository }}:{{ .Values.restore.ssh.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
 {{ toYaml .Values.init.resources | indent 10 }}
@@ -224,7 +224,8 @@ spec:
         - sh
         args:
         - "-c"
-        - "rm -f key && echo -e \"${SSH_KEY}\" >key \
+        - "apk add --no-cache openssh-client \
+           && rm -f key && echo -e \"${SSH_KEY}\" >key \
            && chmod 400 key \
            && timeout {{ .Values.restore.timeout }} \
                 scp -i key \
@@ -493,6 +494,28 @@ spec:
         args:
           - /readonly-config/fix-split-brain.sh
         securityContext: {{- include "compatibility.renderSecurityContext" (dict "secContext" .Values.containerSecurityContext "context" $) | nindent 10 }}
+        readinessProbe:
+          exec:
+            command:
+              - sh
+              - -c
+              - pgrep -f fix-split-brain.sh
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        startupProbe:
+          exec:
+            command:
+              - sh
+              - -c
+              - pgrep -f fix-split-brain.sh
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 10
         env:
 {{- $replicas := int (toString .Values.replicas) -}}
 {{- range $i := until $replicas }}

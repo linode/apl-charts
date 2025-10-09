@@ -172,6 +172,13 @@ spec:
             port: probe
           initialDelaySeconds: 5
           periodSeconds: 3
+        startupProbe:
+          httpGet:
+            path: /healthz
+            port: probe
+          initialDelaySeconds: 5
+          periodSeconds: 3
+          failureThreshold: 10
         ports:
         - name: probe
           containerPort: 8888

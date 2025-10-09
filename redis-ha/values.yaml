@@ -152,7 +152,13 @@ haproxy:
   podAnnotations: {}
 
   # -- HAProxy resources
-  resources: {}
+  resources:
+    requests:
+      memory: 128Mi
+      cpu: 100m
+    limits:
+      memory: 256Mi
+      cpu: 200m
 
   # -- Configuration of `emptyDir`
   emptyDir: {}
@@ -231,7 +237,13 @@ haproxy:
       disableAPICheck: false
   init:
     # -- Extra init resources
-    resources: {}
+    resources:
+      requests:
+        memory: 128Mi
+        cpu: 100m
+      limits:
+        memory: 128Mi
+        cpu: 200m
   timeout:
     # -- haproxy.cfg `timeout connect` setting
     connect: 4s
@@ -249,8 +261,10 @@ haproxy:
   # -- Security context to be added to the HAProxy deployment.
   securityContext:
     runAsUser: 99
+    runAsGroup: 99
     fsGroup: 99
     runAsNonRoot: true
+    supplementalGroups: [99]
 
   # -- Security context to be added to the HAProxy containers.
   containerSecurityContext:
@@ -474,12 +488,13 @@ redis:
     # Define configuration here
 
   # -- CPU/Memory for master/slave nodes resource requests/limits
-  resources: {}
-  #  requests:
-  #    memory: 200Mi
-  #    cpu: 100m
-  #  limits:
-  #    memory: 700Mi
+  resources:
+    requests:
+      memory: 200Mi
+      cpu: 100m
+    limits:
+      memory: 700Mi
+      cpu: 1000m
 
   # -- Container Lifecycle Hooks for redis container
   # Ref: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
@@ -613,12 +628,13 @@ sentinel:
     # Define configuration here
 
   # -- CPU/Memory for sentinel node resource requests/limits
-  resources: {}
-  #  requests:
-  #    memory: 200Mi
-  #    cpu: 100m
-  #  limits:
-  #    memory: 200Mi
+  resources:
+    requests:
+      memory: 200Mi
+      cpu: 100m
+    limits:
+      memory: 200Mi
+      cpu: 200m
 
   # -- Container Lifecycle Hooks for sentinel container.
   # Ref: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
@@ -632,8 +648,10 @@ sentinel:
 # -- Security context to be added to the Redis StatefulSet.
 securityContext:
   runAsUser: 1000
+  runAsGroup: 1000
   fsGroup: 1000
   runAsNonRoot: true
+  supplementalGroups: [1000]
   ## Assuming your kubelet allows it, you can the following instructions to configure
   ## specific sysctl parameters
   ##
@@ -892,7 +910,13 @@ persistentVolume:
   labels: {}
 init:
   # -- Extra init resources
-  resources: {}
+  resources:
+    requests:
+      memory: 128Mi
+      cpu: 100m
+    limits:
+      memory: 128Mi
+      cpu: 200m
 
 # To use a hostPath for data, set persistentVolume.enabled to false
 # and define hostPath.path.
@@ -945,6 +969,10 @@ restore:
   s3:
     # -- Restore init container - AWS S3 location of dump - i.e. s3://bucket/dump.rdb or false
     source: ""
+    # -- Image for S3 restore
+    image:
+      repository: public.ecr.aws/aws-cli/aws-cli
+      tag: latest
     # If using existingSecret, that secret must contain:
     # AWS_SECRET_ACCESS_KEY: <YOUR_ACCESS_KEY:>
     # AWS_ACCESS_KEY_ID: <YOUR_KEY_ID>
@@ -962,6 +990,10 @@ restore:
     # Key should be in one line separated with \n.
     # i.e. `-----BEGIN RSA PRIVATE KEY-----\n...\n...\n-----END RSA PRIVATE KEY-----`
     key: ""
+    # -- Image for SSH restore
+    image:
+      repository: public.ecr.aws/docker/library/alpine
+      tag: 3.20
   redis:
     source: ""
 
@@ -1056,4 +1088,10 @@ splitBrainDetection:
   interval: 60
   retryInterval: 10
   # -- splitBrainDetection resources
-  resources: {}
+  resources:
+    requests:
+      memory: 128Mi
+      cpu: 100m
+    limits:
+      memory: 128Mi
+      cpu: 200m
