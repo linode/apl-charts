@@ -494,6 +494,17 @@ spec:
         args:
           - /readonly-config/fix-split-brain.sh
         securityContext: {{- include "compatibility.renderSecurityContext" (dict "secContext" .Values.containerSecurityContext "context" $) | nindent 10 }}
+        livenessProbe:
+          exec:
+            command:
+              - sh
+              - -c
+              - pgrep -f fix-split-brain.sh
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 5
         readinessProbe:
           exec:
             command:
