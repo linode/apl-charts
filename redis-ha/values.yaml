@@ -993,7 +993,7 @@ restore:
     # -- Image for SSH restore
     image:
       repository: public.ecr.aws/docker/library/alpine
-      tag: 3.20
+      tag: "3.20"
   redis:
     source: ""
 
