@@ -10,8 +10,16 @@
     "image": {
       "type": "object",
       "properties": {
-        "repository": { "type": "string" },
-        "tag": { "type": "string" },
+        "repository": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Image repository (e.g. ghcr.io/org/app)"
+        },
+        "tag": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Image tag (e.g. v1.2.3 or latest)"
+        },
         "pullPolicy": {
           "type": "string",
           "enum": ["Always", "IfNotPresent", "Never"]
