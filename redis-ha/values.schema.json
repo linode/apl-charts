@@ -1,0 +1,1359 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Redis HA Helm Chart Values",
+  "description": "JSON Schema for redis-ha Helm chart values",
+  "type": "object",
+  "properties": {
+    "global": {
+      "type": "object",
+      "description": "Globally shared configuration",
+      "properties": {
+        "priorityClassName": {
+          "type": "string",
+          "description": "Default priority class for all components"
+        },
+        "compatibility": {
+          "type": "object",
+          "description": "Platform compatibility options",
+          "properties": {
+            "openshift": {
+              "type": "object",
+              "properties": {
+                "adaptSecurityContext": {
+                  "type": "string",
+                  "enum": ["auto", "force", "disabled"],
+                  "description": "Adapt security context for OpenShift compatibility"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "image": {
+      "type": "object",
+      "description": "Redis image configuration",
+      "required": ["repository", "tag", "pullPolicy"],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "description": "Redis image repository"
+        },
+        "tag": {
+          "type": "string",
+          "description": "Redis image tag"
+        },
+        "pullPolicy": {
+          "type": "string",
+          "enum": ["Always", "IfNotPresent", "Never"],
+          "description": "Redis image pull policy"
+        }
+      }
+    },
+    "fullnameOverride": {
+      "type": "string",
+      "description": "Full name override for Redis HA resources"
+    },
+    "nameOverride": {
+      "type": "string",
+      "description": "Name override for Redis HA resources"
+    },
+    "imagePullSecrets": {
+      "type": "array",
+      "description": "Reference to one or more secrets to be used when pulling redis images",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "replicas": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of redis master/slave pods",
+      "default": 1
+    },
+    "podManagementPolicy": {
+      "type": "string",
+      "enum": ["OrderedReady", "Parallel"],
+      "description": "The statefulset pod management policy"
+    },
+    "ro_replicas": {
+      "type": "string",
+      "description": "Comma separated list of slaves which never get promoted to master (0-indexed)"
+    },
+    "priorityClassName": {
+      "type": "string",
+      "description": "Kubernetes priorityClass name for the redis-ha-server pod"
+    },
+    "labels": {
+      "type": "object",
+      "description": "Custom labels for the redis pod",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "serviceLabels": {
+      "type": "object",
+      "description": "Custom labels for redis service",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "configmap": {
+      "type": "object",
+      "properties": {
+        "labels": {
+          "type": "object",
+          "description": "Custom labels for the redis configmap",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "configmapTest": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "object",
+          "properties": {
+            "repository": {
+              "type": "string",
+              "description": "Repository of the configmap shellcheck test image"
+            },
+            "tag": {
+              "type": "string",
+              "description": "Tag of the configmap shellcheck test image"
+            }
+          }
+        },
+        "resources": {
+          "$ref": "#/definitions/resources"
+        }
+      }
+    },
+    "serviceAccount": {
+      "type": "object",
+      "properties": {
+        "create": {
+          "type": "boolean",
+          "description": "Specifies whether a ServiceAccount should be created"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the ServiceAccount to use"
+        },
+        "automountToken": {
+          "type": "boolean",
+          "description": "Opt in/out of automounting API credentials into container"
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Annotations to be added to the service account",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "haproxy": {
+      "type": "object",
+      "description": "HAProxy configuration for better LoadBalancing/Sentinel Master support",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable HAProxy LoadBalancing/Proxy"
+        },
+        "servicePort": {
+          "type": "integer",
+          "description": "HAProxy service port",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "containerPort": {
+          "type": "integer",
+          "description": "HAProxy deployment container port",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "tls": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Enable TLS termination on HAProxy"
+            },
+            "secretName": {
+              "type": "string",
+              "description": "Secret containing the .pem file"
+            },
+            "keyName": {
+              "type": "string",
+              "description": "Key file name"
+            },
+            "certMountPath": {
+              "type": "string",
+              "description": "Path to mount the secret that contains the certificates"
+            }
+          }
+        },
+        "readOnly": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Enable dedicated port for read-only redis-slaves"
+            },
+            "port": {
+              "type": "integer",
+              "description": "Port for the read-only redis-slaves",
+              "minimum": 1,
+              "maximum": 65535
+            }
+          }
+        },
+        "replicas": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of HAProxy instances"
+        },
+        "deploymentStrategy": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["RollingUpdate", "Recreate"]
+            }
+          }
+        },
+        "image": {
+          "type": "object",
+          "properties": {
+            "repository": {
+              "type": "string",
+              "description": "HAProxy image repository"
+            },
+            "tag": {
+              "type": "string",
+              "description": "HAProxy image tag"
+            },
+            "pullPolicy": {
+              "type": "string",
+              "enum": ["Always", "IfNotPresent", "Never"],
+              "description": "HAProxy image pull policy"
+            }
+          }
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "imagePullSecrets": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "annotations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "deploymentAnnotations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "podAnnotations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "resources": {
+          "$ref": "#/definitions/resources"
+        },
+        "emptyDir": {
+          "type": "object"
+        },
+        "podDisruptionBudget": {
+          "type": "object"
+        },
+        "stickyBalancing": {
+          "type": "boolean",
+          "description": "HAProxy sticky load balancing to Redis nodes"
+        },
+        "priorityClassName": {
+          "type": "string"
+        },
+        "service": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["ClusterIP", "LoadBalancer", "NodePort"],
+              "description": "HAProxy service type"
+            },
+            "nodePort": {
+              "type": ["integer", "null"],
+              "description": "HAProxy service nodePort value (when type is NodePort)"
+            },
+            "loadBalancerIP": {
+              "type": "string"
+            },
+            "externalTrafficPolicy": {
+              "type": ["string", "null"],
+              "enum": ["Cluster", "Local", null]
+            },
+            "externalIPs": {
+              "type": "object"
+            },
+            "labels": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "annotations": {
+              "type": ["object", "null"],
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "loadBalancerSourceRanges": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "serviceAccountName": {
+          "type": "string"
+        },
+        "serviceAccount": {
+          "type": "object",
+          "properties": {
+            "create": {
+              "type": "boolean"
+            },
+            "automountToken": {
+              "type": "boolean"
+            }
+          }
+        },
+        "metrics": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "port": {
+              "type": "integer"
+            },
+            "portName": {
+              "type": "string"
+            },
+            "scrapePath": {
+              "type": "string"
+            },
+            "serviceMonitor": {
+              "$ref": "#/definitions/serviceMonitor"
+            }
+          }
+        },
+        "init": {
+          "type": "object",
+          "properties": {
+            "resources": {
+              "$ref": "#/definitions/resources"
+            }
+          }
+        },
+        "timeout": {
+          "type": "object",
+          "properties": {
+            "connect": {
+              "type": "string",
+              "pattern": "^[0-9]+(s|ms|m|h)$"
+            },
+            "server": {
+              "type": "string",
+              "pattern": "^[0-9]+(s|ms|m|h)$"
+            },
+            "client": {
+              "type": "string",
+              "pattern": "^[0-9]+(s|ms|m|h)$"
+            },
+            "check": {
+              "type": "string",
+              "pattern": "^[0-9]+(s|ms|m|h)$"
+            }
+          }
+        },
+        "checkInterval": {
+          "type": "string"
+        },
+        "checkFall": {
+          "type": "integer"
+        },
+        "securityContext": {
+          "$ref": "#/definitions/securityContext"
+        },
+        "containerSecurityContext": {
+          "$ref": "#/definitions/containerSecurityContext"
+        },
+        "hardAntiAffinity": {
+          "type": "boolean"
+        },
+        "additionalAffinities": {
+          "type": "object"
+        },
+        "affinity": {
+          "type": "string"
+        },
+        "customConfig": {
+          "type": ["string", "null"]
+        },
+        "extraConfig": {
+          "type": ["string", "null"]
+        },
+        "lifecycle": {
+          "type": "object"
+        },
+        "tests": {
+          "type": "object",
+          "properties": {
+            "resources": {
+              "$ref": "#/definitions/resources"
+            }
+          }
+        },
+        "IPv6": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            }
+          }
+        },
+        "networkPolicy": {
+          "$ref": "#/definitions/networkPolicy"
+        }
+      }
+    },
+    "rbac": {
+      "type": "object",
+      "properties": {
+        "create": {
+          "type": "boolean",
+          "description": "Create and use RBAC resources"
+        }
+      }
+    },
+    "sysctlImage": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable an init container to modify Kernel settings"
+        },
+        "command": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "registry": {
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        },
+        "pullPolicy": {
+          "type": "string",
+          "enum": ["Always", "IfNotPresent", "Never"]
+        },
+        "mountHostSys": {
+          "type": "boolean"
+        },
+        "resources": {
+          "$ref": "#/definitions/resources"
+        }
+      }
+    },
+    "schedulerName": {
+      "type": "string",
+      "description": "Use an alternate scheduler"
+    },
+    "redis": {
+      "type": "object",
+      "description": "Redis specific configuration options",
+      "properties": {
+        "port": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65535,
+          "description": "Port to access the redis service"
+        },
+        "masterGroupName": {
+          "type": "string",
+          "pattern": "^[\\w-\\.]+$",
+          "description": "Redis convention for naming the cluster group"
+        },
+        "customCommand": {
+          "type": "array",
+          "description": "Allows overriding the redis container command",
+          "items": {
+            "type": "string"
+          }
+        },
+        "customArgs": {
+          "type": "array",
+          "description": "Allows overriding the redis container arguments",
+          "items": {
+            "type": "string"
+          }
+        },
+        "envFrom": {
+          "type": "array",
+          "description": "Load environment variables from ConfigMap/Secret",
+          "items": {
+            "type": "object"
+          }
+        },
+        "minReadySeconds": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Configure the minReadySeconds parameter to StatefulSet"
+        },
+        "tlsPort": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "maximum": 65535,
+          "description": "TLS Port to access the redis service"
+        },
+        "tlsReplication": {
+          "type": ["boolean", "null"],
+          "description": "Configures redis with tls-replication parameter"
+        },
+        "authClients": {
+          "type": "string",
+          "description": "Disable client side certificates authentication when set to 'no'"
+        },
+        "terminationGracePeriodSeconds": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Increase terminationGracePeriodSeconds to allow writing large RDB snapshots"
+        },
+        "livenessProbe": {
+          "$ref": "#/definitions/probe"
+        },
+        "readinessProbe": {
+          "$ref": "#/definitions/probe"
+        },
+        "startupProbe": {
+          "$ref": "#/definitions/probe"
+        },
+        "disableCommands": {
+          "type": "array",
+          "description": "Array with commands to disable",
+          "items": {
+            "type": "string"
+          }
+        },
+        "config": {
+          "type": "object",
+          "description": "Valid redis config options",
+          "additionalProperties": true
+        },
+        "customConfig": {
+          "type": ["string", "null"],
+          "description": "Allows for custom redis.conf files to be applied"
+        },
+        "resources": {
+          "$ref": "#/definitions/resources"
+        },
+        "lifecycle": {
+          "type": "object",
+          "description": "Container Lifecycle Hooks for redis container"
+        },
+        "annotations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "podAnnotations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "updateStrategy": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["RollingUpdate", "OnDelete"]
+            }
+          }
+        },
+        "extraVolumeMounts": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "sentinel": {
+      "type": "object",
+      "description": "Sentinel specific configuration options",
+      "properties": {
+        "port": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65535,
+          "description": "Port to access the sentinel service"
+        },
+        "tlsPort": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "maximum": 65535,
+          "description": "TLS Port to access the sentinel service"
+        },
+        "tlsReplication": {
+          "type": ["boolean", "null"],
+          "description": "Configures sentinel with tls-replication parameter"
+        },
+        "authClients": {
+          "type": "string"
+        },
+        "auth": {
+          "type": "boolean",
+          "description": "Enables or disables sentinel AUTH"
+        },
+        "password": {
+          "type": ["string", "null"],
+          "description": "A password that configures a requirepass in the conf parameters"
+        },
+        "existingSecret": {
+          "type": "string",
+          "description": "An existing secret containing sentinel password"
+        },
+        "authKey": {
+          "type": "string",
+          "description": "The key holding the sentinel password in an existing secret"
+        },
+        "customCommand": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "customArgs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "livenessProbe": {
+          "$ref": "#/definitions/probe"
+        },
+        "readinessProbe": {
+          "$ref": "#/definitions/probe"
+        },
+        "startupProbe": {
+          "$ref": "#/definitions/probe"
+        },
+        "quorum": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Minimum number of nodes expected to be live"
+        },
+        "config": {
+          "type": "object",
+          "description": "Valid sentinel config options",
+          "additionalProperties": true
+        },
+        "customConfig": {
+          "type": "string",
+          "description": "Allows for custom sentinel.conf files to be applied"
+        },
+        "resources": {
+          "$ref": "#/definitions/resources"
+        },
+        "lifecycle": {
+          "type": "object"
+        },
+        "extraVolumeMounts": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "securityContext": {
+      "$ref": "#/definitions/securityContext",
+      "description": "Security context to be added to the Redis StatefulSet"
+    },
+    "containerSecurityContext": {
+      "$ref": "#/definitions/containerSecurityContext",
+      "description": "Security context to be added to the Redis containers"
+    },
+    "nodeSelector": {
+      "type": "object",
+      "description": "Node labels for pod assignment",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "tolerations": {
+      "type": "array",
+      "description": "Tolerations for pod assignment",
+      "items": {
+        "type": "object"
+      }
+    },
+    "hardAntiAffinity": {
+      "type": "boolean",
+      "description": "Whether the Redis server pods should be forced to run on separate nodes"
+    },
+    "additionalAffinities": {
+      "type": "object",
+      "description": "Additional affinities to add to the Redis server pods"
+    },
+    "affinity": {
+      "type": "string",
+      "description": "Override all other affinity settings for the Redis server pods"
+    },
+    "topologySpreadConstraints": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "maxSkew": {
+          "type": ["string", "integer"]
+        },
+        "topologyKey": {
+          "type": "string"
+        },
+        "whenUnsatisfiable": {
+          "type": "string",
+          "enum": ["DoNotSchedule", "ScheduleAnyway", ""]
+        }
+      }
+    },
+    "exporter": {
+      "type": "object",
+      "description": "Prometheus exporter specific configuration options",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "If true, the prometheus exporter sidecar is enabled"
+        },
+        "image": {
+          "type": "string",
+          "description": "Exporter image"
+        },
+        "tag": {
+          "type": "string",
+          "description": "Exporter image tag"
+        },
+        "pullPolicy": {
+          "type": "string",
+          "enum": ["Always", "IfNotPresent", "Never"]
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "portName": {
+          "type": "string"
+        },
+        "scrapePath": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "sslEnabled": {
+          "type": "boolean"
+        },
+        "resources": {
+          "$ref": "#/definitions/resources"
+        },
+        "extraArgs": {
+          "type": "object",
+          "additionalProperties": {
+            "type": ["string", "number", "boolean"]
+          }
+        },
+        "script": {
+          "type": "string",
+          "description": "A custom Lua script for collection of custom metrics"
+        },
+        "serviceMonitor": {
+          "$ref": "#/definitions/serviceMonitor"
+        },
+        "livenessProbe": {
+          "type": "object",
+          "properties": {
+            "httpGet": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "port": {
+                  "type": ["integer", "string"]
+                }
+              }
+            },
+            "initialDelaySeconds": {
+              "type": "integer"
+            },
+            "timeoutSeconds": {
+              "type": "integer"
+            },
+            "periodSeconds": {
+              "type": "integer"
+            }
+          }
+        },
+        "readinessProbe": {
+          "type": "object",
+          "properties": {
+            "httpGet": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "port": {
+                  "type": ["integer", "string"]
+                }
+              }
+            },
+            "initialDelaySeconds": {
+              "type": "integer"
+            },
+            "timeoutSeconds": {
+              "type": "integer"
+            },
+            "periodSeconds": {
+              "type": "integer"
+            },
+            "successThreshold": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "podDisruptionBudget": {
+      "type": "object",
+      "description": "Pod Disruption Budget rules"
+    },
+    "auth": {
+      "type": "boolean",
+      "description": "Configures redis with AUTH (requirepass & masterauth conf params)"
+    },
+    "redisPassword": {
+      "type": ["string", "null"],
+      "description": "A password that configures requirepass and masterauth"
+    },
+    "authSecretAnnotations": {
+      "type": "object",
+      "description": "Annotations for auth secret",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "existingSecret": {
+      "type": ["string", "null"],
+      "description": "An existing secret containing redis password"
+    },
+    "authKey": {
+      "type": "string",
+      "description": "Defines the key holding the redis password in existing secret"
+    },
+    "persistentVolume": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable persistent volume"
+        },
+        "storageClass": {
+          "type": "string",
+          "description": "redis-ha data Persistent Volume Storage Class"
+        },
+        "accessModes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["ReadWriteOnce", "ReadOnlyMany", "ReadWriteMany"]
+          }
+        },
+        "size": {
+          "type": "string",
+          "pattern": "^[0-9]+(Ei|Pi|Ti|Gi|Mi|Ki|E|P|T|G|M|K)$",
+          "description": "Persistent volume size"
+        },
+        "annotations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "init": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "$ref": "#/definitions/resources"
+        }
+      }
+    },
+    "hostPath": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Use this path on the host for data storage"
+        },
+        "chown": {
+          "type": "boolean",
+          "description": "Launch init-container with root permissions to change owner of hostPath folder"
+        }
+      }
+    },
+    "emptyDir": {
+      "type": "object",
+      "description": "Configuration of emptyDir"
+    },
+    "tls": {
+      "type": "object",
+      "properties": {
+        "secretName": {
+          "type": "string"
+        },
+        "certFile": {
+          "type": "string",
+          "description": "Name of certificate file"
+        },
+        "keyFile": {
+          "type": "string",
+          "description": "Name of key file"
+        },
+        "dhParamsFile": {
+          "type": ["string", "null"],
+          "description": "Name of Diffie-Hellman (DH) key exchange parameters file"
+        },
+        "caCertFile": {
+          "type": "string",
+          "description": "Name of CA certificate file"
+        }
+      }
+    },
+    "restore": {
+      "type": "object",
+      "properties": {
+        "timeout": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Timeout for the restore in seconds"
+        },
+        "existingSecret": {
+          "type": "boolean"
+        },
+        "s3": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "string",
+              "description": "AWS S3 location of dump - i.e. s3://bucket/dump.rdb"
+            },
+            "image": {
+              "type": "object",
+              "properties": {
+                "repository": {
+                  "type": "string"
+                },
+                "tag": {
+                  "type": "string"
+                }
+              }
+            },
+            "access_key": {
+              "type": "string"
+            },
+            "secret_key": {
+              "type": "string"
+            },
+            "region": {
+              "type": "string"
+            }
+          }
+        },
+        "ssh": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "string",
+              "description": "SSH scp location of dump - i.e. user@server:/path/dump.rdb"
+            },
+            "key": {
+              "type": "string",
+              "description": "SSH private key to scp restore"
+            },
+            "image": {
+              "type": "object",
+              "properties": {
+                "repository": {
+                  "type": "string"
+                },
+                "tag": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "redis": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "string",
+              "description": "Redis connection uri - redis://[username:password@]host:port[/db]"
+            }
+          }
+        }
+      }
+    },
+    "prometheusRule": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "If true, creates a Prometheus Operator PrometheusRule"
+        },
+        "additionalLabels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "interval": {
+          "type": "string"
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "extraInitContainers": {
+      "type": "array",
+      "description": "Extra init containers to include in StatefulSet",
+      "items": {
+        "type": "object"
+      }
+    },
+    "extraContainers": {
+      "type": "array",
+      "description": "Extra containers to include in StatefulSet",
+      "items": {
+        "type": "object"
+      }
+    },
+    "extraVolumes": {
+      "type": "array",
+      "description": "Extra volumes to include in StatefulSet",
+      "items": {
+        "type": "object"
+      }
+    },
+    "extraLabels": {
+      "type": "object",
+      "description": "Labels added here are applied to all created resources",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "networkPolicy": {
+      "$ref": "#/definitions/networkPolicy",
+      "description": "NetworkPolicy for Redis StatefulSets"
+    },
+    "splitBrainDetection": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Interval between redis sentinel and server split brain checks (in seconds)"
+        },
+        "retryInterval": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "resources": {
+          "$ref": "#/definitions/resources"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "resources": {
+      "type": "object",
+      "description": "CPU/Memory resource requests/limits",
+      "properties": {
+        "requests": {
+          "type": "object",
+          "properties": {
+            "memory": {
+              "type": "string",
+              "pattern": "^[0-9]+(Ei|Pi|Ti|Gi|Mi|Ki|E|P|T|G|M|K)$"
+            },
+            "cpu": {
+              "type": ["string", "number"],
+              "pattern": "^[0-9]+(m)?$"
+            }
+          }
+        },
+        "limits": {
+          "type": "object",
+          "properties": {
+            "memory": {
+              "type": "string",
+              "pattern": "^[0-9]+(Ei|Pi|Ti|Gi|Mi|Ki|E|P|T|G|M|K)$"
+            },
+            "cpu": {
+              "type": ["string", "number"],
+              "pattern": "^[0-9]+(m)?$"
+            }
+          }
+        }
+      }
+    },
+    "probe": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable the probe"
+        },
+        "initialDelaySeconds": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Initial delay in seconds"
+        },
+        "periodSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Period in seconds after which probe will be repeated"
+        },
+        "timeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Timeout seconds"
+        },
+        "successThreshold": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Success threshold"
+        },
+        "failureThreshold": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Failure threshold"
+        }
+      }
+    },
+    "securityContext": {
+      "type": "object",
+      "properties": {
+        "runAsUser": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "runAsGroup": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fsGroup": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "runAsNonRoot": {
+          "type": "boolean"
+        },
+        "supplementalGroups": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "sysctls": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "containerSecurityContext": {
+      "type": "object",
+      "properties": {
+        "runAsUser": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "runAsNonRoot": {
+          "type": "boolean"
+        },
+        "allowPrivilegeEscalation": {
+          "type": "boolean"
+        },
+        "seccompProfile": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["RuntimeDefault", "Unconfined", "Localhost"]
+            }
+          }
+        },
+        "capabilities": {
+          "type": "object",
+          "properties": {
+            "drop": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "add": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "serviceMonitor": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "interval": {
+          "type": "string"
+        },
+        "telemetryPath": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "timeout": {
+          "type": "string"
+        },
+        "endpointAdditionalProperties": {
+          "type": "object"
+        },
+        "disableAPICheck": {
+          "type": "boolean"
+        },
+        "relabelings": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "metricRelabelings": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "networkPolicy": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "annotations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "ingressRules": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "egressRules": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}
