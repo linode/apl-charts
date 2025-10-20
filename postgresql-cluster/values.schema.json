@@ -1,63 +1,15 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "PostgreSQL Cluster Values Schema",
+  "title": "RabbitMQ Cluster Values Schema",
   "type": "object",
   "properties": {
+    "nameOverride": {
+      "type": "string",
+      "description": "String to partially override the release name"
+    },
     "fullnameOverride": {
       "type": "string",
       "description": "String to fully override deployment.fullname template"
-    },
-    "instances": {
-      "type": "integer",
-      "minimum": 1,
-      "description": "Number of instances required in the cluster (default 2 for smooth migration)"
-    },
-    "postgresMajor": {
-      "type": "integer",
-      "enum": [15, 17],
-      "description": "Major version of PostgreSQL to deploy (allowed values: 15 or 17)"
-    },
-    "imageName": {
-      "type": ["string", "null"],
-      "description": "Fully qualified image name for PostgreSQL container (takes precedence over imageCatalogRef)"
-    },
-    "imageCatalogRef": {
-      "type": "object",
-      "description": "Reference to ClusterImageCatalog for PostgreSQL image resolution",
-      "properties": {
-        "apiGroup": { "type": "string", "minLength": 1 },
-        "kind": { "type": "string", "minLength": 1 },
-        "name": { "type": "string", "minLength": 1 },
-        "major": {
-          "type": "integer",
-          "enum": [15, 17],
-          "description": "PostgreSQL major version to use from catalog"
-        }
-      },
-      "required": ["apiGroup", "kind", "name", "major"]
-    },
-    "primaryUpdateStrategy": {
-      "type": "string",
-      "enum": ["unsupervised", "supervised"],
-      "description": "Primary update strategy (unsupervised or supervised)"
-    },
-    "storage": {
-      "type": "object",
-      "description": "Storage configuration for PostgreSQL data",
-      "properties": {
-        "storageClass": { "type": "string" },
-        "size": { "type": "string", "minLength": 1 }
-      },
-      "required": ["size"]
-    },
-    "walStorage": {
-      "type": "object",
-      "description": "Storage configuration for PostgreSQL WAL",
-      "properties": {
-        "storageClass": { "type": "string" },
-        "size": { "type": "string", "minLength": 1 }
-      },
-      "required": ["size"]
     },
     "monitoring": {
       "type": "boolean",
@@ -65,30 +17,70 @@
     },
     "dashboard": {
       "type": "boolean",
-      "description": "Add a Grafana dashboard ConfigMap for CloudNativePG"
+      "description": "Add a Grafana dashboard ConfigMap for RabbitMQ"
     },
-    "byoSuperUserSecret": {
+    "serviceMonitor": {
       "type": "object",
-      "description": "Bring-your-own secret for PostgreSQL superuser credentials",
+      "description": "Prometheus ServiceMonitor configuration",
       "properties": {
-        "enabled": { "type": "boolean" },
+        "create": { "type": "boolean" }
+      },
+      "required": ["create"]
+    },
+    "serviceAccount": {
+      "type": "object",
+      "description": "Service account configuration for RabbitMQ pods",
+      "properties": {
+        "create": { "type": "boolean" },
+        "annotations": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
         "name": { "type": "string" }
       },
-      "required": ["enabled", "name"]
+      "required": ["create"]
     },
-    "bootstrap": {
+    "imagePullSecrets": {
+      "type": "array",
+      "description": "List of Kubernetes secrets used to pull images from private registries",
+      "items": { "type": "string" }
+    },
+    "podAnnotations": {
       "type": "object",
-      "description": "Cluster bootstrap configuration",
+      "description": "Annotations for RabbitMQ pods",
+      "additionalProperties": { "type": "string" }
+    },
+    "podSecurityContext": {
+      "type": "object",
+      "description": "Security context for RabbitMQ pods",
       "properties": {
-        "initdb": {
+        "runAsNonRoot": { "type": "boolean" },
+        "runAsUser": { "type": "integer" },
+        "runAsGroup": { "type": "integer" },
+        "seccompProfile": {
           "type": "object",
           "properties": {
-            "dataChecksums": { "type": "boolean" }
+            "type": { "type": "string" }
           },
-          "required": ["dataChecksums"]
+          "required": ["type"]
         }
-      },
-      "required": ["initdb"]
+      }
+    },
+    "containerSecurityContext": {
+      "type": "object",
+      "description": "Security context for RabbitMQ containers",
+      "properties": {
+        "allowPrivilegeEscalation": { "type": "boolean" },
+        "capabilities": {
+          "type": "object",
+          "properties": {
+            "drop": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }
+      }
     },
     "resources": {
       "type": "object",
@@ -113,36 +105,122 @@
       },
       "required": ["limits", "requests"]
     },
-    "otomi": {
+    "nodeSelector": {
       "type": "object",
-      "description": "Otomi-specific configurations",
+      "description": "Node labels for pod assignment",
+      "additionalProperties": { "type": "string" }
+    },
+    "tolerations": {
+      "type": "array",
+      "description": "Tolerations for pod assignment",
+      "items": { "type": "object" }
+    },
+    "affinity": {
+      "type": "object",
+      "description": "Affinity rules for pod scheduling"
+    },
+    "delayStartSeconds": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Delay time in seconds before RabbitMQ container startup (to ensure DNS propagation)"
+    },
+    "persistence": {
+      "type": "object",
+      "description": "Persistent storage configuration for RabbitMQ data",
       "properties": {
-        "networkpolicies": {
-          "type": "object",
-          "properties": {
-            "create": { "type": "boolean" }
-          },
-          "required": ["create"]
-        }
+        "storage": { "type": "string", "minLength": 1 },
+        "storageClassName": { "type": ["string", "null"] }
       },
-      "required": ["networkpolicies"]
+      "required": ["storage"]
+    },
+    "replicaCount": {
+      "type": "integer",
+      "enum": [1, 3, 5],
+      "description": "Number of RabbitMQ replicas (recommended odd number for quorum)"
+    },
+    "skipPostDeploySteps": {
+      "type": "boolean",
+      "description": "Skip RabbitMQ post-deploy queue rebalance steps"
+    },
+    "terminationGracePeriodSeconds": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Grace period for pod termination (default 604800 seconds)"
+    },
+    "plugins": {
+      "type": "array",
+      "description": "RabbitMQ plugins to enable (e.g. rabbitmq_federation, rabbitmq_mqtt)",
+      "items": { "type": "string" }
+    },
+    "queues": {
+      "type": "array",
+      "description": "List of RabbitMQ queues to configure",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "spec": {
+            "type": "object",
+            "properties": {
+              "durable": { "type": "boolean" },
+              "arguments": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": ["string", "integer", "boolean"]
+                }
+              }
+            }
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    "policies": {
+      "type": "array",
+      "description": "RabbitMQ policy definitions",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "pattern": { "type": "string" },
+          "definition": {
+            "type": "object",
+            "additionalProperties": { "type": ["string", "integer", "boolean"] }
+          },
+          "spec": {
+            "type": "object",
+            "properties": {
+              "applyTo": {
+                "type": "string",
+                "enum": [
+                  "queues",
+                  "classic_queues",
+                  "quorum_queues",
+                  "streams",
+                  "exchanges",
+                  "all"
+                ]
+              },
+              "priority": { "type": ["integer", "null"] },
+              "vhost": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    "additionalConfig": {
+      "type": "string",
+      "description": "Additional entries for rabbitmq.conf"
+    },
+    "advancedConfig": {
+      "type": "string",
+      "description": "Additional entries for advanced.config"
+    },
+    "envConfig": {
+      "type": "string",
+      "description": "Additional entries for rabbitmq-env.conf"
     }
   },
-  "required": [
-    "instances",
-    "postgresMajor",
-    "storage",
-    "walStorage",
-    "resources",
-    "otomi"
-  ],
-  "oneOf": [
-    {
-      "description": "Use imageName or imageCatalogRef (mutually exclusive)",
-      "anyOf": [
-        { "required": ["imageName"] },
-        { "required": ["imageCatalogRef"] }
-      ]
-    }
-  ]
+  "required": ["replicaCount", "resources", "persistence", "serviceAccount"]
 }
