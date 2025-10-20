@@ -1,0 +1,158 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Vector PostgreSQL Cluster Values Schema",
+  "type": "object",
+  "properties": {
+    "fullnameOverride": {
+      "type": "string",
+      "description": "String to fully override deployment.fullname template"
+    },
+    "instances": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of instances required in the cluster (default 3 for optimal performance)"
+    },
+    "imageName": {
+      "type": ["string", "null"],
+      "description": "Fully qualified image name for PostgreSQL container (takes precedence over imageCatalogRef)"
+    },
+    "imageCatalogRef": {
+      "type": "object",
+      "description": "Reference to ClusterImageCatalog for PostgreSQL image resolution",
+      "properties": {
+        "apiGroup": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "major": { "type": "integer", "minimum": 1 }
+      },
+      "required": ["apiGroup", "kind", "name", "major"]
+    },
+    "primaryUpdateStrategy": {
+      "type": "string",
+      "enum": ["unsupervised", "supervised"],
+      "description": "Primary update strategy (unsupervised or supervised)"
+    },
+    "storage": {
+      "type": "object",
+      "description": "Storage configuration for PostgreSQL data",
+      "properties": {
+        "storageClass": { "type": "string" },
+        "size": { "type": "string", "minLength": 1 }
+      },
+      "required": ["size"]
+    },
+    "walStorage": {
+      "type": "object",
+      "description": "Storage configuration for PostgreSQL WAL",
+      "properties": {
+        "storageClass": { "type": "string" },
+        "size": { "type": "string", "minLength": 1 }
+      },
+      "required": ["size"]
+    },
+    "postgresql": {
+      "type": "object",
+      "description": "PostgreSQL configuration parameters optimized for vector workloads",
+      "properties": {
+        "parameters": {
+          "type": "object",
+          "description": "PostgreSQL runtime parameters",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "required": ["parameters"]
+    },
+    "monitoring": {
+      "type": "boolean",
+      "description": "Enable PodMonitor for Prometheus metrics scraping"
+    },
+    "dashboard": {
+      "type": "boolean",
+      "description": "Add a Grafana dashboard ConfigMap for CloudNativePG"
+    },
+    "databases": {
+      "type": "array",
+      "description": "Configuration for databases and their extensions",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "owner": { "type": "string", "minLength": 1 },
+          "extensions": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          }
+        },
+        "required": ["name", "extensions"]
+      }
+    },
+    "byoSuperUserSecret": {
+      "type": "object",
+      "description": "Bring-your-own secret for PostgreSQL superuser credentials",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "name": { "type": "string" }
+      },
+      "required": ["enabled", "name"]
+    },
+    "bootstrap": {
+      "type": "object",
+      "description": "Cluster bootstrap configuration",
+      "properties": {
+        "initdb": {
+          "type": "object",
+          "properties": {
+            "dataChecksums": { "type": "boolean" }
+          },
+          "required": ["dataChecksums"]
+        }
+      },
+      "required": ["initdb"]
+    },
+    "resources": {
+      "type": "object",
+      "description": "Container resource requests and limits",
+      "properties": {
+        "limits": {
+          "type": "object",
+          "properties": {
+            "cpu": { "type": "string" },
+            "memory": { "type": "string" }
+          },
+          "required": ["cpu", "memory"]
+        },
+        "requests": {
+          "type": "object",
+          "properties": {
+            "cpu": { "type": "string" },
+            "memory": { "type": "string" }
+          },
+          "required": ["cpu", "memory"]
+        }
+      },
+      "required": ["limits", "requests"]
+    },
+    "apl": {
+      "type": "object",
+      "description": "APL-specific configurations",
+      "properties": {
+        "networkpolicies": {
+          "type": "object",
+          "properties": {
+            "create": { "type": "boolean" }
+          },
+          "required": ["create"]
+        }
+      },
+      "required": ["networkpolicies"]
+    }
+  },
+  "required": [
+    "instances",
+    "storage",
+    "walStorage",
+    "postgresql",
+    "resources",
+    "apl"
+  ]
+}
