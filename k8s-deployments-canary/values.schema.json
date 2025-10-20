@@ -1,0 +1,247 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Values Schema",
+  "type": "object",
+  "properties": {
+    "fullnameOverride": {
+      "type": "string",
+      "description": "String to fully override deployment.fullname template"
+    },
+    "versionOne": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "object",
+          "properties": {
+            "repository": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Image repository (e.g. ghcr.io/org/app)"
+            },
+            "tag": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Image tag (e.g. v1.2.3 or latest)"
+            },
+            "pullPolicy": {
+              "type": "string",
+              "enum": ["Always", "IfNotPresent", "Never"]
+            }
+          },
+          "required": ["repository", "tag", "pullPolicy"]
+        },
+        "replicaCount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "autoscaling": {
+          "type": "object",
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "minReplicas": { "type": "integer", "minimum": 1 },
+            "maxReplicas": { "type": "integer", "minimum": 1 },
+            "targetCPU": { "type": "integer", "minimum": 1 },
+            "targetMemory": { "type": "integer", "minimum": 1 }
+          },
+          "required": [
+            "enabled",
+            "minReplicas",
+            "maxReplicas",
+            "targetCPU",
+            "targetMemory"
+          ]
+        },
+        "configmap": {
+          "type": "object",
+          "properties": {
+            "create": { "type": "boolean" },
+            "mountPath": { "type": "string" },
+            "data": {
+              "type": "object",
+              "additionalProperties": { "type": "string" }
+            }
+          }
+        },
+        "secrets": { "type": "array", "items": { "type": "string" } },
+        "command": { "type": "array", "items": { "type": "string" } },
+        "args": { "type": "array", "items": { "type": "string" } },
+        "env": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "value": { "type": "string" }
+            },
+            "required": ["name"]
+          }
+        },
+        "initContainers": { "type": "array", "items": { "type": "object" } }
+      },
+      "required": ["image", "replicaCount"]
+    },
+    "versionTwo": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "object",
+          "properties": {
+            "repository": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Image repository (e.g. ghcr.io/org/app)"
+            },
+            "tag": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Image tag (e.g. v1.2.3 or latest)"
+            },
+            "pullPolicy": {
+              "type": "string",
+              "enum": ["Always", "IfNotPresent", "Never"]
+            }
+          },
+          "required": ["repository", "tag", "pullPolicy"]
+        },
+        "replicaCount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "autoscaling": {
+          "type": "object",
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "minReplicas": { "type": "integer", "minimum": 1 },
+            "maxReplicas": { "type": "integer", "minimum": 1 },
+            "targetCPU": { "type": "integer", "minimum": 1 },
+            "targetMemory": { "type": "integer", "minimum": 1 }
+          },
+          "required": [
+            "enabled",
+            "minReplicas",
+            "maxReplicas",
+            "targetCPU",
+            "targetMemory"
+          ]
+        },
+        "configmap": {
+          "type": "object",
+          "properties": {
+            "create": { "type": "boolean" },
+            "mountPath": { "type": "string" },
+            "data": {
+              "type": "object",
+              "additionalProperties": { "type": "string" }
+            }
+          }
+        },
+        "secrets": { "type": "array", "items": { "type": "string" } },
+        "command": { "type": "array", "items": { "type": "string" } },
+        "args": { "type": "array", "items": { "type": "string" } },
+        "env": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "value": { "type": "string" }
+            },
+            "required": ["name"]
+          }
+        },
+        "initContainers": { "type": "array", "items": { "type": "object" } }
+      },
+      "required": ["image", "replicaCount"]
+    },
+    "podLabels": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "podAnnotations": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "commonLabels": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "serviceAccount": {
+      "type": "object",
+      "properties": {
+        "annotations": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "imagePullSecrets": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "livenessProbe": { "type": "object" },
+    "readinessProbe": { "type": "object" },
+    "podSecurityContext": { "type": "object" },
+    "containerSecurityContext": { "type": "object" },
+    "containerPorts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "containerPort": { "type": "integer" },
+          "protocol": { "type": "string" }
+        },
+        "required": ["name", "containerPort", "protocol"]
+      }
+    },
+    "servicePorts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "port": { "type": "integer" },
+          "targetPort": { "type": ["string", "integer"] },
+          "protocol": { "type": "string" },
+          "name": { "type": "string" }
+        },
+        "required": ["port", "targetPort", "protocol", "name"]
+      }
+    },
+    "resources": { "type": "object" },
+    "nodeSelector": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "tolerations": { "type": "array", "items": { "type": "object" } },
+    "affinity": { "type": "object" },
+    "volumeMounts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "mountPath": { "type": "string" },
+          "readOnly": { "type": "boolean" }
+        },
+        "required": ["name", "mountPath"]
+      }
+    },
+    "volumes": { "type": "array", "items": { "type": "object" } },
+    "serviceMonitor": {
+      "type": "object",
+      "properties": {
+        "create": { "type": "boolean" },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "port": { "type": "string" },
+              "path": { "type": "string" },
+              "interval": { "type": "string" }
+            },
+            "required": ["port", "path"]
+          }
+        }
+      }
+    }
+  },
+  "required": ["versionOne", "versionTwo"]
+}
