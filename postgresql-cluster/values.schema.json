@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PostgreSQL Cluster Values Schema (Exact)",
+  "type": "object",
+  "properties": {
+    "fullnameOverride": {
+      "type": "string",
+      "description": "String to fully override deployment.fullname template"
+    },
+    "instances": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of instances required in the cluster (default 2 for smooth migration)"
+    },
+    "imageName": {
+      "type": ["string", "null"],
+      "description": "Fully qualified image name for PostgreSQL container (takes precedence over imageCatalogRef)"
+    },
+    "imageCatalogRef": {
+      "type": "object",
+      "description": "Reference to ClusterImageCatalog for PostgreSQL image resolution",
+      "properties": {
+        "apiGroup": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "major": { "type": "integer" }
+      },
+      "required": ["apiGroup", "kind", "name", "major"]
+    },
+    "primaryUpdateStrategy": {
+      "type": "string",
+      "enum": ["unsupervised", "supervised"],
+      "description": "Primary update strategy for rolling updates"
+    },
+    "storage": {
+      "type": "object",
+      "description": "Storage configuration for PostgreSQL data",
+      "properties": {
+        "storageClass": { "type": "string" },
+        "size": { "type": "string", "minLength": 1 }
+      },
+      "required": ["size"]
+    },
+    "walStorage": {
+      "type": "object",
+      "description": "Storage configuration for PostgreSQL WAL (Write-Ahead Log)",
+      "properties": {
+        "storageClass": { "type": "string" },
+        "size": { "type": "string", "minLength": 1 }
+      },
+      "required": ["size"]
+    },
+    "monitoring": {
+      "type": "boolean",
+      "description": "Enable PodMonitor for Prometheus metrics scraping"
+    },
+    "dashboard": {
+      "type": "boolean",
+      "description": "Add a Grafana dashboard ConfigMap for CloudNativePG"
+    },
+    "byoSuperUserSecret": {
+      "type": "object",
+      "description": "Bring-your-own secret for PostgreSQL superuser credentials",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "name": { "type": "string" }
+      },
+      "required": ["enabled", "name"]
+    },
+    "bootstrap": {
+      "type": "object",
+      "description": "Cluster bootstrap configuration",
+      "properties": {
+        "initdb": {
+          "type": "object",
+          "properties": {
+            "dataChecksums": { "type": "boolean" }
+          },
+          "required": ["dataChecksums"]
+        }
+      },
+      "required": ["initdb"]
+    },
+    "resources": {
+      "type": "object",
+      "description": "Container resource requests and limits",
+      "properties": {
+        "limits": {
+          "type": "object",
+          "properties": {
+            "cpu": { "type": "string" },
+            "memory": { "type": "string" }
+          },
+          "required": ["cpu", "memory"]
+        },
+        "requests": {
+          "type": "object",
+          "properties": {
+            "cpu": { "type": "string" },
+            "memory": { "type": "string" }
+          },
+          "required": ["cpu", "memory"]
+        }
+      },
+      "required": ["limits", "requests"]
+    },
+    "otomi": {
+      "type": "object",
+      "description": "Otomi-specific configuration for the PostgreSQL deployment",
+      "properties": {
+        "networkpolicies": {
+          "type": "object",
+          "properties": {
+            "create": { "type": "boolean" }
+          },
+          "required": ["create"]
+        }
+      },
+      "required": ["networkpolicies"]
+    }
+  },
+  "required": ["instances", "storage", "walStorage", "resources", "otomi"],
+  "oneOf": [
+    {
+      "description": "Either imageName or imageCatalogRef must be provided (mutually exclusive)",
+      "anyOf": [
+        { "required": ["imageName"] },
+        { "required": ["imageCatalogRef"] }
+      ]
+    }
+  ]
+}

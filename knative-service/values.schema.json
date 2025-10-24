@@ -1,0 +1,185 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Knative Workload Values Schema",
+  "type": "object",
+  "properties": {
+    "fullnameOverride": {
+      "type": "string",
+      "description": "String to fully override ksvc.fullname template"
+    },
+    "image": {
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Image repository (e.g. ghcr.io/org/app)"
+        },
+        "tag": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Image tag (e.g. v1.2.3 or latest)"
+        },
+        "pullPolicy": {
+          "type": "string",
+          "enum": ["Always", "IfNotPresent", "Never"]
+        }
+      },
+      "required": ["repository", "tag", "pullPolicy"]
+    },
+    "env": {
+      "type": "array",
+      "description": "Environment variables for containers",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "value": { "type": "string" },
+          "valueFrom": {
+            "type": "object",
+            "properties": {
+              "secretKeyRef": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "key": { "type": "string" }
+                },
+                "required": ["name", "key"]
+              }
+            }
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    "annotations": {
+      "type": "object",
+      "description": "Annotations for Knative service. Supports autoscaling and other Knative annotations.",
+      "additionalProperties": { "type": "string" }
+    },
+    "podLabels": {
+      "type": "object",
+      "description": "Additional labels for pods",
+      "additionalProperties": { "type": "string" }
+    },
+    "commonLabels": {
+      "type": "object",
+      "description": "Labels applied to all resources",
+      "additionalProperties": { "type": "string" }
+    },
+    "serviceAccount": {
+      "type": "object",
+      "properties": {
+        "annotations": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "imagePullSecrets": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "livenessProbe": { "type": "object" },
+    "readinessProbe": {
+      "type": "object",
+      "properties": {
+        "httpGet": {
+          "type": "object",
+          "properties": {
+            "path": { "type": "string" },
+            "port": { "type": ["string", "integer"] }
+          },
+          "required": ["path", "port"]
+        },
+        "successThreshold": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "containerSecurityContext": {
+      "type": "object",
+      "description": "Security context for container"
+    },
+    "containerPorts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "containerPort": { "type": "integer" },
+          "protocol": { "type": "string" }
+        },
+        "required": ["name", "containerPort", "protocol"]
+      }
+    },
+    "resources": {
+      "type": "object",
+      "description": "Resource requests and limits for containers"
+    },
+    "volumeMounts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "mountPath": { "type": "string" },
+          "readOnly": { "type": "boolean" }
+        },
+        "required": ["name", "mountPath"]
+      }
+    },
+    "volumes": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "nodeSelector": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "tolerations": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "affinity": {
+      "type": "object"
+    },
+    "secrets": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "command": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "args": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "ingress": {
+      "type": "string",
+      "enum": ["public", "cluster"],
+      "description": "Service visibility. If set to 'cluster', makes the service cluster-local."
+    },
+    "serviceMonitor": {
+      "type": "object",
+      "properties": {
+        "create": { "type": "boolean" },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "port": { "type": "string" },
+              "path": { "type": "string" },
+              "interval": { "type": "string" }
+            },
+            "required": ["port", "path"]
+          }
+        }
+      }
+    }
+  },
+  "required": ["image", "ingress"]
+}
