@@ -32,7 +32,7 @@
         },
         "replicaCount": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 0
         },
         "autoscaling": {
           "type": "object",
@@ -105,7 +105,7 @@
         },
         "replicaCount": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 0
         },
         "autoscaling": {
           "type": "object",
