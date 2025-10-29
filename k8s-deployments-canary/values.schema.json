@@ -31,8 +31,7 @@
           "required": ["repository", "tag", "pullPolicy"]
         },
         "replicaCount": {
-          "type": "integer",
-          "minimum": 1
+          "type": "integer"
         },
         "autoscaling": {
           "type": "object",
@@ -104,8 +103,7 @@
           "required": ["repository", "tag", "pullPolicy"]
         },
         "replicaCount": {
-          "type": "integer",
-          "minimum": 1
+          "type": "integer"
         },
         "autoscaling": {
           "type": "object",

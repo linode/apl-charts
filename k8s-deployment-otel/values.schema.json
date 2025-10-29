@@ -129,7 +129,6 @@
     "volumes": { "type": "array", "items": { "type": "object" } },
     "replicaCount": {
       "type": "integer",
-      "minimum": 1,
       "description": "Number of replicas to deploy"
     },
     "autoscaling": {
