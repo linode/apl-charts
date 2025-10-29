@@ -138,7 +138,8 @@
     },
     "replicaCount": {
       "type": "integer",
-      "description": "Number of replicas to deploy"
+      "description": "Number of replicas to deploy",
+      "minimum": 0
     },
     "autoscaling": {
       "type": "object",
