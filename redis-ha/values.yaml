@@ -108,7 +108,7 @@ haproxy:
     # Supports templates like "{{ .Release.Name }}-haproxy-tls"
     secretName: ""
     # -- Key file name
-    keyName:
+    keyName: ""
     # -- Path to mount the secret that contains the certificates. haproxy
     certMountPath: /tmp/
 
@@ -184,7 +184,7 @@ haproxy:
     # -- (int) HAProxy service nodePort value (haproxy.service.type must be NodePort)
     nodePort: ~
     # -- HAProxy service loadbalancer IP
-    loadBalancerIP:
+    loadBalancerIP: ""
     # -- (string) HAProxy service externalTrafficPolicy value (haproxy.service.type must be LoadBalancer)
     externalTrafficPolicy: ~
     # -- HAProxy external IPs
@@ -1006,7 +1006,7 @@ prometheusRule:
   # -- Additional labels to be set in metadata.
   additionalLabels: {}
   # -- Namespace which Prometheus is running in.
-  namespace:
+  namespace: ""
   # -- How often rules in the group are evaluated (falls back to `global.evaluation_interval` if not set).
   interval: 10s
   # -- Rules spec template (see https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#rule).
