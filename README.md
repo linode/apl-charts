@@ -2,6 +2,14 @@
 
 This repository contains a set of curated Helm charts that are available in the Akamai App Platform Catalog.
 
+## CI runtime
+
+The Helm chart test and release workflows use Node.js 24-based versions of
+`actions/checkout` and `azure/setup-helm`. GitHub-hosted runners manage the bundled
+Node.js patch version used by these actions; a package `engines.node` constraint
+or `actions/setup-node` does not control that runtime. These workflows therefore
+do not enforce the patch range `>=24.22.1 <25`.
+
 ## k8s-deployment
 
 The `k8s-deployment` Helm chart can be used to create a Kubernetes `Deployment` (to deploy a single image), a `Service` and a `ServiceAccount`. Optionally a `HorizontalPodAutoscaler`, a Prometheus `ServiceMonitor` and a `Configmap` can be created.
@@ -35,4 +43,3 @@ The `redis-cluster` Helm chart can be used to create a Redis master-replica clus
 The `rabbitmq-cluster` Helm chart can be used to create a `RabbitmqCluster`, `queues` and `Policy`s.
 
 Using the `rabbitmq-cluster` Helm chart requires `RabbitMQ` to be enabled by a platform administrator.
-
